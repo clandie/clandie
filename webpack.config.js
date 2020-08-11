@@ -8,7 +8,7 @@ module.exports = {
     filename: 'bundle.js',
   },
   devServer: {
-    publicPath: '/build',
+    publicPath: '/',
     proxy: {
       '/': 'http://localhost:3000',
     },
