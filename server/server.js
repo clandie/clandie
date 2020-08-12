@@ -25,7 +25,8 @@ const server = new ApolloServer({
 server.applyMiddleware({ app, path: "/graphql" });
 
 // serve html
-app.get(["/app", "/app/*"], (req, res) => {
+// multiple endpoints in array as first arg to get method for serving index.html
+app.get(["/app", "/clandie"], (req, res) => {
   res.status(200).sendFile(path.resolve(__dirname, "../client/index.html"));
 });
 
