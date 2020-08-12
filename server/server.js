@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
   res.status(200).sendFile(path.resolve(__dirname, '../client/index.html'));
 });
 // catch all
-app.use('/', (req, res) => {
+app.use('*', (req, res) => {
   res.status(404).send('Page Not Found');
 });
 // global error handler
