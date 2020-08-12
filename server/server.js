@@ -26,7 +26,7 @@ server.applyMiddleware({ app, path: '/graphql' });
 
 // serve html
 // multiple endpoints in array as first arg to get method for serving index.html
-app.get(['/home', '/signup'], (req, res) => {
+app.get(['/', '/home', '/signup'], (req, res) => {
   res.status(200).sendFile(path.resolve(__dirname, '../client/index.html'));
 });
 
