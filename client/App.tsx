@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 
-const App = () => {
+const App: React.FC = () => {
   return (
     <div className='app'>
       <h1>CLANDIE APP</h1>
