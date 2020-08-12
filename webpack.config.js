@@ -9,6 +9,7 @@ module.exports = {
   },
   devServer: {
     publicPath: '/',
+    historyApiFallback: true,
     proxy: {
       '/': 'http://localhost:3000',
     },
