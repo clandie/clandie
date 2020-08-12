@@ -10,7 +10,7 @@ const app = express();
 const PORT = 3000;
 require("dotenv").config();
 
-const typeDefs = require("./schema");
+const schema = require("./schema");
 const resolvers = require("./resolvers");
 
 app.use(cors());
@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "../build/")));
 
 const server = new ApolloServer({
-  typeDefs,
+  typeDefs: schema,
   resolvers,
 });
 
