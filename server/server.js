@@ -1,86 +1,51 @@
+/* CORS is needed to perform HTTP requests from another domain than your s
+erver domain to your server. Otherwise you may run into cross-origin resource s
+haring errors for your GraphQL server.
+*/
+const cors = require("cors");
 const express = require("express");
 const path = require("path");
-const { ApolloServer, gql } = require("apollo-server");
+const { ApolloServer } = require("apollo-server-express");
 const app = express();
 const PORT = 3000;
 require("dotenv").config();
 
-const typeDefs = gql`
-  # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
+const typeDefs = require("./schema");
+const resolvers = require("./resolvers");
 
-  # This "Book" type defines the queryable fields for every book in our data source.
-  type Book {
-    title: String
-    author: String
-  }
-
-  # The "Query" type is special: it lists all of the available queries that
-  # clients can execute, along with the return type for each. In this
-  # case, the "books" query returns an array of zero or more Books (defined above).
-  type Query {
-    books: [Book]
-  }
-`;
-
-const books = [
-  {
-    title: "Harry Potter and the Chamber of Secrets",
-    author: "J.K. Rowling",
-  },
-  {
-    title: "Jurassic Park",
-    author: "Michael Crichton",
-  },
-];
-
-const resolvers = {
-  Query: {
-    books: () => books,
-  },
-};
+app.use(cors());
+app.use(express.json());
+app.use(express.static(path.join(__dirname, "../build/")));
 
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  engine: {
-    reportSchema: true,
-    variant: "current",
-  },
 });
 
-server.listen().then(({ url }) => console.log(`🚀  Server ready at ${url}`));
+server.applyMiddleware({ app, path: "/graphql" });
 
-// app.use(express.json());
-// app.use(express.static(path.join(__dirname, "../build/")));
+// serve html
+app.get("/", (req, res) => {
+  res.status(200).sendFile(path.resolve(__dirname, "../client/index.html"));
+});
 
-// // serve html
-// app.get("/", (req, res) => {
-//   res.status(200).sendFile(path.resolve(__dirname, "../client/index.html"));
-// });
+// catch all
+app.use("*", (req, res) => {
+  res.status(404).send("Page Not Found");
+});
 
-// // graphql endpoint
-// app.use(
-//   "/graphql".graphqlHTTP({
-//     // graphql schema
-//   })
-// );
-// // catch all
-// app.use("/", (req, res) => {
-//   res.status(404).send("Page Not Found");
-// });
+// global error handler
+app.use((err, req, res, next) => {
+  const defaultErr = {
+    log: "Express error handler caught unknown middleware error",
+    status: 400,
+    message: { err: "error occurred" },
+  };
+  const errorObj = Object.assign({}, defaultErr, err);
+  console.log(errorObj.log);
+  return res.status(errorObj.status).json(errorObj.message);
+});
 
-// // global error handler
-// app.use((err, req, res, next) => {
-//   const defaultErr = {
-//     log: "Express error handler caught unknown middleware error",
-//     status: 400,
-//     message: { err: "error occurred" },
-//   };
-//   const errorObj = Object.assign({}, defaultErr, err);
-//   console.log(errorObj.log);
-//   return res.status(errorObj.status).json(errorObj.message);
-// });
-
-// app.listen(PORT, () => {
-//   console.log(`Listening to Port ${PORT}...`);
-// });
+app.listen(PORT, () => {
+  console.log(`Apollo Server listening on ${PORT}/graphql...`);
+});
