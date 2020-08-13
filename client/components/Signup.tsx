@@ -4,6 +4,8 @@ import { Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 const Signup: React.FC = () => {
+  // logic for user sign up
+
   return (
     <div className="login-container">
       <div className="login-img"></div>
