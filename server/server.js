@@ -12,6 +12,7 @@ require('dotenv').config();
 
 const schema = require('./schema');
 const resolvers = require('./resolvers');
+const db = require('./models/dbModel');
 
 app.use(cors());
 app.use(express.json());
@@ -20,6 +21,7 @@ app.use(express.static(path.join(__dirname, '../build/')));
 const server = new ApolloServer({
   typeDefs: schema,
   resolvers,
+  context: { db },
 });
 
 server.applyMiddleware({ app, path: '/graphql' });
