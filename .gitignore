@@ -2,3 +2,4 @@
 yarn.lock
 .env
 /build/
+prettier.config.js

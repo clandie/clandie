@@ -1,1 +1,47 @@
 // styles
+$lavender: #f1e8ff;
+$lemon: #ffffc6;
+$babyblue: #ddfaff;
+
+html,
+body,
+#root,
+.app {
+  // margin: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+  .login-img {
+    width: 100%;
+    height: 100%;
+    background-color: $lavender;
+  }
+
+  .login-box {
+    width: 70%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .login-form {
+      width: 500px;
+      margin-bottom: 50px;
+
+      .login-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+}
