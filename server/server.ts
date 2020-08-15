@@ -6,7 +6,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import path from 'path';
 import { ApolloServer } from 'apollo-server-express';
 require('dotenv').config();
-const cors = require('cors');
+import cors from 'cors';
 const PORT = 3000;
 
 const app: express.Application = express();
