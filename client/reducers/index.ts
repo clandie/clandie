@@ -10,4 +10,3 @@ const reducers = combineReducers({
 });
 
 export default reducers;
-// export type reducers = ReturnType<typeof reducers>;

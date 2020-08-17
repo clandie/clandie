@@ -24,12 +24,15 @@ class Signup extends Component<ISignupProps, ISignupState> {
     this.handleChange = this.handleChange.bind(this);
     this.handleSignup = this.handleSignup.bind(this);
   }
-  // logic for user sign up - dispatch action to create user in db, then within the reducer set user state
+
+  // update state on form change
   handleChange = (e: any): void => {
     console.log('in handleChange - e', e.target.name);
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
+
+  // create obj with user info then invoke addUser action
   handleSignup = (e: any): void => {
     e.preventDefault();
     console.log('pressed submit');
@@ -41,6 +44,7 @@ class Signup extends Component<ISignupProps, ISignupState> {
     console.log('handleSU - userobj', userObj);
     this.props.addUser(userObj);
   };
+
   render() {
     const { name, email, password } = this.state;
     return (
@@ -51,7 +55,6 @@ class Signup extends Component<ISignupProps, ISignupState> {
             <Form.Group controlId="formBasicName">
               <Form.Label>Name</Form.Label>
               <Form.Control
-                // type="name"
                 name="name"
                 placeholder="Name"
                 value={name}

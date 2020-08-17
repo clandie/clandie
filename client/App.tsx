@@ -19,12 +19,6 @@ const mapDispatchToProps = (dispatch: any) => ({
   },
 });
 
-// const mapDispatchToProps = {
-//   addUser: actions.addUser(userObj: types.ISignupState),
-// };
-
-// const connector = connect(null, dispatchProps);
-// type Props = ConnectedProps<typeof connector>;
 type Props = ReturnType<typeof mapDispatchToProps>;
 
 export const App: React.FC<Props> = (props) => {
@@ -47,7 +41,6 @@ export const App: React.FC<Props> = (props) => {
   );
 };
 
-// export default connector(App);
 export const AppConnectedBindActionCreators = connect(
   null,
   mapDispatchToProps
