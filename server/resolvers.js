@@ -1,10 +1,9 @@
 module.exports = {
   Query: {
     // example query
-    me: () => {
-      return {
-        username: "andie",
-      };
+    users: async (parent, args, { db }) => {
+      const users = await db.query('SELECT * FROM users');
+      return users.rows;
     },
   },
 };
