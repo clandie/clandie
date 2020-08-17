@@ -8,15 +8,15 @@ import BoardContainer from './containers/BoardContainer';
 const App: React.FC = () => {
   return (
     <Router>
-      <div className='app'>
+      <div className="app">
         <Switch>
-          <Route exact path='/home'>
+          <Route exact path="/home">
             <BoardContainer />
           </Route>
-          <Route exact path='/signup'>
+          <Route exact path="/signup">
             <Signup />
           </Route>
-          <Route exact path='/'>
+          <Route exact path="/">
             <Login />
           </Route>
         </Switch>
