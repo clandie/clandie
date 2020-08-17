@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "index.tsx",
   "scripts": {
-    "start": "NODE_ENV=production nodemon server/server.js",
+    "start": "NODE_ENV=production nodemon -r esm server/server.ts",
     "build": "webpack -p",
-    "dev": "NODE_ENV=development nodemon server/server.js & webpack-dev-server --hot --inline"
+    "dev": "NODE_ENV=development nodemon -r esm server/server.ts -- hot & webpack-dev-server --hot --inline"
   },
   "repository": "https://github.com/clandie/clandie.git",
   "author": "Clara K. & Andie R.",
@@ -46,6 +46,7 @@
     "bootstrap": "^4.5.2",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
+    "esm": "^3.2.25",
     "express": "^4.17.1",
     "express-graphql": "^0.11.0",
     "graphql": "^15.3.0",

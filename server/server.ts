@@ -6,7 +6,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import path from 'path';
 import { ApolloServer } from 'apollo-server-express';
 require('dotenv').config();
-import cors from 'cors';
+// import cors from 'cors';
 const PORT = 3000;
 
 const app: express.Application = express();
@@ -15,7 +15,7 @@ import schema from './schema';
 import resolvers from './resolvers';
 import db from './models/dbModel';
 
-app.use(cors());
+// app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../build/')));
 
