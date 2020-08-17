@@ -8,9 +8,11 @@ import { UserActionTypes } from '../constants/actionTypes';
 
 // we may need to add more to this later
 const initialState: UserState = {
+  id: null,
   name: '',
   email: '',
   password: '',
+  authorized: false,
 };
 
 const usersReducer = (state = initialState, action: UserActionTypes) => {
