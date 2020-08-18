@@ -10,8 +10,8 @@ import { UserActionTypes } from '../constants/actionTypes';
 const initialState: UserState = {
   id: null,
   name: '',
-  email: '',
-  password: '',
+  // email: '',
+  // password: '',
   authorized: false,
 };
 

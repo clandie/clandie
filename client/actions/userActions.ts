@@ -21,6 +21,7 @@ import { AppThunk } from '../store';
  * if above doesn't work, try ThunkAction<void, UserState, null, UserActionTypes>
  *
  */
+
 // Thunk middleware will turn async actions into actions
 export const addUser = (userObj: types.ISignupState): AppThunk => async (
   dispatch
@@ -37,6 +38,7 @@ export const verifyUser = (userObj: types.ILoginState): AppThunk => async (
   const userPassword = `${userObj.password}`;
   const query = `query VerifyUser($userEmail: String!, $userPassword: String!) { 
     user(email: $userEmail, password: $userPassword) {
+      _id
       name
     }
   }`;
