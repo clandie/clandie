@@ -37,7 +37,6 @@ interface SetUserInfo {
   payload: {
     id: number;
     name: string;
-    authorized: boolean;
   };
 }
 

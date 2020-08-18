@@ -13,6 +13,7 @@
 // import { UserState } from '../constants/stateTypes';
 // import { UserActionTypes, ADD_USER } from '../constants/actionTypes';
 import * as types from '../constants/types';
+import { SET_USER_INFO } from '../constants/actionTypes';
 import { AppThunk } from '../store';
 
 /**
@@ -21,6 +22,11 @@ import { AppThunk } from '../store';
  * if above doesn't work, try ThunkAction<void, UserState, null, UserActionTypes>
  *
  */
+
+export const setUserInfo = (userObj: types.ILoginState) => ({
+  type: SET_USER_INFO,
+  payload: userObj,
+});
 
 // Thunk middleware will turn async actions into actions
 export const addUser = (userObj: types.ISignupState): AppThunk => async (
