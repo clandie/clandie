@@ -31,7 +31,7 @@ class Login extends Component<ILoginProps, ILoginState> {
     this.setState({ [name]: value });
   };
 
-  // create obj with user info then invoke addUser action
+  // create obj with user info then invoke verifyUser action
   handleLogin = (e: any): void => {
     e.preventDefault();
     console.log('pressed submit');
