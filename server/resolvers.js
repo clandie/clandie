@@ -1,8 +1,7 @@
 module.exports = {
   Query: {
-    // example query
-    users: async (parent, args, { db }) => {
-      const users = await db.query('SELECT * FROM users');
+    users: async (parent, args, { postgresDB }) => {
+      const users = await postgresDB.query('SELECT * FROM users');
       return users.rows;
     },
   },
