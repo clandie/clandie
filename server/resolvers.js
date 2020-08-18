@@ -8,9 +8,10 @@ module.exports = {
     // gets a single user
     user: async (parent, args, { postgresDB }) => {
       try {
-        const text = 'SELECT * FROM users WHERE email=$1';
-        const params = [args.email];
+        const text = 'SELECT * FROM users WHERE email=$1 AND password=$2';
+        const params = [args.email, args.password];
         const user = await postgresDB.query(text, params);
+        // may have to change the error handling
         if (user.rows[0] === undefined) throw new Error();
         return user.rows[0];
       } catch (err) {

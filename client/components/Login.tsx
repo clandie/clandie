@@ -61,6 +61,7 @@ class Login extends Component<ILoginProps, ILoginState> {
               <Form.Label>Password</Form.Label>
               <Form.Control
                 name="password"
+                type="password"
                 placeholder="Password"
                 onChange={this.handleChange}
               />

@@ -34,17 +34,16 @@ export const verifyUser = (userObj: types.ILoginState): AppThunk => async (
 ) => {
   console.log('verify user thunk', userObj);
   const userEmail = `${userObj.email}`;
-  console.log(userEmail);
-  const query = `query VerifyUser($userEmail: String!) { 
-    user(email: $userEmail) {
+  const userPassword = `${userObj.password}`;
+  const query = `query VerifyUser($userEmail: String!, $userPassword: String!) { 
+    user(email: $userEmail, password: $userPassword) {
       name
     }
   }`;
-  console.log('query', query);
 
   fetch('/graphql', {
     method: 'POST',
-    body: JSON.stringify({ query, variables: { userEmail } }),
+    body: JSON.stringify({ query, variables: { userEmail, userPassword } }),
     headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
   })
     .then((res) => res.json())
@@ -52,9 +51,10 @@ export const verifyUser = (userObj: types.ILoginState): AppThunk => async (
       console.log(userAuthed);
       if (userAuthed.data !== null) {
         console.log('success!');
+        // need to add more logic here to dispatch another action and set user state
       }
     })
     .catch((err) => {
-      console.log('verifyuser action fetch error', err);
+      console.log('verifyUser action fetch error', err);
     });
 };
