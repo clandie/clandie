@@ -28,3 +28,9 @@ export const addUser = (userObj: types.ISignupState): AppThunk => async (
   console.log('adduser thunk', userObj);
   // fetch request to create user in db
 };
+
+export const verifyUser = (userObj: types.ILoginState): AppThunk => async (
+  dispatch
+) => {
+  console.log('verify user thunk', userObj);
+};
