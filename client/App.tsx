@@ -17,6 +17,10 @@ const mapDispatchToProps = (dispatch: any) => ({
     console.log('dispatched create user', userObj);
     dispatch(actions.addUser(userObj));
   },
+  verifyUser: (userObj: types.ILoginState) => {
+    console.log('dispatched verify user', userObj);
+    dispatch(actions.verifyUser(userObj));
+  },
 });
 
 type Props = ReturnType<typeof mapDispatchToProps>;
@@ -33,7 +37,7 @@ export const App: React.FC<Props> = (props) => {
             <Signup addUser={props.addUser} />
           </Route>
           <Route exact path="/">
-            <Login />
+            <Login verifyUser={props.verifyUser} />
           </Route>
         </Switch>
       </div>

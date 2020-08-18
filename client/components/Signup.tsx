@@ -78,6 +78,7 @@ class Signup extends Component<ISignupProps, ISignupState> {
               <Form.Label>Password</Form.Label>
               <Form.Control
                 name="password"
+                type="password"
                 placeholder="Password"
                 value={password}
                 onChange={this.handleChange}

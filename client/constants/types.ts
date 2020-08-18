@@ -3,3 +3,8 @@ export interface ISignupState {
   email: string;
   password: string;
 }
+
+export interface ILoginState {
+  email: string;
+  password: string;
+}
