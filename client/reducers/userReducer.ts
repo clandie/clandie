@@ -15,7 +15,7 @@ const initialState: UserState = {
   authorized: false,
 };
 
-const usersReducer = (state = initialState, action: UserActionTypes) => {
+const userReducer = (state = initialState, action: UserActionTypes) => {
   console.log('currState', state);
 
   switch (action.type) {
@@ -34,4 +34,4 @@ const usersReducer = (state = initialState, action: UserActionTypes) => {
   }
 };
 
-export default usersReducer;
+export default userReducer;
