@@ -35,7 +35,7 @@ interface VerifyUser {
 interface SetUserInfo {
   type: typeof SET_USER_INFO;
   payload: {
-    id: number;
+    _id: number;
     name: string;
   };
 }

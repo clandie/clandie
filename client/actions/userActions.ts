@@ -23,7 +23,7 @@ import { AppThunk } from '../store';
  *
  */
 
-export const setUserInfo = (userObj: types.ILoginState) => ({
+export const setUserInfo = (userObj: types.IUserInfo) => ({
   type: SET_USER_INFO,
   payload: userObj,
 });
@@ -60,6 +60,7 @@ export const verifyUser = (userObj: types.ILoginState): AppThunk => async (
       if (userAuthed.data !== null) {
         console.log('success!');
         // need to add more logic here to dispatch another action and set user state
+        dispatch(setUserInfo(userAuthed.data.user));
       }
     })
     .catch((err) => {

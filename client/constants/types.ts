@@ -10,6 +10,6 @@ export interface ILoginState {
 }
 
 export interface IUserInfo {
-  id: number;
+  _id: number;
   name: string;
 }
