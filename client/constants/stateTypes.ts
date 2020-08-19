@@ -8,3 +8,8 @@ export interface UserState {
   // password: string;
   authorized: boolean;
 }
+
+export interface BoardState {
+  id: number | null;
+  name: string;
+}

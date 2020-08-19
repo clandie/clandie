@@ -16,7 +16,7 @@ const initialState: UserState = {
 };
 
 const userReducer = (state = initialState, action: UserActionTypes) => {
-  console.log('currState', state);
+  console.log('currUserState', state);
 
   switch (action.type) {
     case SET_USER_INFO:
