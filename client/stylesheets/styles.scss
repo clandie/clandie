@@ -2,6 +2,7 @@
 $lavender: #f1e8ff;
 $lemon: #ffffc6;
 $babyblue: #ddfaff;
+$periwinkle: #e8eaff;
 
 html,
 body,
@@ -22,7 +23,11 @@ body,
   .login-img {
     width: 100%;
     height: 100%;
-    background-color: $lavender;
+    // background-color: $periwinkle;
+    background-image: url('../assets/laptop-full.jpg');
+    background-size: 125%;
+    background-repeat: no-repeat;
+    background-position: center;
   }
 
   .login-box {
