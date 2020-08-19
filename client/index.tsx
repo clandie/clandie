@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { AppConnectedBindActionCreators } from './App';
+import App from './App';
 import store from './store';
 import './stylesheets/styles.scss';
 
 render(
   <Provider store={store}>
-    <AppConnectedBindActionCreators />
+    <App />
   </Provider>,
   document.getElementById('root')
 );
