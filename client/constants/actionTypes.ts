@@ -11,6 +11,8 @@
 
 // User Action Types
 export const ADD_USER = 'ADD_USER';
+export const VERIFY_USER = 'VERIFY_USER';
+export const SET_USER_INFO = 'SET_USER_INFO';
 // export const ADD_BOARD = 'ADD_BOARD';
 
 interface AddUser {
@@ -22,4 +24,20 @@ interface AddUser {
   };
 }
 
-export type UserActionTypes = AddUser;
+interface VerifyUser {
+  type: typeof VERIFY_USER;
+  payload: {
+    email: string;
+    password: string;
+  };
+}
+
+interface SetUserInfo {
+  type: typeof SET_USER_INFO;
+  payload: {
+    _id: number;
+    name: string;
+  };
+}
+
+export type UserActionTypes = AddUser | VerifyUser | SetUserInfo;
