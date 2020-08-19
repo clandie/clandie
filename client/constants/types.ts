@@ -8,3 +8,8 @@ export interface ILoginState {
   email: string;
   password: string;
 }
+
+export interface IUserInfo {
+  _id: number;
+  name: string;
+}

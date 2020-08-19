@@ -4,7 +4,7 @@
 export interface UserState {
   id: number | null;
   name: string;
-  email: string;
-  password: string;
+  // email: string;
+  // password: string;
   authorized: boolean;
 }

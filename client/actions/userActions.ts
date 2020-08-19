@@ -13,6 +13,7 @@
 // import { UserState } from '../constants/stateTypes';
 // import { UserActionTypes, ADD_USER } from '../constants/actionTypes';
 import * as types from '../constants/types';
+import { SET_USER_INFO } from '../constants/actionTypes';
 import { AppThunk } from '../store';
 
 /**
@@ -21,6 +22,12 @@ import { AppThunk } from '../store';
  * if above doesn't work, try ThunkAction<void, UserState, null, UserActionTypes>
  *
  */
+
+export const setUserInfo = (userObj: types.IUserInfo) => ({
+  type: SET_USER_INFO,
+  payload: userObj,
+});
+
 // Thunk middleware will turn async actions into actions
 export const addUser = (userObj: types.ISignupState): AppThunk => async (
   dispatch
@@ -37,6 +44,7 @@ export const verifyUser = (userObj: types.ILoginState): AppThunk => async (
   const userPassword = `${userObj.password}`;
   const query = `query VerifyUser($userEmail: String!, $userPassword: String!) { 
     user(email: $userEmail, password: $userPassword) {
+      _id
       name
     }
   }`;
@@ -52,6 +60,7 @@ export const verifyUser = (userObj: types.ILoginState): AppThunk => async (
       if (userAuthed.data !== null) {
         console.log('success!');
         // need to add more logic here to dispatch another action and set user state
+        dispatch(setUserInfo(userAuthed.data.user));
       }
     })
     .catch((err) => {

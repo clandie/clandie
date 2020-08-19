@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 // import { Dispatch } from 'redux';
@@ -6,10 +6,14 @@ import { connect } from 'react-redux';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import BoardContainer from './containers/BoardContainer';
+import PrivateRoute from './components/PrivateRoute';
 import * as actions from './actions/userActions';
 import * as types from './constants/types';
+import { TAppState } from './store';
 
-// const mapStateToProps = (state) => ({});
+const mapStateToProps = (store: TAppState) => ({
+  authorized: store.users.authorized,
+});
 
 // ** type error when dispatch: Dispatch
 const mapDispatchToProps = (dispatch: any) => ({
@@ -23,29 +27,34 @@ const mapDispatchToProps = (dispatch: any) => ({
   },
 });
 
-type Props = ReturnType<typeof mapDispatchToProps>;
+type Props = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
 
-export const App: React.FC<Props> = (props) => {
-  return (
-    <Router>
-      <div className="app">
-        <Switch>
-          <Route exact path="/home">
-            <BoardContainer />
-          </Route>
-          <Route exact path="/signup">
-            <Signup addUser={props.addUser} />
-          </Route>
-          <Route exact path="/">
-            <Login verifyUser={props.verifyUser} />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
-  );
-};
-
-export const AppConnectedBindActionCreators = connect(
-  null,
-  mapDispatchToProps
-)(App);
+class App extends Component<Props> {
+  render() {
+    return (
+      <Router>
+        <div className="app">
+          <Switch>
+            <PrivateRoute
+              exact
+              path="/home"
+              component={BoardContainer}
+              authorized={this.props.authorized}
+            />
+            <Route exact path="/signup">
+              <Signup addUser={this.props.addUser} />
+            </Route>
+            <Route exact path="/">
+              <Login
+                verifyUser={this.props.verifyUser}
+                authorized={this.props.authorized}
+              />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
+    );
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(App);

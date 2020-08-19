@@ -1,10 +1,11 @@
 // login component
 import React, { Component } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 interface ILoginProps {
   verifyUser(userObj: ILoginState): void;
+  authorized?: boolean;
 }
 
 interface ILoginState {
@@ -44,6 +45,9 @@ class Login extends Component<ILoginProps, ILoginState> {
   };
 
   render() {
+    if (this.props.authorized) {
+      return <Redirect to="/home" />;
+    }
     return (
       <div className="login-container">
         <div className="login-img"></div>
