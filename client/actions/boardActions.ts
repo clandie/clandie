@@ -14,8 +14,6 @@ export const setBoard = (boardObj: types.IBoardInfo) => ({
   payload: boardObj,
 });
 
-export const getBoard = (boardObj: types.IBoardInfo): AppThunk => async (
-  dispatch
-) => {
+export const getBoard = (userId: number): AppThunk => async (dispatch) => {
   // logic for getting boards once user is logged in
 };

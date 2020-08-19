@@ -15,6 +15,7 @@
 import * as types from '../constants/types';
 import { SET_USER_INFO } from '../constants/actionTypes';
 import { AppThunk } from '../store';
+import { getBoard } from './boardActions';
 
 /**
  * Redux thunk w/ TS - refer to AppThunk in store.ts
@@ -40,6 +41,7 @@ export const verifyUser = (userObj: types.ILoginState): AppThunk => async (
   dispatch
 ) => {
   console.log('verify user thunk', userObj);
+  let userId: number;
   const userEmail = `${userObj.email}`;
   const userPassword = `${userObj.password}`;
   const query = `query VerifyUser($userEmail: String!, $userPassword: String!) { 
@@ -61,7 +63,13 @@ export const verifyUser = (userObj: types.ILoginState): AppThunk => async (
         console.log('success!');
         // need to add more logic here to dispatch another action and set user state
         dispatch(setUserInfo(userAuthed.data.user));
+        userId = userAuthed.data.user._id;
+        console.log(userId);
       }
+    })
+
+    .then(() => {
+      dispatch(getBoard(userId));
     })
     .catch((err) => {
       console.log('verifyUser action fetch error', err);

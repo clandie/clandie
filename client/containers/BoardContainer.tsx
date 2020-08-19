@@ -2,7 +2,7 @@ import * as React from 'react';
 import Board from '../utils/Board';
 import { connect } from 'react-redux';
 
-// import * as actions from '../actions/userActions';
+// import * as actions from '../actions/boardActions';
 // import * as types from '../constants/types';
 import { TAppState } from '../store';
 
