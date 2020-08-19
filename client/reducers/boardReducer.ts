@@ -20,7 +20,6 @@ const boardReducer = (state = initialState, action: BoardActionTypes) => {
         id,
         name,
       };
-    //logic to set board
     default:
       return state;
   }

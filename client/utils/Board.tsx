@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import Column from './Column';
 
-interface IBoardProps {}
+interface IBoardProps {
+  boardId: number | null;
+  boardName: string;
+}
 
 interface IBoardState {
   id: number | null;
@@ -20,6 +23,10 @@ class Board extends Component<IBoardProps, IBoardState> {
 
   componentDidMount() {
     //once board mounts, update id and name
+    this.setState({
+      id: this.props.boardId,
+      name: this.props.boardName,
+    });
   }
 
   // render each column
