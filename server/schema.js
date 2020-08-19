@@ -10,6 +10,10 @@ const typeDefs = gql`
     boards(id: ID!): [Board!]
 
     jobs(id: ID!): [Job!]
+
+    contacts(id: ID!): [Contact!]
+
+    interviews(id: ID!): [Interview!]
   }
 
   type User {
@@ -36,10 +40,10 @@ const typeDefs = gql`
     salary: Int
     url: String
     notes: String
-    # connect to board thru boards_id
     boards_id: ID!
-    # connect to interview thru interviews_id
     interviews_id: ID!
+    contacts: [Contact!]
+    interviews: [Interview!]
   }
 
   type Contact {
