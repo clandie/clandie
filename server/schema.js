@@ -1,11 +1,15 @@
 const { gql } = require('apollo-server');
 
 const typeDefs = gql`
+  scalar Date
+
   type Query {
     user(email: String!, password: String!): User!
     users: [User!]
 
     boards(id: ID!): [Board!]
+
+    jobs(id: ID!): [Job!]
   }
 
   type User {
@@ -20,6 +24,41 @@ const typeDefs = gql`
     name: String!
     _id: ID!
     users_id: ID!
+    jobs: [Job!]
+  }
+
+  type Job {
+    _id: ID!
+    status: String!
+    company: String!
+    title: String!
+    location: String
+    salary: Int
+    url: String
+    notes: String
+    # connect to board thru boards_id
+    boards_id: ID!
+    # connect to interview thru interviews_id
+    interviews_id: ID!
+  }
+
+  type Contact {
+    _id: ID!
+    name: String!
+    title: String
+    phone: String
+    email: String
+    notes: String
+    # connect to job thru jobs_id
+    jobs_id: ID!
+  }
+
+  type Interview {
+    _id: ID!
+    title: String!
+    date: Date
+    time: Date
+    notes: String
   }
 `;
 

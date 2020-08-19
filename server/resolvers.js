@@ -1,3 +1,5 @@
+const GraphQLDateTime = require('graphql-iso-date');
+
 module.exports = {
   Query: {
     // gets all users
@@ -19,7 +21,7 @@ module.exports = {
         return 'user not verified';
       }
     },
-    // getes boards from specific user
+    // gets boards from specific user
     boards: async (parent, args, { postgresDB }) => {
       const id = args.id;
       const text = 'SELECT * FROM boards WHERE users_id=$1';
@@ -31,10 +33,7 @@ module.exports = {
 
   User: {
     boards: async (parent, args, { postgresDB }) => {
-      // console.log('user', user);
-      // console.log('parent', parent);
       const id = parent._id;
-      console.log('id', id);
       const text = 'SELECT * FROM boards WHERE users_id=$1';
       const params = [id];
       const boards = await postgresDB.query(text, params);
@@ -42,4 +41,19 @@ module.exports = {
       return boards.rows;
     },
   },
+
+  Board: {
+    jobs: async (parent, args, { postgresDB }) => {
+      const id = parent._id; // board's id
+      const text = 'SELECT * FROM jobs WHERE boards_id=$1';
+      const params = [id];
+      const jobs = await postgresDB.query(text, params);
+      console.log('jobs', jobs.rows);
+      return jobs.rows;
+    },
+  },
+
+  // Date: {
+  //   Date: GraphQLDateTime,
+  // },
 };
