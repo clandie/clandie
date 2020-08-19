@@ -1,3 +1,5 @@
+const GraphQLDateTime = require('graphql-iso-date');
+
 module.exports = {
   Query: {
     // gets all users
@@ -19,12 +21,47 @@ module.exports = {
         return 'user not verified';
       }
     },
-    // getes boards from specific user
+  },
+
+  User: {
     boards: async (parent, args, { postgresDB }) => {
+      const id = parent._id;
       const text = 'SELECT * FROM boards WHERE users_id=$1';
-      const params = [2];
+      const params = [id];
       const boards = await postgresDB.query(text, params);
+      console.log('boards', boards.rows);
       return boards.rows;
     },
   },
+
+  Board: {
+    jobs: async (parent, args, { postgresDB }) => {
+      const boardId = parent._id;
+      const text = 'SELECT * FROM jobs WHERE boards_id=$1';
+      const params = [boardId];
+      const jobs = await postgresDB.query(text, params);
+      return jobs.rows;
+    },
+  },
+
+  Job: {
+    contacts: async (parent, args, { postgresDB }) => {
+      const jobId = parent._id;
+      const text = 'SELECT * FROM contacts WHERE jobs_id=$1';
+      const params = [jobId];
+      const contacts = await postgresDB.query(text, params);
+      return contacts.rows;
+    },
+    interviews: async (parent, args, { postgresDB }) => {
+      const jobId = parent._id;
+      const text = 'SELECT * FROM interviews WHERE jobs_id=$1';
+      const params = [jobId];
+      const interviews = await postgresDB.query(text, params);
+      return interviews.rows;
+    },
+  },
+
+  // Date: {
+  //   Date: GraphQLDateTime,
+  // },
 };
