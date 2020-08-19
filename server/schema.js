@@ -4,19 +4,22 @@ const typeDefs = gql`
   type Query {
     user: User
     users: [User!]
-    boards: [Board!]
+
+    boards(id: ID!): [Board!]
   }
 
   type User {
+    _id: ID!
     name: String!
     email: String!
     password: String!
+    boards: [Board!]
   }
 
   type Board {
     name: String!
-    _id: Int!
-    users_id: Int!
+    _id: ID!
+    users_id: ID!
   }
 `;
 

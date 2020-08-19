@@ -14,9 +14,24 @@ module.exports = {
     },
     // getes boards from specific user
     boards: async (parent, args, { postgresDB }) => {
+      const id = args.id;
       const text = 'SELECT * FROM boards WHERE users_id=$1';
-      const params = [2];
+      const params = [id];
       const boards = await postgresDB.query(text, params);
+      return boards.rows;
+    },
+  },
+
+  User: {
+    boards: async (parent, args, { postgresDB }) => {
+      // console.log('user', user);
+      // console.log('parent', parent);
+      const id = parent._id;
+      console.log('id', id);
+      const text = 'SELECT * FROM boards WHERE users_id=$1';
+      const params = [id];
+      const boards = await postgresDB.query(text, params);
+      console.log('boards', boards.rows);
       return boards.rows;
     },
   },
