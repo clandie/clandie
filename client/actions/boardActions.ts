@@ -16,4 +16,26 @@ export const setBoard = (boardObj: types.IBoardInfo) => ({
 
 export const getBoard = (userId: number): AppThunk => async (dispatch) => {
   // logic for getting boards once user is logged in
+  console.log('in getBoard action!!');
+  const query = `
+  query GetBoard($userId: ID!) {
+    boards(id: $userId) {
+      _id
+      name
+    }
+  }
+  `;
+
+  fetch('/graphql', {
+    method: 'POST',
+    body: JSON.stringify({ query, variables: { userId } }),
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+  })
+    .then((res) => res.json())
+    .then((allBoards) => {
+      console.log('allBoards', allBoards);
+    })
+    .catch((err) => {
+      console.log('getBoard action fetch error', err);
+    });
 };
