@@ -2,6 +2,7 @@
 $lavender: #f1e8ff;
 $lemon: #ffffc6;
 $babyblue: #ddfaff;
+$periwinkle: #e8eaff;
 
 html,
 body,
@@ -22,7 +23,12 @@ body,
   .login-img {
     width: 100%;
     height: 100%;
-    background-color: $lavender;
+    // background-color: $periwinkle;
+    // background-image: url('../assets/laptop-full.jpg');
+    background-image: url('../assets/begin.jpg');
+    background-size: 125%;
+    background-repeat: no-repeat;
+    background-position: bottom;
   }
 
   .login-box {
@@ -42,6 +48,26 @@ body,
         justify-content: center;
         align-items: center;
       }
+    }
+  }
+}
+
+// BOARD
+.boardContainer {
+  height: 100%;
+
+  .board {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    background-color: $periwinkle;
+    height: 100%;
+
+    .column {
+      margin: 20px;
+      height: 100%;
+      width: 50%;
+      text-align: center;
     }
   }
 }
