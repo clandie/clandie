@@ -1,5 +1,5 @@
 import * as types from '../constants/types';
-import { SET_BOARD } from '../constants/actionTypes';
+import { SET_BOARD, GET_BOARD } from '../constants/actionTypes';
 import { AppThunk } from '../store';
 
 /**
@@ -33,7 +33,10 @@ export const getBoard = (userId: number): AppThunk => async (dispatch) => {
   })
     .then((res) => res.json())
     .then((allBoards) => {
-      console.log('allBoards', allBoards);
+      dispatch({
+        type: GET_BOARD,
+        payload: allBoards.data,
+      });
     })
     .catch((err) => {
       console.log('getBoard action fetch error', err);

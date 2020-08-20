@@ -58,7 +58,6 @@ export const verifyUser = (userObj: types.ILoginState): AppThunk => async (
   })
     .then((res) => res.json())
     .then((userAuthed) => {
-      console.log(userAuthed);
       if (userAuthed.data !== null) {
         console.log('success!');
         // need to add more logic here to dispatch another action and set user state

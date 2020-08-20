@@ -1,25 +1,61 @@
-import * as React from 'react';
+import React, { Component } from 'react';
 import Board from '../utils/Board';
 import { connect } from 'react-redux';
-
-// import * as actions from '../actions/boardActions';
-// import * as types from '../constants/types';
+import BoardModal from '../utils/BoardModal';
 import { TAppState } from '../store';
 
 const mapStateToProps = (store: TAppState) => ({
   boardId: store.boards.id,
   boardName: store.boards.name,
+  boards: store.boards.boards,
 });
 
 type BoardProps = ReturnType<typeof mapStateToProps>;
 
-const BoardContainer = (props: BoardProps) => {
-  return (
-    <div className="boardContainer">
-      <h1>BOARD - {props.boardName}</h1>
-      <Board boardId={props.boardId} boardName={props.boardName} />
-    </div>
-  );
-};
+interface BoardState {
+  showModal: boolean;
+}
+
+class BoardContainer extends Component<BoardProps, BoardState> {
+  constructor(props: BoardProps) {
+    super(props);
+
+    this.state = {
+      showModal: false,
+    };
+
+    this.selectBoard = this.selectBoard.bind(this);
+  }
+
+  // render modal once it's received all boards as props
+  componentWillReceiveProps() {
+    if (this.props.boards && this.state.showModal === false) {
+      this.setState({ showModal: true });
+    }
+  }
+
+  selectBoard() {
+    this.setState({ showModal: false });
+  }
+
+  render() {
+    return (
+      <>
+        <BoardModal
+          show={this.state.showModal}
+          boards={this.props.boards}
+          selectBoard={this.selectBoard}
+        />
+        <div className="boardContainer">
+          <h1>BOARD - {this.props.boardName}</h1>
+          <Board
+            boardId={this.props.boardId}
+            boardName={this.props.boardName}
+          />
+        </div>
+      </>
+    );
+  }
+}
 
 export default connect(mapStateToProps)(BoardContainer);

@@ -15,6 +15,8 @@ export const VERIFY_USER = 'VERIFY_USER';
 export const SET_USER_INFO = 'SET_USER_INFO';
 // export const ADD_BOARD = 'ADD_BOARD';
 export const SET_BOARD = 'SET_BOARD';
+export const GET_BOARD = 'GET_BOARD';
+export const SELECT_BOARD = 'SELECT_BOARD';
 
 interface AddUser {
   type: typeof ADD_USER;
@@ -49,5 +51,22 @@ interface SetBoard {
   };
 }
 
+interface BoardData {
+  boards: { _id: number; name: string }[];
+}
+
+interface GetBoard {
+  type: typeof GET_BOARD;
+  payload: BoardData;
+}
+
+interface SelectBoard {
+  type: typeof SELECT_BOARD;
+  payload: {
+    id: number;
+    name: string;
+  };
+}
+
 export type UserActionTypes = AddUser | VerifyUser | SetUserInfo;
-export type BoardActionTypes = SetBoard;
+export type BoardActionTypes = SetBoard | GetBoard | SelectBoard;

@@ -4,12 +4,12 @@
 export interface UserState {
   id: number | null;
   name: string;
-  // email: string;
-  // password: string;
   authorized: boolean;
 }
 
+// board reducer state
 export interface BoardState {
   id: number | null;
   name: string;
+  boards: { _id: number; name: string }[] | [];
 }
