@@ -62,7 +62,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
           selectBoard={this.selectBoard}
         />
         <div className="boardContainer">
-          <h1>BOARD - {this.props.boardName}</h1>
+          <h1>{this.props.boardName}</h1>
           <Board
             boardId={this.props.boardId}
             boardName={this.props.boardName}

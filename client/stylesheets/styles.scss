@@ -3,6 +3,8 @@ $lavender: #f1e8ff;
 $lemon: #ffffc6;
 $babyblue: #ddfaff;
 $periwinkle: #e8eaff;
+$lightgrey: #fbfbfb;
+$grey: #c7c7c7;
 
 html,
 body,
@@ -56,18 +58,43 @@ body,
 .boardContainer {
   height: 100%;
 
+  h1 {
+    text-align: center;
+  }
+
   .board {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-    background-color: $periwinkle;
+    background-color: #f7f8ff;
     height: 100%;
 
+    span {
+      display: inline-block;
+      width: 0;
+      height: 98%;
+      margin-top: 15px;
+      border-right: 1px solid $grey;
+    }
+
     .column {
-      margin: 20px;
+      padding: 20px;
       height: 100%;
       width: 50%;
       text-align: center;
+      // border-right: 1px solid $grey;
+
+      h1 {
+        font-size: 25px;
+        margin: 20px;
+        padding: 20px;
+      }
+
+      .addBtn {
+        background-color: white;
+        font-weight: 400;
+        font-size: 30px;
+      }
     }
   }
 }
