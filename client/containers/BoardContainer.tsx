@@ -69,7 +69,6 @@ class BoardContainer extends Component<BoardProps, BoardState> {
   }
 
   handleSignout() {
-    console.log('clicked signout');
     this.props.clearUserInfo();
     this.props.clearBoard();
   }
@@ -82,11 +81,15 @@ class BoardContainer extends Component<BoardProps, BoardState> {
           boards={this.props.boards}
           selectBoard={this.selectBoard}
         />
-        <Button className="sign-out" onClick={this.handleSignout}>
-          sign out
-        </Button>
+
         <div className="boardContainer">
-          <h1>{this.props.boardName}</h1>
+          <div className="boardHeader">
+            <h1>{this.props.boardName}</h1>
+            <Button className="sign-out" onClick={this.handleSignout}>
+              Sign Out
+            </Button>
+          </div>
+
           <Board
             boardId={this.props.boardId}
             boardName={this.props.boardName}

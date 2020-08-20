@@ -58,8 +58,22 @@ body,
 .boardContainer {
   height: 100%;
 
-  h1 {
-    text-align: center;
+  .boardHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    h1 {
+      text-align: center;
+      padding: 10px;
+    }
+
+    .sign-out {
+      margin-right: 20px;
+      margin-top: 5px;
+      padding: 10px;
+    }
   }
 
   .board {

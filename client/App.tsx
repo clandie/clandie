@@ -36,7 +36,6 @@ class App extends Component<Props> {
       <Router>
         <div className="app">
           <Switch>
-            {/* Switch back to PrivateRoute once JWT is set up */}
             <PrivateRoute
               exact
               path="/home"
