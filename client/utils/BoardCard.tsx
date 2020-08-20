@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 interface IBoardCard {
   id: number;
   name: string;
-  select: (id: number) => void;
+  select: (id: number, name: string) => void;
 }
 
 const BoardCard = (props: IBoardCard) => {
@@ -12,7 +12,7 @@ const BoardCard = (props: IBoardCard) => {
     <Button
       board-key={props.id}
       className="boardCard"
-      onClick={() => props.select(props.id)}
+      onClick={() => props.select(props.id, props.name)}
     >
       <h3>{props.name}</h3>
     </Button>

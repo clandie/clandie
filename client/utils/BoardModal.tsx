@@ -4,7 +4,7 @@ import BoardCard from './BoardCard';
 
 interface IModalProps {
   boards: { _id: number; name: string }[] | [];
-  selectBoard: (id: number) => void;
+  selectBoard: (id: number, name: string) => void;
   show: boolean;
 }
 

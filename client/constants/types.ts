@@ -15,6 +15,6 @@ export interface IUserInfo {
 }
 
 export interface IBoardInfo {
-  _id: number;
+  id: number;
   name: string;
 }

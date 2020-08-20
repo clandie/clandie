@@ -3,6 +3,8 @@ import Board from '../utils/Board';
 import { connect } from 'react-redux';
 import BoardModal from '../utils/BoardModal';
 import { TAppState } from '../store';
+import * as actions from '../actions/boardActions';
+import * as types from '../constants/types';
 
 const mapStateToProps = (store: TAppState) => ({
   boardId: store.boards.id,
@@ -10,7 +12,15 @@ const mapStateToProps = (store: TAppState) => ({
   boards: store.boards.boards,
 });
 
-type BoardProps = ReturnType<typeof mapStateToProps>;
+const mapDispatchToProps = (dispatch: any) => ({
+  setBoard: (boardObj: types.IBoardInfo) => {
+    console.log('dispatched set board', boardObj);
+    dispatch(actions.setBoard(boardObj));
+  },
+});
+
+type BoardProps = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
 
 interface BoardState {
   showModal: boolean;
@@ -34,9 +44,12 @@ class BoardContainer extends Component<BoardProps, BoardState> {
     }
   }
 
-  selectBoard(id: any) {
-    console.log('target', id);
-    // console.log('button id', e.target.getAttribute('board-key'));
+  selectBoard(id: number, name: string) {
+    const boardObj: types.IBoardInfo = {
+      id: id,
+      name: name,
+    };
+    this.props.setBoard(boardObj);
     this.setState({ showModal: false });
   }
 
@@ -60,4 +73,4 @@ class BoardContainer extends Component<BoardProps, BoardState> {
   }
 }
 
-export default connect(mapStateToProps)(BoardContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(BoardContainer);
