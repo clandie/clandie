@@ -21,6 +21,15 @@ module.exports = {
         return 'user not verified';
       }
     },
+    // get boards through args upon user login
+    boards: async (parent, args, { postgresDB }) => {
+      const id = args.id;
+      const text = 'SELECT * FROM boards WHERE users_id=$1';
+      const params = [id];
+      const boards = await postgresDB.query(text, params);
+      console.log('boards', boards.rows);
+      return boards.rows;
+    },
   },
 
   User: {

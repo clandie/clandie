@@ -10,18 +10,14 @@ import { UserActionTypes, SET_USER_INFO } from '../constants/actionTypes';
 const initialState: UserState = {
   id: null,
   name: '',
-  // email: '',
-  // password: '',
   authorized: false,
 };
 
-const usersReducer = (state = initialState, action: UserActionTypes) => {
-  console.log('currState', state);
+const userReducer = (state = initialState, action: UserActionTypes) => {
+  console.log('currUserState', state);
 
   switch (action.type) {
     case SET_USER_INFO:
-      console.log('set user info test');
-      console.log('ap', action.payload);
       const { _id, name } = action.payload;
       return {
         ...state,
@@ -34,4 +30,4 @@ const usersReducer = (state = initialState, action: UserActionTypes) => {
   }
 };
 
-export default usersReducer;
+export default userReducer;

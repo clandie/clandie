@@ -13,3 +13,8 @@ export interface IUserInfo {
   _id: number;
   name: string;
 }
+
+export interface IBoardInfo {
+  _id: number;
+  name: string;
+}

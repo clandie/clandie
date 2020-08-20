@@ -1,12 +1,14 @@
 import { combineReducers } from 'redux';
 
-import jobsReducer from './jobsReducer';
-import usersReducer from './usersReducer';
+import jobReducer from './jobReducer';
+import userReducer from './userReducer';
+import boardReducer from './boardReducer';
 
 // combine reducers
 const reducers = combineReducers({
-  jobs: jobsReducer,
-  users: usersReducer,
+  jobs: jobReducer,
+  users: userReducer,
+  boards: boardReducer,
 });
 
 export default reducers;
