@@ -1,5 +1,5 @@
 import * as types from '../constants/types';
-import { SET_BOARD, GET_BOARD } from '../constants/actionTypes';
+import { SET_BOARD, GET_BOARD, CLEAR_BOARD } from '../constants/actionTypes';
 import { AppThunk } from '../store';
 
 /**
@@ -12,6 +12,10 @@ import { AppThunk } from '../store';
 export const setBoard = (boardObj: types.IBoardInfo) => ({
   type: SET_BOARD,
   payload: boardObj,
+});
+
+export const clearBoard = () => ({
+  type: CLEAR_BOARD,
 });
 
 export const getBoard = (userId: number): AppThunk => async (dispatch) => {

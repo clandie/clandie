@@ -4,7 +4,10 @@ import { connect } from 'react-redux';
 import BoardModal from '../utils/BoardModal';
 import { TAppState } from '../store';
 import * as actions from '../actions/boardActions';
+import * as userActions from '../actions/userActions';
 import * as types from '../constants/types';
+import { Button } from 'react-bootstrap';
+// import { Redirect } from 'react-router-dom';
 
 const mapStateToProps = (store: TAppState) => ({
   boardId: store.boards.id,
@@ -17,6 +20,14 @@ const mapDispatchToProps = (dispatch: any) => ({
     console.log('dispatched set board', boardObj);
     dispatch(actions.setBoard(boardObj));
   },
+  clearBoard: () => {
+    console.log('dispatched clear board');
+    dispatch(actions.clearBoard());
+  },
+  clearUserInfo: () => {
+    console.log('dispatched clear info');
+    dispatch(userActions.clearUserInfo());
+  },
 });
 
 type BoardProps = ReturnType<typeof mapStateToProps> &
@@ -24,6 +35,7 @@ type BoardProps = ReturnType<typeof mapStateToProps> &
 
 interface BoardState {
   showModal: boolean;
+  currentBoard: string | null;
 }
 
 class BoardContainer extends Component<BoardProps, BoardState> {
@@ -32,14 +44,17 @@ class BoardContainer extends Component<BoardProps, BoardState> {
 
     this.state = {
       showModal: false,
+      currentBoard: null,
     };
 
     this.selectBoard = this.selectBoard.bind(this);
+    this.handleSignout = this.handleSignout.bind(this);
   }
 
   // render modal once it's received all boards as props
   componentWillReceiveProps() {
-    if (this.props.boards && this.state.showModal === false) {
+    if (this.props.boards && this.state.currentBoard === null) {
+      console.log('currBoard', this.state.currentBoard);
       this.setState({ showModal: true });
     }
   }
@@ -50,7 +65,13 @@ class BoardContainer extends Component<BoardProps, BoardState> {
       name: name,
     };
     this.props.setBoard(boardObj);
-    this.setState({ showModal: false });
+    this.setState({ showModal: false, currentBoard: name });
+  }
+
+  handleSignout() {
+    console.log('clicked signout');
+    this.props.clearUserInfo();
+    this.props.clearBoard();
   }
 
   render() {
@@ -61,6 +82,9 @@ class BoardContainer extends Component<BoardProps, BoardState> {
           boards={this.props.boards}
           selectBoard={this.selectBoard}
         />
+        <Button className="sign-out" onClick={this.handleSignout}>
+          sign out
+        </Button>
         <div className="boardContainer">
           <h1>{this.props.boardName}</h1>
           <Board

@@ -10,8 +10,9 @@ export interface ILoginState {
 }
 
 export interface IUserInfo {
-  _id: number;
+  id: number;
   name: string;
+  authorized?: boolean;
 }
 
 export interface IBoardInfo {

@@ -13,7 +13,7 @@
 // import { UserState } from '../constants/stateTypes';
 // import { UserActionTypes, ADD_USER } from '../constants/actionTypes';
 import * as types from '../constants/types';
-import { SET_USER_INFO } from '../constants/actionTypes';
+import { SET_USER_INFO, CLEAR_USER_INFO } from '../constants/actionTypes';
 import { AppThunk } from '../store';
 import { getBoard } from './boardActions';
 
@@ -27,6 +27,14 @@ import { getBoard } from './boardActions';
 export const setUserInfo = (userObj: types.IUserInfo) => ({
   type: SET_USER_INFO,
   payload: userObj,
+});
+
+// export const clearUserInfo = (userObj: types.IUserInfo) => ({
+//   type: CLEAR_USER_INFO,
+//   payload: userObj,
+// });
+export const clearUserInfo = () => ({
+  type: CLEAR_USER_INFO,
 });
 
 // Thunk middleware will turn async actions into actions
