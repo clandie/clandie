@@ -5,7 +5,7 @@ import userReducer from './userReducer';
 import boardReducer from './boardReducer';
 
 // combine reducers
-const reducers = combineReducers({
+const reducers: any = combineReducers({
   jobs: jobReducer,
   users: userReducer,
   boards: boardReducer,
