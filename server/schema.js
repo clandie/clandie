@@ -16,6 +16,11 @@ const typeDefs = gql`
     interviews(id: ID!): [Interview!]
   }
 
+  type Mutation {
+    createUser(name: String!, email: String!, password: String!): User!
+    deleteUser(email: String!): User!
+  }
+
   type User {
     _id: ID!
     name: String!
