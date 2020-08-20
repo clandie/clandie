@@ -4,7 +4,7 @@ import BoardCard from './BoardCard';
 
 interface IModalProps {
   boards: { _id: number; name: string }[] | [];
-  selectBoard: () => void;
+  selectBoard: (id: number) => void;
   show: boolean;
 }
 
@@ -13,7 +13,11 @@ const BoardModal = (props: IModalProps) => {
   const boardCards = [];
   for (let i = 0; i < boards.length; i++) {
     boardCards.push(
-      <BoardCard name={boards[i].name} select={props.selectBoard} />
+      <BoardCard
+        id={boards[i]._id}
+        name={boards[i].name}
+        select={props.selectBoard}
+      />
     );
   }
   console.log('bc', boardCards);

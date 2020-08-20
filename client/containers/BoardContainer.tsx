@@ -34,7 +34,9 @@ class BoardContainer extends Component<BoardProps, BoardState> {
     }
   }
 
-  selectBoard() {
+  selectBoard(id: any) {
+    console.log('target', id);
+    // console.log('button id', e.target.getAttribute('board-key'));
     this.setState({ showModal: false });
   }
 

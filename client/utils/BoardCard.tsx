@@ -2,13 +2,18 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 
 interface IBoardCard {
+  id: number;
   name: string;
-  select: () => void;
+  select: (id: number) => void;
 }
 
 const BoardCard = (props: IBoardCard) => {
   return (
-    <Button className="boardCard" onClick={props.select}>
+    <Button
+      board-key={props.id}
+      className="boardCard"
+      onClick={() => props.select(props.id)}
+    >
       <h3>{props.name}</h3>
     </Button>
   );
