@@ -7,11 +7,12 @@ import {
   BoardActionTypes,
   SET_BOARD,
   GET_BOARD,
+  CLEAR_BOARD,
 } from '../constants/actionTypes';
 
 const initialState: BoardState = {
   id: null,
-  name: '',
+  name: null,
   boards: [],
 };
 
@@ -30,6 +31,14 @@ const boardReducer = (state = initialState, action: BoardActionTypes) => {
         ...state,
         id,
         name,
+      };
+
+    case CLEAR_BOARD:
+      return {
+        ...state,
+        id: null,
+        name: null,
+        boards: [],
       };
     default:
       return state;

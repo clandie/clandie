@@ -10,6 +10,6 @@ export interface UserState {
 // board reducer state
 export interface BoardState {
   id: number | null;
-  name: string;
+  name: string | null;
   boards: { _id: number; name: string }[] | [];
 }

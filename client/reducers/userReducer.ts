@@ -4,7 +4,11 @@
  */
 
 import { UserState } from '../constants/stateTypes';
-import { UserActionTypes, SET_USER_INFO } from '../constants/actionTypes';
+import {
+  UserActionTypes,
+  SET_USER_INFO,
+  CLEAR_USER_INFO,
+} from '../constants/actionTypes';
 
 // we may need to add more to this later
 const initialState: UserState = {
@@ -24,6 +28,14 @@ const userReducer = (state = initialState, action: UserActionTypes) => {
         id: _id,
         name,
         authorized: true,
+      };
+
+    case CLEAR_USER_INFO:
+      return {
+        ...state,
+        id: null,
+        name: '',
+        authorized: false,
       };
     default:
       return state;
