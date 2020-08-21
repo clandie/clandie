@@ -47,6 +47,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
 
     this.selectBoard = this.selectBoard.bind(this);
     this.handleSignout = this.handleSignout.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
 
   // render modal if board name isn't set
@@ -54,6 +55,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
     if (this.props.boardName === null) this.setState({ showModal: true });
   }
 
+  // user selects board and modal closes
   selectBoard(id: number, name: string) {
     const boardObj: types.IBoardInfo = {
       id: id,
@@ -68,6 +70,10 @@ class BoardContainer extends Component<BoardProps, BoardState> {
     this.props.clearBoard();
   }
 
+  handleClose() {
+    this.setState({ showModal: false });
+  }
+
   render() {
     return (
       <>
@@ -76,6 +82,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
           user={this.props.user}
           boards={this.props.boards}
           selectBoard={this.selectBoard}
+          close={this.handleClose}
         />
 
         <div className="boardContainer">

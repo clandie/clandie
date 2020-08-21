@@ -5,12 +5,13 @@ import BoardCard from './BoardCard';
 interface IModalProps {
   boards: { _id: number; name: string }[] | [];
   selectBoard: (id: number, name: string) => void;
+  close: () => void;
   show: boolean;
   user: string;
 }
 
 const BoardModal = (props: IModalProps) => {
-  const { boards, show, user } = props;
+  const { boards, show, user, close } = props;
   const boardCards = [];
   for (let i = 0; i < boards.length; i++) {
     boardCards.push(
@@ -27,6 +28,7 @@ const BoardModal = (props: IModalProps) => {
     <Modal
       className="boardModal"
       show={show}
+      onHide={close}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
