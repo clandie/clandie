@@ -4,21 +4,28 @@ import BoardCard from './BoardCard';
 
 interface IModalProps {
   boards: { _id: number; name: string }[] | [];
-  selectBoard: () => void;
+  selectBoard: (id: number, name: string) => void;
   show: boolean;
+  user: string;
 }
 
 const BoardModal = (props: IModalProps) => {
-  const { boards, show } = props;
+  const { boards, show, user } = props;
   const boardCards = [];
   for (let i = 0; i < boards.length; i++) {
     boardCards.push(
-      <BoardCard name={boards[i].name} select={props.selectBoard} />
+      <BoardCard
+        key={boards[i]._id}
+        id={boards[i]._id}
+        name={boards[i].name}
+        select={props.selectBoard}
+      />
     );
   }
-  console.log('bc', boardCards);
+
   return (
     <Modal
+      className="boardModal"
       show={show}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
@@ -26,7 +33,7 @@ const BoardModal = (props: IModalProps) => {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Select Board
+          Hello {user}! Here are your boards
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>{boardCards}</Modal.Body>

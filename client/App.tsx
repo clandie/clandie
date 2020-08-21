@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import BoardContainer from './containers/BoardContainer';
-// import PrivateRoute from './components/PrivateRoute';
+import PrivateRoute from './components/PrivateRoute';
 import * as actions from './actions/userActions';
 import * as types from './constants/types';
 import { TAppState } from './store';
@@ -36,8 +36,7 @@ class App extends Component<Props> {
       <Router>
         <div className="app">
           <Switch>
-            {/* Switch back to PrivateRoute once JWT is set up */}
-            <Route
+            <PrivateRoute
               exact
               path="/home"
               component={BoardContainer}

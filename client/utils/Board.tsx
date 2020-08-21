@@ -33,11 +33,15 @@ class Board extends Component<IBoardProps, IBoardState> {
   render() {
     return (
       <div className="board">
-        <Column name={'opportunities'} />
-        <Column name={'applied'} />
-        <Column name={'interviews'} />
-        <Column name={'offers'} />
-        <Column name={'rejected'} />
+        <Column name={'OPPORTUNITIES'} />
+        <span className="divider"></span>
+        <Column name={'APPLIED'} />
+        <span className="divider"></span>
+        <Column name={'INTERVIEWS'} />
+        <span className="divider"></span>
+        <Column name={'OFFERS'} />
+        <span className="divider"></span>
+        <Column name={'REJECTED'} />
       </div>
     );
   }

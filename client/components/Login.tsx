@@ -69,6 +69,7 @@ class Login extends Component<ILoginProps, ILoginState> {
             </Form.Group>
             <div className="login-btn">
               <Button
+                className="submit-btn"
                 variant="primary"
                 type="submit"
                 onClick={this.handleLogin}
