@@ -19,3 +19,8 @@ export interface IBoardInfo {
   id: number;
   name: string;
 }
+
+export interface IBoardInput {
+  name: string;
+  user_id: number;
+}

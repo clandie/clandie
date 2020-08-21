@@ -13,12 +13,17 @@ const mapStateToProps = (store: TAppState) => ({
   boardName: store.boards.name,
   boards: store.boards.boards,
   user: store.users.name,
+  userId: store.users.id,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
   setBoard: (boardObj: types.IBoardInfo) => {
     console.log('dispatched set board', boardObj);
     dispatch(actions.setBoard(boardObj));
+  },
+  createBoard: (boardObj: types.IBoardInput) => {
+    console.log('dispatched create board', boardObj);
+    dispatch(actions.createBoard(boardObj));
   },
   clearBoard: () => {
     console.log('dispatched clear board');
@@ -48,6 +53,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
     this.selectBoard = this.selectBoard.bind(this);
     this.handleSignout = this.handleSignout.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.addBoard = this.addBoard.bind(this);
   }
 
   // render modal if board name isn't set
@@ -62,6 +68,15 @@ class BoardContainer extends Component<BoardProps, BoardState> {
       name: name,
     };
     this.props.setBoard(boardObj);
+    this.setState({ showModal: false });
+  }
+
+  addBoard(id: number, name: string) {
+    const boardObj: types.IBoardInput = {
+      name: name,
+      user_id: id,
+    };
+    this.props.createBoard(boardObj);
     this.setState({ showModal: false });
   }
 
@@ -80,8 +95,10 @@ class BoardContainer extends Component<BoardProps, BoardState> {
         <BoardModal
           show={this.state.showModal}
           user={this.props.user}
+          userId={this.props.userId}
           boards={this.props.boards}
           selectBoard={this.selectBoard}
+          addBoard={this.addBoard}
           close={this.handleClose}
         />
 
