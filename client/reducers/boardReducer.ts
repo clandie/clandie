@@ -12,7 +12,7 @@ import {
 
 const initialState: BoardState = {
   id: null,
-  name: '',
+  name: null,
   boards: [],
 };
 
@@ -37,7 +37,7 @@ const boardReducer = (state = initialState, action: BoardActionTypes) => {
       return {
         ...state,
         id: null,
-        name: '',
+        name: null,
         boards: [],
       };
     default:

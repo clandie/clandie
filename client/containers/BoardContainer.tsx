@@ -7,7 +7,6 @@ import * as actions from '../actions/boardActions';
 import * as userActions from '../actions/userActions';
 import * as types from '../constants/types';
 import { Button } from 'react-bootstrap';
-// import { Redirect } from 'react-router-dom';
 
 const mapStateToProps = (store: TAppState) => ({
   boardId: store.boards.id,
@@ -35,7 +34,6 @@ type BoardProps = ReturnType<typeof mapStateToProps> &
 
 interface BoardState {
   showModal: boolean;
-  currentBoard: string | null;
 }
 
 class BoardContainer extends Component<BoardProps, BoardState> {
@@ -44,19 +42,15 @@ class BoardContainer extends Component<BoardProps, BoardState> {
 
     this.state = {
       showModal: false,
-      currentBoard: null,
     };
 
     this.selectBoard = this.selectBoard.bind(this);
     this.handleSignout = this.handleSignout.bind(this);
   }
 
-  // render modal once it's received all boards as props
-  componentWillReceiveProps() {
-    if (this.props.boards && this.state.currentBoard === null) {
-      console.log('currBoard', this.state.currentBoard);
-      this.setState({ showModal: true });
-    }
+  // render modal if board name isn't set
+  componentDidMount() {
+    if (this.props.boardName === null) this.setState({ showModal: true });
   }
 
   selectBoard(id: number, name: string) {
@@ -65,7 +59,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
       name: name,
     };
     this.props.setBoard(boardObj);
-    this.setState({ showModal: false, currentBoard: name });
+    this.setState({ showModal: false });
   }
 
   handleSignout() {

@@ -14,13 +14,14 @@ const BoardModal = (props: IModalProps) => {
   for (let i = 0; i < boards.length; i++) {
     boardCards.push(
       <BoardCard
+        key={boards[i]._id}
         id={boards[i]._id}
         name={boards[i].name}
         select={props.selectBoard}
       />
     );
   }
-  console.log('bc', boardCards);
+
   return (
     <Modal
       show={show}

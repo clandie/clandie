@@ -29,10 +29,6 @@ export const setUserInfo = (userObj: types.IUserInfo) => ({
   payload: userObj,
 });
 
-// export const clearUserInfo = (userObj: types.IUserInfo) => ({
-//   type: CLEAR_USER_INFO,
-//   payload: userObj,
-// });
 export const clearUserInfo = () => ({
   type: CLEAR_USER_INFO,
 });
@@ -48,7 +44,6 @@ export const addUser = (userObj: types.ISignupState): AppThunk => async (
 export const verifyUser = (userObj: types.ILoginState): AppThunk => async (
   dispatch
 ) => {
-  console.log('verify user thunk', userObj);
   let userId: number;
   const userEmail = `${userObj.email}`;
   const userPassword = `${userObj.password}`;
@@ -68,7 +63,6 @@ export const verifyUser = (userObj: types.ILoginState): AppThunk => async (
     .then((userAuthed) => {
       if (userAuthed.data !== null) {
         console.log('success!');
-        // need to add more logic here to dispatch another action and set user state
         dispatch(setUserInfo(userAuthed.data.user));
         userId = userAuthed.data.user._id;
         console.log(userId);

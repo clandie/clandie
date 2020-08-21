@@ -19,8 +19,6 @@ export const clearBoard = () => ({
 });
 
 export const getBoard = (userId: number): AppThunk => async (dispatch) => {
-  // logic for getting boards once user is logged in
-  console.log('in getBoard action!!');
   const query = `
   query GetBoard($userId: ID!) {
     boards(id: $userId) {
