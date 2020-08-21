@@ -12,7 +12,11 @@ const PORT = 3000;
 const app: express.Application = express();
 
 import schema from './schema';
-import resolvers from './resolvers';
+import { Query } from './resolvers/queryResolvers';
+import { Mutation } from './resolvers/mutationResolvers';
+import { User } from './resolvers/userResolvers';
+import { Board } from './resolvers/boardResolvers';
+import { Job } from './resolvers/jobResolvers';
 import db from './models/dbModel';
 
 // app.use(cors());
@@ -28,7 +32,13 @@ const startApolloServer = async () => {
   const postgresDB = await db;
   const server = await new ApolloServer({
     typeDefs: schema,
-    resolvers: resolvers,
+    resolvers: {
+      Query,
+      Mutation,
+      User,
+      Board,
+      Job,
+    },
     engine: {
       reportSchema: true,
     },
