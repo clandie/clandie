@@ -22,6 +22,7 @@ const typeDefs = gql`
     deleteUser(email: String!): User!
     # updateUser(name: String, email: String, password: String): User!
     createBoard(name: String!, _id: Int!): Board!
+    deleteBoard(_id: Int!): Board!
   }
 
   type User {

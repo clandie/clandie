@@ -28,5 +28,12 @@ module.exports = {
       const newBoard = await postgresDB.query(text, params);
       return newBoard.rows[0];
     },
+
+    deleteBoard: async (parent, { _id }, { postgresDB }) => {
+      const text = 'DELETE FROM boards Where _id=$1 RETURNING *';
+      const params = [_id];
+      const deletedBoard = await postgresDB.query(text, params);
+      return deletedBoard.rows[0];
+    },
   },
 };
