@@ -6,7 +6,7 @@ import { TAppState } from '../store';
 import * as actions from '../actions/boardActions';
 import * as userActions from '../actions/userActions';
 import * as types from '../constants/types';
-import { Button } from 'react-bootstrap';
+import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
 
 const mapStateToProps = (store: TAppState) => ({
   boardId: store.boards.id,
@@ -40,6 +40,7 @@ type BoardProps = ReturnType<typeof mapStateToProps> &
 
 interface BoardState {
   showModal: boolean;
+  dropdownItems: JSX.Element[] | [];
 }
 
 class BoardContainer extends Component<BoardProps, BoardState> {
@@ -48,12 +49,14 @@ class BoardContainer extends Component<BoardProps, BoardState> {
 
     this.state = {
       showModal: false,
+      dropdownItems: [],
     };
 
     this.selectBoard = this.selectBoard.bind(this);
     this.handleSignout = this.handleSignout.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.addBoard = this.addBoard.bind(this);
+    this.createDropdown = this.createDropdown.bind(this);
   }
 
   // render modal if board name isn't set
@@ -68,6 +71,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
       name: name,
     };
     this.props.setBoard(boardObj);
+    this.createDropdown();
     this.setState({ showModal: false });
   }
 
@@ -89,6 +93,25 @@ class BoardContainer extends Component<BoardProps, BoardState> {
     this.setState({ showModal: false });
   }
 
+  // create dropdown item for each board - selected board will become the active board
+  createDropdown() {
+    const { boards, boardName } = this.props;
+    const items: JSX.Element[] = [];
+    for (let i = 0; i < boards.length; i++) {
+      if (boards[i].name !== boardName) {
+        items.push(
+          <Dropdown.Item
+            id="dropItem"
+            onClick={() => this.selectBoard(boards[i]._id, boards[i].name)}
+          >
+            {boards[i].name}
+          </Dropdown.Item>
+        );
+      }
+    }
+    this.setState({ dropdownItems: items });
+  }
+
   render() {
     return (
       <>
@@ -104,6 +127,12 @@ class BoardContainer extends Component<BoardProps, BoardState> {
 
         <div className="boardContainer">
           <div className="boardHeader">
+            <DropdownButton
+              id="dropdown-basic-button"
+              title={this.props.boardName}
+            >
+              {this.state.dropdownItems}
+            </DropdownButton>
             <h1>{this.props.boardName}</h1>
             <Button className="sign-out" onClick={this.handleSignout}>
               Sign Out
