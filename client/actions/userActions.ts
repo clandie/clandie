@@ -59,6 +59,7 @@ export const addUser = (userObj: types.ISignupState): AppThunk => async (
     .then((res) => res.json())
     .then((newUser) => {
       console.log('user added', newUser);
+      dispatch(setUserInfo(newUser.data.createUser));
     })
     .catch((err) => {
       console.log('addUser action fetch error', err);
