@@ -21,7 +21,21 @@ const typeDefs = gql`
     createUser(name: String!, email: String!, password: String!): User!
     deleteUser(email: String!): User!
     # updateUser(name: String, email: String, password: String): User!
-    createBoard(name: String!, _id: Int!): Board!
+
+    createBoard(name: String!, id: ID!): Board!
+    deleteBoard(id: ID!): Board!
+
+    createJob(company: String!, title: String!, id: ID!): Job!
+    deleteJob(id: ID!): Job!
+    # updateJob(): Job!
+
+    createInterview(title: String!, jobsID: ID!): Interview!
+    deleteInterview(interviewID: ID!): Interview!
+    # updateInterview(): Interview!
+
+    createContact(name: String!, jobID: ID!): Contact!
+    deleteContact(contactID: ID!): Contact!
+    # updateContact(): Contact!
   }
 
   type User {
