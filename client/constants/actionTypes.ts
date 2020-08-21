@@ -14,7 +14,9 @@ export const ADD_USER = 'ADD_USER';
 export const VERIFY_USER = 'VERIFY_USER';
 export const SET_USER_INFO = 'SET_USER_INFO';
 export const CLEAR_USER_INFO = 'CLEAR_USER_INFO';
-// export const ADD_BOARD = 'ADD_BOARD';
+
+// Board Action Types
+export const CREATE_BOARD = 'CREATE_BOARD';
 export const SET_BOARD = 'SET_BOARD';
 export const GET_BOARD = 'GET_BOARD';
 export const SELECT_BOARD = 'SELECT_BOARD';
@@ -47,6 +49,14 @@ interface SetUserInfo {
 
 interface ClearUserInfo {
   type: typeof CLEAR_USER_INFO;
+}
+
+interface CreateBoard {
+  type: typeof CREATE_BOARD;
+  payload: {
+    name: string;
+    user_id: number;
+  };
 }
 
 interface SetBoard {
@@ -84,3 +94,9 @@ export type UserActionTypes =
   | SetUserInfo
   | ClearUserInfo;
 export type BoardActionTypes = SetBoard | GetBoard | SelectBoard | ClearBoard;
+export type BoardActionTypes =
+  | CreateBoard
+  | SetBoard
+  | GetBoard
+  | SelectBoard
+  | ClearBoard;

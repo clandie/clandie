@@ -1,10 +1,11 @@
 // login component
 import React, { Component } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 interface ISignupProps {
   addUser(userObj: ISignupState): void;
+  authorized?: boolean;
 }
 interface ISignupState {
   name?: string;
@@ -43,6 +44,9 @@ class Signup extends Component<ISignupProps, ISignupState> {
   };
 
   render() {
+    if (this.props.authorized) {
+      return <Redirect to="/home" />;
+    }
     const { name, email, password } = this.state;
     return (
       <div className="login-container">
