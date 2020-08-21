@@ -1,7 +1,17 @@
 // styles
 $lavender: #f1e8ff;
+$dark-lav: #db3194;
 $lemon: #ffffc6;
+$light-lemon: #ffffea;
+$peach: #ffe8d3;
 $babyblue: #ddfaff;
+$periwinkle: #e8eaff;
+$light-grey: #fbfbfb;
+$dark-grey: #2a2a2a;
+$grey: #c7c7c7;
+$teal: #1e8894;
+$bright-teal: #02adad;
+$dark-teal: #005050;
 
 html,
 body,
@@ -10,6 +20,8 @@ body,
   // margin: 0;
   height: 100%;
   width: 100%;
+  font-family: 'Oxygen', sans-serif;
+  letter-spacing: 1px;
 }
 
 .login-container {
@@ -22,7 +34,12 @@ body,
   .login-img {
     width: 100%;
     height: 100%;
-    background-color: $lavender;
+    // background-color: $periwinkle;
+    // background-image: url('../assets/laptop-full.jpg');
+    background-image: url('../assets/begin.jpg');
+    background-size: 125%;
+    background-repeat: no-repeat;
+    background-position: bottom;
   }
 
   .login-box {
@@ -41,6 +58,115 @@ body,
         display: flex;
         justify-content: center;
         align-items: center;
+
+        .submit-btn {
+          background-color: $bright-teal;
+          border: 1px solid $bright-teal;
+        }
+
+        .submit-btn:hover {
+          background-color: $teal;
+          border: 1px solid $teal;
+        }
+      }
+    }
+    a {
+      color: $dark-teal;
+    }
+  }
+}
+
+// BOARD
+
+.boardModal {
+  .modal-body {
+    padding: 20px;
+  }
+
+  .boardCard {
+    height: 200px;
+    width: 200px;
+    margin: 20px;
+    padding: 20px;
+    color: white;
+    background-color: $teal;
+    border: 1px solid $teal;
+    border-radius: 8px;
+
+    h3 {
+      font-size: 20px;
+      font-family: 'Oxygen', sans-serif;
+    }
+  }
+  .boardCard:hover {
+    background-color: white;
+    color: $teal;
+  }
+}
+
+.boardContainer {
+  height: 100%;
+
+  .boardHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    h1 {
+      text-align: center;
+      padding: 10px;
+      margin-left: auto;
+    }
+
+    .sign-out {
+      margin-right: 20px;
+      margin-top: 5px;
+      padding: 10px;
+      margin-left: auto;
+      background-color: $dark-lav;
+      color: white;
+      border: 1px solid $dark-lav;
+    }
+
+    .sign-out:hover {
+      background-color: $lavender;
+      border: 1px solid $lavender;
+      color: $dark-grey;
+    }
+  }
+
+  .board {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    background-color: $light-grey;
+    height: 100%;
+
+    span {
+      display: inline-block;
+      width: 0;
+      height: 98%;
+      margin-top: 15px;
+      border-right: 1px solid $grey;
+    }
+
+    .column {
+      padding: 20px;
+      height: 100%;
+      width: 50%;
+      text-align: center;
+
+      h1 {
+        font-size: 25px;
+        margin: 20px;
+        padding: 20px;
+      }
+
+      .addBtn {
+        background-color: white;
+        font-weight: 400;
+        font-size: 30px;
       }
     }
   }

@@ -27,7 +27,6 @@ class Signup extends Component<ISignupProps, ISignupState> {
 
   // update state on form change
   handleChange = (e: any): void => {
-    console.log('in handleChange - e', e.target.name);
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
@@ -35,13 +34,11 @@ class Signup extends Component<ISignupProps, ISignupState> {
   // create obj with user info then invoke addUser action
   handleSignup = (e: any): void => {
     e.preventDefault();
-    console.log('pressed submit');
     const userObj: ISignupState = {
       name: this.state.name,
       email: this.state.email,
       password: this.state.password,
     };
-    console.log('handleSU - userobj', userObj);
     this.props.addUser(userObj);
   };
 
@@ -86,6 +83,7 @@ class Signup extends Component<ISignupProps, ISignupState> {
             </Form.Group>
             <div className="login-btn">
               <Button
+                className="submit-btn"
                 variant="primary"
                 type="submit"
                 onClick={this.handleSignup}

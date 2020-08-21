@@ -27,7 +27,6 @@ class Login extends Component<ILoginProps, ILoginState> {
 
   // update state on form change
   handleChange = (e: any): void => {
-    console.log('in handleChange - e', e.target.name);
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
@@ -35,12 +34,10 @@ class Login extends Component<ILoginProps, ILoginState> {
   // create obj with user info then invoke verifyUser action
   handleLogin = (e: any): void => {
     e.preventDefault();
-    console.log('pressed submit');
     const userObj: ILoginState = {
       email: this.state.email,
       password: this.state.password,
     };
-    console.log('handleLI - userobj', userObj);
     this.props.verifyUser(userObj);
   };
 
@@ -72,6 +69,7 @@ class Login extends Component<ILoginProps, ILoginState> {
             </Form.Group>
             <div className="login-btn">
               <Button
+                className="submit-btn"
                 variant="primary"
                 type="submit"
                 onClick={this.handleLogin}

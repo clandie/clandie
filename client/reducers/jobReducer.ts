@@ -5,11 +5,11 @@
 
 const initialState = {};
 
-const jobsReducer = (state = initialState, action: any) => {
+const jobReducer = (state = initialState, action: any) => {
   switch (action.type) {
     default:
       return state;
   }
 };
 
-export default jobsReducer;
+export default jobReducer;

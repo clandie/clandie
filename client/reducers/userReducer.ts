@@ -4,24 +4,24 @@
  */
 
 import { UserState } from '../constants/stateTypes';
-import { UserActionTypes, SET_USER_INFO } from '../constants/actionTypes';
+import {
+  UserActionTypes,
+  SET_USER_INFO,
+  CLEAR_USER_INFO,
+} from '../constants/actionTypes';
 
 // we may need to add more to this later
 const initialState: UserState = {
   id: null,
   name: '',
-  // email: '',
-  // password: '',
   authorized: false,
 };
 
-const usersReducer = (state = initialState, action: UserActionTypes) => {
-  console.log('currState', state);
+const userReducer = (state = initialState, action: UserActionTypes) => {
+  console.log('currUserState', state);
 
   switch (action.type) {
     case SET_USER_INFO:
-      console.log('set user info test');
-      console.log('ap', action.payload);
       const { _id, name } = action.payload;
       return {
         ...state,
@@ -29,9 +29,17 @@ const usersReducer = (state = initialState, action: UserActionTypes) => {
         name,
         authorized: true,
       };
+
+    case CLEAR_USER_INFO:
+      return {
+        ...state,
+        id: null,
+        name: '',
+        authorized: false,
+      };
     default:
       return state;
   }
 };
 
-export default usersReducer;
+export default userReducer;

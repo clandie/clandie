@@ -23,7 +23,7 @@ class PrivateRoute extends Component<Props> {
           if (authorized === true) return <BoardContainer />;
           // below is more dynamic - if authed, we can take user to intended location, but something breaks
           // if (authorized === true) return <Component {...props} />;
-          else if (authorized === false) return <Redirect to="/signup" />;
+          else if (authorized === false) return <Redirect to="/" />;
         }}
       />
     );
