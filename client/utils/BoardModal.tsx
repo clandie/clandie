@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal } from 'react-bootstrap';
+import { Modal, InputGroup, FormControl, Button } from 'react-bootstrap';
 import BoardCard from './BoardCard';
 
 interface IModalProps {
@@ -21,6 +21,36 @@ const BoardModal = (props: IModalProps) => {
         name={boards[i].name}
         select={props.selectBoard}
       />
+    );
+  }
+  if (boards.length === 0) {
+    return (
+      <Modal
+        className="boardModal"
+        show={show}
+        onHide={close}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Welcome {user}, create your first board!
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <InputGroup className="boardInput">
+            <FormControl
+              placeholder="Board Name"
+              aria-label="Board Name"
+              aria-describedby="basic-addon2"
+            />
+            <InputGroup.Append>
+              <Button variant="outline-secondary">Create</Button>
+            </InputGroup.Append>
+          </InputGroup>
+        </Modal.Body>
+      </Modal>
     );
   }
 
