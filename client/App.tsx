@@ -43,7 +43,10 @@ class App extends Component<Props> {
               authorized={this.props.authorized}
             />
             <Route exact path="/signup">
-              <Signup addUser={this.props.addUser} />
+              <Signup
+                addUser={this.props.addUser}
+                authorized={this.props.authorized}
+              />
             </Route>
             <Route exact path="/">
               <Login
