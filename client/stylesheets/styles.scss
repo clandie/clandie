@@ -83,6 +83,10 @@ body,
     padding: 20px;
   }
 
+  .boardInput {
+    padding: 40px;
+  }
+
   .boardCard {
     height: 200px;
     width: 200px;
@@ -112,6 +116,7 @@ body,
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    height: 80px;
 
     h1 {
       text-align: center;
