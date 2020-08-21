@@ -10,6 +10,8 @@ $light-grey: #fbfbfb;
 $dark-grey: #2a2a2a;
 $grey: #c7c7c7;
 $teal: #1e8894;
+$bright-teal: #02adad;
+$dark-teal: #005050;
 
 html,
 body,
@@ -56,7 +58,20 @@ body,
         display: flex;
         justify-content: center;
         align-items: center;
+
+        .submit-btn {
+          background-color: $bright-teal;
+          border: 1px solid $bright-teal;
+        }
+
+        .submit-btn:hover {
+          background-color: $teal;
+          border: 1px solid $teal;
+        }
       }
+    }
+    a {
+      color: $dark-teal;
     }
   }
 }
