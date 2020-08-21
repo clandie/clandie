@@ -23,6 +23,8 @@ const BoardModal = (props: IModalProps) => {
       />
     );
   }
+
+  // first time users will get a modal that asks them to create a board
   if (boards.length === 0) {
     return (
       <Modal
