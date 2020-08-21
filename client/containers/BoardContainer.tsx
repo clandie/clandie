@@ -12,6 +12,7 @@ const mapStateToProps = (store: TAppState) => ({
   boardId: store.boards.id,
   boardName: store.boards.name,
   boards: store.boards.boards,
+  user: store.users.name,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
@@ -72,6 +73,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
       <>
         <BoardModal
           show={this.state.showModal}
+          user={this.props.user}
           boards={this.props.boards}
           selectBoard={this.selectBoard}
         />

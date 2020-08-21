@@ -6,10 +6,11 @@ interface IModalProps {
   boards: { _id: number; name: string }[] | [];
   selectBoard: (id: number, name: string) => void;
   show: boolean;
+  user: string;
 }
 
 const BoardModal = (props: IModalProps) => {
-  const { boards, show } = props;
+  const { boards, show, user } = props;
   const boardCards = [];
   for (let i = 0; i < boards.length; i++) {
     boardCards.push(
@@ -24,6 +25,7 @@ const BoardModal = (props: IModalProps) => {
 
   return (
     <Modal
+      className="boardModal"
       show={show}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
@@ -31,7 +33,7 @@ const BoardModal = (props: IModalProps) => {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Select Board
+          Hello {user}! Here are your boards
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>{boardCards}</Modal.Body>
