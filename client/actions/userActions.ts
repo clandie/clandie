@@ -39,6 +39,30 @@ export const addUser = (userObj: types.ISignupState): AppThunk => async (
 ) => {
   console.log('adduser thunk', userObj);
   // fetch request to create user in db
+  const userName = `${userObj.name}`;
+  const userEmail = `${userObj.email}`;
+  const userPassword = `${userObj.password}`;
+  const query = `mutation AddUser($userName: String!, $userEmail: String!, $userPassword: String!) {
+    createUser(name: $userName, email: $userEmail, password: $userPassword) {
+      _id
+      name
+    }
+  }`;
+  fetch('/graphql', {
+    method: 'POST',
+    body: JSON.stringify({
+      query,
+      variables: { userName, userEmail, userPassword },
+    }),
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+  })
+    .then((res) => res.json())
+    .then((newUser) => {
+      console.log('user added', newUser);
+    })
+    .catch((err) => {
+      console.log('addUser action fetch error', err);
+    });
 };
 
 export const verifyUser = (userObj: types.ILoginState): AppThunk => async (
