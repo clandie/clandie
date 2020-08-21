@@ -61,7 +61,6 @@ class BoardContainer extends Component<BoardProps, BoardState> {
 
   // render modal if board name isn't set
   componentDidMount() {
-    this.createDropdown();
     if (this.props.boardName === null) this.setState({ showModal: true });
   }
 
@@ -72,6 +71,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
       name: name,
     };
     this.props.setBoard(boardObj);
+    this.createDropdown();
     this.setState({ showModal: false });
   }
 
@@ -101,6 +101,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
       if (boards[i].name !== boardName) {
         items.push(
           <Dropdown.Item
+            id="dropItem"
             onClick={() => this.selectBoard(boards[i]._id, boards[i].name)}
           >
             {boards[i].name}
