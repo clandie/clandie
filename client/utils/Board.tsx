@@ -4,6 +4,7 @@ import Column from './Column';
 interface IBoardProps {
   boardId: number | null;
   boardName: string;
+  open: () => void;
 }
 
 interface IBoardState {
@@ -31,17 +32,18 @@ class Board extends Component<IBoardProps, IBoardState> {
 
   // render each column
   render() {
+    const { open } = this.props;
     return (
       <div className="board">
-        <Column name={'OPPORTUNITIES'} />
+        <Column name={'OPPORTUNITIES'} open={open} />
         <span className="divider"></span>
-        <Column name={'APPLIED'} />
+        <Column name={'APPLIED'} open={open} />
         <span className="divider"></span>
-        <Column name={'INTERVIEWS'} />
+        <Column name={'INTERVIEWS'} open={open} />
         <span className="divider"></span>
-        <Column name={'OFFERS'} />
+        <Column name={'OFFERS'} open={open} />
         <span className="divider"></span>
-        <Column name={'REJECTED'} />
+        <Column name={'REJECTED'} open={open} />
       </div>
     );
   }

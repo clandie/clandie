@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Board from '../utils/Board';
 import { connect } from 'react-redux';
 import BoardModal from '../utils/BoardModal';
+import CreateJobModal from '../utils/CreateJobModal';
 import { TAppState } from '../store';
 import * as actions from '../actions/boardActions';
 import * as userActions from '../actions/userActions';
@@ -40,6 +41,7 @@ type BoardProps = ReturnType<typeof mapStateToProps> &
 
 interface BoardState {
   showModal: boolean;
+  showJobModal: boolean;
   dropdownItems: JSX.Element[] | [];
 }
 
@@ -49,14 +51,17 @@ class BoardContainer extends Component<BoardProps, BoardState> {
 
     this.state = {
       showModal: false,
+      showJobModal: false,
       dropdownItems: [],
     };
 
     this.selectBoard = this.selectBoard.bind(this);
     this.handleSignout = this.handleSignout.bind(this);
+    this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.addBoard = this.addBoard.bind(this);
     this.createDropdown = this.createDropdown.bind(this);
+    this.closeJobModal = this.closeJobModal.bind(this);
   }
 
   // render modal if board name isn't set
@@ -84,9 +89,17 @@ class BoardContainer extends Component<BoardProps, BoardState> {
     this.setState({ showModal: false });
   }
 
+  closeJobModal() {
+    this.setState({ showJobModal: false });
+  }
+
   handleSignout() {
     this.props.clearUserInfo();
     this.props.clearBoard();
+  }
+
+  handleOpen() {
+    this.setState({ showJobModal: true });
   }
 
   handleClose() {
@@ -124,7 +137,10 @@ class BoardContainer extends Component<BoardProps, BoardState> {
           addBoard={this.addBoard}
           close={this.handleClose}
         />
-
+        <CreateJobModal
+          show={this.state.showJobModal}
+          close={this.closeJobModal}
+        />
         <div className="boardContainer">
           <div className="boardHeader">
             <DropdownButton
@@ -142,6 +158,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
           <Board
             boardId={this.props.boardId}
             boardName={this.props.boardName}
+            open={this.handleOpen}
           />
         </div>
       </>
