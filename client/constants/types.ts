@@ -24,3 +24,10 @@ export interface IBoardInput {
   name: string;
   user_id: number;
 }
+
+export interface IJobInput {
+  status: string | null;
+  company?: string;
+  title?: string;
+  board_id: number;
+}

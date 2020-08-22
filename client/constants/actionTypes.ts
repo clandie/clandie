@@ -120,4 +120,4 @@ export type BoardActionTypes =
   | SelectBoard
   | ClearBoard;
 
-export type JobActionType = CreateJob;
+export type JobActionTypes = CreateJob;

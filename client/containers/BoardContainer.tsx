@@ -6,6 +6,7 @@ import CreateJobModal from '../utils/CreateJobModal';
 import { TAppState } from '../store';
 import * as actions from '../actions/boardActions';
 import * as userActions from '../actions/userActions';
+import * as jobActions from '../actions/jobActions';
 import * as types from '../constants/types';
 import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
 
@@ -33,6 +34,10 @@ const mapDispatchToProps = (dispatch: any) => ({
   clearUserInfo: () => {
     console.log('dispatched clear info');
     dispatch(userActions.clearUserInfo());
+  },
+  createJob: (jobObj: types.IJobInput) => {
+    console.log('dispatched create job');
+    dispatch(jobActions.createJob(jobObj));
   },
 });
 
@@ -142,6 +147,9 @@ class BoardContainer extends Component<BoardProps, BoardState> {
         <CreateJobModal
           show={this.state.showJobModal}
           close={this.handleClose}
+          column={this.state.currentColumn}
+          boardId={this.props.boardId}
+          createJob={this.props.createJob}
         />
         <div className="boardContainer">
           <div className="boardHeader">

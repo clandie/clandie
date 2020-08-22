@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import { Modal, Form, Button } from 'react-bootstrap';
+import { IJobInput } from '../constants/types';
 
 interface IJobModalProps {
   show: boolean;
+  column: string | null;
+  boardId: number;
+  createJob: (jobObj: IJobInput) => void;
   close: () => void;
 }
 
@@ -30,10 +34,13 @@ class CreateJobModal extends Component<IJobModalProps, IJobModalState> {
 
   handleSave(e: any) {
     e.preventDefault();
-    const jobObj: IJobModalState = {
+    const jobObj: IJobInput = {
+      status: this.props.column,
       company: this.state.company,
       title: this.state.title,
+      board_id: this.props.boardId,
     };
+    this.props.createJob(jobObj);
   }
 
   render() {
