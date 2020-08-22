@@ -9,7 +9,6 @@ interface IColumnProps {
 const Column = (props: IColumnProps) => {
   const { allJobs, name } = props;
   const jobs = [];
-  console.log('allJobs', allJobs);
   for (let i = 0; i < allJobs.length; i++) {
     if (allJobs[i].status === name) {
       jobs.push(<div>{allJobs[i].company}</div>);

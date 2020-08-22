@@ -50,6 +50,10 @@ export const createJob = (jobObj: types.IJobInput): AppThunk => async (
     .then((newJob) => {
       console.log(newJob);
     })
+    .then(() => {
+      dispatch(getJob(board_id));
+    })
+
     .catch((err) => {
       console.log('error in create job action', err);
     });
