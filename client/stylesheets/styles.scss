@@ -215,6 +215,17 @@ body,
         font-weight: 400;
         font-size: 30px;
       }
+
+      .jobCard {
+        .card {
+          margin: 10px;
+          padding: 10px;
+
+          .cardTitle {
+            font-weight: 600;
+          }
+        }
+      }
     }
   }
 }

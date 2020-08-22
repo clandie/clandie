@@ -7,12 +7,11 @@ interface ICardProps {
 }
 
 const JobCard = (props: ICardProps) => {
-  console.log('jobcard', props);
   return (
     <div className="jobCard">
-      <Card>
+      <Card className="card">
         <Card.Body>
-          <Card.Title>{props.company}</Card.Title>
+          <Card.Title className="cardTitle">{props.company}</Card.Title>
           <Card.Text>{props.title}</Card.Text>
         </Card.Body>
       </Card>

@@ -35,13 +35,6 @@ class Board extends Component<IBoardProps, IBoardState> {
     });
   }
 
-  // componentDidUpdate() {
-  //   const { boardId, getJob, allJobs } = this.props;
-  //   console.log('board id', boardId);
-  //   if (boardId !== null && allJobs.length === 0) getJob(boardId);
-  //   console.log('jobs updated');
-  // }
-
   // render each column
   render() {
     const { open, allJobs } = this.props;

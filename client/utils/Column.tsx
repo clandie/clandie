@@ -9,8 +9,8 @@ interface IColumnProps {
 }
 const Column = (props: IColumnProps) => {
   const { allJobs, name } = props;
-  console.log(allJobs);
   const jobs = [];
+  // place cards into the correct column
   for (let i = 0; i < allJobs.length; i++) {
     if (allJobs[i].status === name) {
       jobs.push(
@@ -18,7 +18,6 @@ const Column = (props: IColumnProps) => {
       );
     }
   }
-  console.log('jobs', jobs);
 
   return (
     <div className="column">

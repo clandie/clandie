@@ -4,7 +4,7 @@
  */
 
 import { JobState } from '../constants/stateTypes';
-import { JobActionTypes, GET_JOB } from '../constants/actionTypes';
+import { JobActionTypes, GET_JOB, CLEAR_JOB } from '../constants/actionTypes';
 
 const initialState: JobState = {
   jobs: [],
@@ -13,10 +13,15 @@ const initialState: JobState = {
 const jobReducer = (state = initialState, action: JobActionTypes) => {
   switch (action.type) {
     case GET_JOB:
-      console.log('in job reducer');
       return {
         ...state,
         jobs: action.payload,
+      };
+
+    case CLEAR_JOB:
+      return {
+        ...state,
+        jobs: [],
       };
     default:
       return state;

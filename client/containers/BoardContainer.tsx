@@ -44,6 +44,10 @@ const mapDispatchToProps = (dispatch: any) => ({
     console.log('dispatched get job');
     dispatch(jobActions.getJob(boardId));
   },
+  clearJob: () => {
+    console.log('dispatched clear job');
+    dispatch(jobActions.clearJob());
+  },
 });
 
 type BoardProps = ReturnType<typeof mapStateToProps> &
@@ -77,7 +81,15 @@ class BoardContainer extends Component<BoardProps, BoardState> {
 
   // render modal if board name isn't set
   componentDidMount() {
+    this.createDropdown();
     if (this.props.boardName === null) this.setState({ showBoardModal: true });
+  }
+
+  // update drop down menu when users switch boards
+  componentDidUpdate(prevProps: any) {
+    if (prevProps.boardName !== this.props.boardName) {
+      this.createDropdown();
+    }
   }
 
   // user selects board and modal closes
@@ -86,8 +98,10 @@ class BoardContainer extends Component<BoardProps, BoardState> {
       id: id,
       name: name,
     };
+
     this.props.setBoard(boardObj);
     this.createDropdown();
+    this.props.getJob(id);
     this.setState({ showBoardModal: false });
   }
 
@@ -100,13 +114,14 @@ class BoardContainer extends Component<BoardProps, BoardState> {
     this.setState({ showBoardModal: false });
   }
 
+  // reset state
   handleSignout() {
     this.props.clearUserInfo();
     this.props.clearBoard();
+    this.props.clearJob();
   }
 
   handleOpen(e: any) {
-    console.log(e.target.id);
     this.setState({ showJobModal: true, currentColumn: e.target.id });
   }
 
