@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
+import JobCard from './JobCard';
 
 interface IColumnProps {
   name: string;
@@ -8,12 +9,16 @@ interface IColumnProps {
 }
 const Column = (props: IColumnProps) => {
   const { allJobs, name } = props;
+  console.log(allJobs);
   const jobs = [];
   for (let i = 0; i < allJobs.length; i++) {
     if (allJobs[i].status === name) {
-      jobs.push(<div>{allJobs[i].company}</div>);
+      jobs.push(
+        <JobCard company={allJobs[i].company} title={allJobs[i].title} />
+      );
     }
   }
+  console.log('jobs', jobs);
 
   return (
     <div className="column">
