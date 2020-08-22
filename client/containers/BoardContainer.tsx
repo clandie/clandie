@@ -40,7 +40,7 @@ type BoardProps = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 interface BoardState {
-  showModal: boolean;
+  showBoardModal: boolean;
   showJobModal: boolean;
   dropdownItems: JSX.Element[] | [];
 }
@@ -50,7 +50,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
     super(props);
 
     this.state = {
-      showModal: false,
+      showBoardModal: false,
       showJobModal: false,
       dropdownItems: [],
     };
@@ -61,12 +61,11 @@ class BoardContainer extends Component<BoardProps, BoardState> {
     this.handleClose = this.handleClose.bind(this);
     this.addBoard = this.addBoard.bind(this);
     this.createDropdown = this.createDropdown.bind(this);
-    this.closeJobModal = this.closeJobModal.bind(this);
   }
 
   // render modal if board name isn't set
   componentDidMount() {
-    if (this.props.boardName === null) this.setState({ showModal: true });
+    if (this.props.boardName === null) this.setState({ showBoardModal: true });
   }
 
   // user selects board and modal closes
@@ -77,7 +76,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
     };
     this.props.setBoard(boardObj);
     this.createDropdown();
-    this.setState({ showModal: false });
+    this.setState({ showBoardModal: false });
   }
 
   addBoard(id: number, name: string) {
@@ -86,11 +85,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
       user_id: id,
     };
     this.props.createBoard(boardObj);
-    this.setState({ showModal: false });
-  }
-
-  closeJobModal() {
-    this.setState({ showJobModal: false });
+    this.setState({ showBoardModal: false });
   }
 
   handleSignout() {
@@ -103,7 +98,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
   }
 
   handleClose() {
-    this.setState({ showModal: false });
+    this.setState({ showBoardModal: false, showJobModal: false });
   }
 
   // create dropdown item for each board - selected board will become the active board
@@ -129,7 +124,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
     return (
       <>
         <BoardModal
-          show={this.state.showModal}
+          show={this.state.showBoardModal}
           user={this.props.user}
           userId={this.props.userId}
           boards={this.props.boards}
@@ -139,7 +134,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
         />
         <CreateJobModal
           show={this.state.showJobModal}
-          close={this.closeJobModal}
+          close={this.handleClose}
         />
         <div className="boardContainer">
           <div className="boardHeader">
