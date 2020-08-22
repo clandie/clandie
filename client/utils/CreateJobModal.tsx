@@ -41,6 +41,7 @@ class CreateJobModal extends Component<IJobModalProps, IJobModalState> {
       board_id: this.props.boardId,
     };
     this.props.createJob(jobObj);
+    this.props.close();
   }
 
   render() {
