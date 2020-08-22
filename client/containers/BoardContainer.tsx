@@ -16,6 +16,7 @@ const mapStateToProps = (store: TAppState) => ({
   boards: store.boards.boards,
   user: store.users.name,
   userId: store.users.id,
+  allJobs: store.jobs.jobs,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
@@ -38,6 +39,10 @@ const mapDispatchToProps = (dispatch: any) => ({
   createJob: (jobObj: types.IJobInput) => {
     console.log('dispatched create job');
     dispatch(jobActions.createJob(jobObj));
+  },
+  getJob: (boardId: number) => {
+    console.log('dispatched get job');
+    dispatch(jobActions.getJob(boardId));
   },
 });
 
@@ -169,6 +174,8 @@ class BoardContainer extends Component<BoardProps, BoardState> {
             boardId={this.props.boardId}
             boardName={this.props.boardName}
             open={this.handleOpen}
+            getJob={this.props.getJob}
+            allJobs={this.props.allJobs}
           />
         </div>
       </>

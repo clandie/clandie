@@ -23,6 +23,7 @@ export const SELECT_BOARD = 'SELECT_BOARD';
 export const CLEAR_BOARD = 'CLEAR_BOARD';
 
 // Job Action Types
+export const GET_JOB = 'GET_JOB;';
 export const CREATE_JOB = 'CREATE_JOB';
 
 //USER ACTION TYPES
@@ -97,6 +98,13 @@ interface ClearBoard {
 
 //JOB ACTION TYPES
 
+interface GetJob {
+  type: typeof GET_JOB;
+  payload: {
+    jobs: { status: string; company: string; title: string }[];
+  };
+}
+
 interface CreateJob {
   type: typeof CREATE_JOB;
   payload: {
@@ -120,4 +128,4 @@ export type BoardActionTypes =
   | SelectBoard
   | ClearBoard;
 
-export type JobActionTypes = CreateJob;
+export type JobActionTypes = GetJob | CreateJob;

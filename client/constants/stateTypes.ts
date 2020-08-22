@@ -13,3 +13,8 @@ export interface BoardState {
   name: string | null;
   boards: { _id: number; name: string }[] | [];
 }
+
+// job reducer state
+export interface JobState {
+  jobs: { status: string; company: string; title: string }[] | [];
+}

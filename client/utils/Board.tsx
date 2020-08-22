@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import Column from './Column';
 
 interface IBoardProps {
-  boardId: number | null;
+  boardId: number;
   boardName: string;
+  allJobs: { status: string; company: string; title: string }[] | [];
   open: (e: any) => void;
+  getJob: (boardId: number) => void;
 }
 
 interface IBoardState {
@@ -23,27 +25,37 @@ class Board extends Component<IBoardProps, IBoardState> {
   }
 
   componentDidMount() {
+    this.props.getJob(this.props.boardId);
+
+    const { boardId, boardName } = this.props;
     //once board mounts, update id and name
     this.setState({
-      id: this.props.boardId,
-      name: this.props.boardName,
+      id: boardId,
+      name: boardName,
     });
   }
 
+  // componentDidUpdate() {
+  //   const { boardId, getJob, allJobs } = this.props;
+  //   console.log('board id', boardId);
+  //   if (boardId !== null && allJobs.length === 0) getJob(boardId);
+  //   console.log('jobs updated');
+  // }
+
   // render each column
   render() {
-    const { open } = this.props;
+    const { open, allJobs } = this.props;
     return (
       <div className="board">
-        <Column name={'opportunities'} open={open} />
+        <Column name={'opportunities'} open={open} allJobs={allJobs} />
         <span className="divider"></span>
-        <Column name={'applied'} open={open} />
+        <Column name={'applied'} open={open} allJobs={allJobs} />
         <span className="divider"></span>
-        <Column name={'interviews'} open={open} />
+        <Column name={'interviews'} open={open} allJobs={allJobs} />
         <span className="divider"></span>
-        <Column name={'offers'} open={open} />
+        <Column name={'offers'} open={open} allJobs={allJobs} />
         <span className="divider"></span>
-        <Column name={'rejected'} open={open} />
+        <Column name={'rejected'} open={open} allJobs={allJobs} />
       </div>
     );
   }
