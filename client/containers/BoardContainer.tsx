@@ -42,6 +42,7 @@ type BoardProps = ReturnType<typeof mapStateToProps> &
 interface BoardState {
   showBoardModal: boolean;
   showJobModal: boolean;
+  currentColumn: string | null;
   dropdownItems: JSX.Element[] | [];
 }
 
@@ -52,6 +53,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
     this.state = {
       showBoardModal: false,
       showJobModal: false,
+      currentColumn: null,
       dropdownItems: [],
     };
 
@@ -93,12 +95,17 @@ class BoardContainer extends Component<BoardProps, BoardState> {
     this.props.clearBoard();
   }
 
-  handleOpen() {
-    this.setState({ showJobModal: true });
+  handleOpen(e: any) {
+    console.log(e.target.id);
+    this.setState({ showJobModal: true, currentColumn: e.target.id });
   }
 
   handleClose() {
-    this.setState({ showBoardModal: false, showJobModal: false });
+    this.setState({
+      showBoardModal: false,
+      showJobModal: false,
+      currentColumn: null,
+    });
   }
 
   // create dropdown item for each board - selected board will become the active board

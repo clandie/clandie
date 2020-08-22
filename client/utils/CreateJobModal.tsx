@@ -5,7 +5,37 @@ interface IJobModalProps {
   show: boolean;
   close: () => void;
 }
-class CreateJobModal extends Component<IJobModalProps> {
+
+interface IJobModalState {
+  company?: string;
+  title?: string;
+}
+class CreateJobModal extends Component<IJobModalProps, IJobModalState> {
+  constructor(props: IJobModalProps) {
+    super(props);
+
+    this.state = {
+      company: '',
+      title: '',
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSave = this.handleSave.bind(this);
+  }
+
+  handleChange(e: any) {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  }
+
+  handleSave(e: any) {
+    e.preventDefault();
+    const jobObj: IJobModalState = {
+      company: this.state.company,
+      title: this.state.title,
+    };
+  }
+
   render() {
     const { show, close } = this.props;
     return (
@@ -24,16 +54,25 @@ class CreateJobModal extends Component<IJobModalProps> {
         <Modal.Body>
           <Form className="create-job-form">
             <Form.Group controlId="formBasicCompany">
-              <Form.Control name="company" placeholder="Company" />
+              <Form.Control
+                name="company"
+                placeholder="Company"
+                onChange={this.handleChange}
+              />
             </Form.Group>
             <Form.Group controlId="formBasicTitle">
-              <Form.Control name="title" placeholder="Job Title" />
+              <Form.Control
+                name="title"
+                placeholder="Job Title"
+                onChange={this.handleChange}
+              />
             </Form.Group>
             <div className="save-job-btn">
               <Button
                 className="save-btn"
                 variant="primary"
                 type="submit"
+                onClick={this.handleSave}
                 block
               >
                 Save
