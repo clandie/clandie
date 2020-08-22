@@ -55,23 +55,18 @@ module.exports = {
       return deletedBoard.rows[0];
     },
 
-    createJob: async (parent, { company, title, id }, { postgresDB }) => {
+    createJob: async (
+      parent,
+      { status, company, title, id },
+      { postgresDB }
+    ) => {
       const text = `
         INSERT INTO 
         jobs (status, company, title, location, salary, url, notes, boards_id) 
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
         RETURNING *
       `;
-      const params = [
-        'opportunities',
-        company,
-        title,
-        null,
-        null,
-        null,
-        null,
-        id,
-      ];
+      const params = [status, company, title, null, null, null, null, id];
       const newJob = await postgresDB.query(text, params);
       return newJob.rows[0];
     },

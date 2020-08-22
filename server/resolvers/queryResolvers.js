@@ -28,5 +28,14 @@ module.exports = {
       console.log('boards', boards.rows);
       return boards.rows;
     },
+
+    jobs: async (parent, args, { postgresDB }) => {
+      const id = args.id;
+      const text = 'SELECT * FROM jobs WHERE boards_id=$1';
+      const params = [id];
+      const jobs = await postgresDB.query(text, params);
+      console.log('jobs', jobs.rows);
+      return jobs.rows;
+    },
   },
 };
