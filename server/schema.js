@@ -25,7 +25,7 @@ const typeDefs = gql`
     createBoard(name: String!, id: ID!): Board!
     deleteBoard(id: ID!): Board!
 
-    createJob(company: String!, title: String!, id: ID!): Job!
+    createJob(status: String!, company: String!, title: String!, id: ID!): Job!
     deleteJob(id: ID!): Job!
     # updateJob(): Job!
 
