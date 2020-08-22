@@ -93,7 +93,6 @@ export type UserActionTypes =
   | VerifyUser
   | SetUserInfo
   | ClearUserInfo;
-export type BoardActionTypes = SetBoard | GetBoard | SelectBoard | ClearBoard;
 export type BoardActionTypes =
   | CreateBoard
   | SetBoard
