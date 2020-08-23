@@ -175,7 +175,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
           <div className="boardHeader">
             <DropdownButton
               id="dropdown-basic-button"
-              title={this.props.boardName}
+              title={this.props.boardName || ''}
             >
               {this.state.dropdownItems}
             </DropdownButton>
