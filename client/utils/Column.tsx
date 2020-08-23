@@ -11,11 +11,14 @@ const Column = (props: IColumnProps) => {
   const { allJobs, name } = props;
   const jobs = [];
   // place cards into the correct column
-  for (let i = 0; i < allJobs.length; i++) {
-    if (allJobs[i].status === name) {
-      jobs.push(
-        <JobCard company={allJobs[i].company} title={allJobs[i].title} />
-      );
+
+  if (allJobs !== undefined) {
+    for (let i = 0; i < allJobs.length; i++) {
+      if (allJobs[i].status === name) {
+        jobs.push(
+          <JobCard company={allJobs[i].company} title={allJobs[i].title} />
+        );
+      }
     }
   }
 
