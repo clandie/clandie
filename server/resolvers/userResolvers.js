@@ -1,3 +1,5 @@
+const { AuthenticationError } = require('apollo-server');
+
 module.exports = {
   Query: {
     // gets all users
@@ -13,12 +15,27 @@ module.exports = {
         const params = [email, password];
         const user = await postgresDB.query(text, params);
         // may have to change the error handling
-        if (user.rows[0] === undefined) throw new Error();
+        if (!user.rows[0]) throw new AuthenticationError();
         return user.rows[0];
       } catch (err) {
+        // console.log('in catch');
+
         console.log('err in user resolver', err);
-        return 'user not verified';
+        return err.extensions.code;
       }
+    },
+
+    // unauthenticated: (parent, args, context) => {
+    //   console.log('in unauthenticated');
+    //   throw new AuthenticationError();
+    // },
+  },
+
+  UserResult: {
+    __resolveType: (user, context, info) => {
+      console.log('resolveType obj: ', user);
+      if (user.name) return 'User';
+      return 'Unauthenticated';
     },
   },
 

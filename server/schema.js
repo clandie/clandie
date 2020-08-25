@@ -4,9 +4,12 @@ const { gql } = require('apollo-server');
 const typeDefs = gql`
   scalar Date
 
+  union UserResult = User | Unauthenticated
+
   type Query {
-    user(email: String!, password: String!): User!
+    user(email: String!, password: String!): UserResult!
     users: [User!]
+    # unauthenticated: Unauthenticated
 
     boards(id: ID!): [Board!]
 
@@ -15,6 +18,10 @@ const typeDefs = gql`
     contacts(id: ID!): [Contact!]
 
     interviews(id: ID!): [Interview!]
+  }
+
+  type Unauthenticated {
+    message: String
   }
 
   type Mutation {
