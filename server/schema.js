@@ -9,7 +9,6 @@ const typeDefs = gql`
   type Query {
     user(email: String!, password: String!): UserResult!
     users: [User!]
-    # unauthenticated: Unauthenticated
 
     boards(id: ID!): [Board!]
 

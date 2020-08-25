@@ -18,24 +18,17 @@ module.exports = {
         if (!user.rows[0]) throw new AuthenticationError();
         return user.rows[0];
       } catch (err) {
-        // console.log('in catch');
-
-        console.log('err in user resolver', err);
-        return err.extensions.code;
+        err.extensions.message =
+          'User is not authenticated. Please log in or create an account.';
+        return err.extensions;
       }
     },
-
-    // unauthenticated: (parent, args, context) => {
-    //   console.log('in unauthenticated');
-    //   throw new AuthenticationError();
-    // },
   },
 
   UserResult: {
     __resolveType: (user, context, info) => {
-      console.log('resolveType obj: ', user);
       if (user.name) return 'User';
-      return 'Unauthenticated';
+      if (user.message) return 'Unauthenticated';
     },
   },
 
