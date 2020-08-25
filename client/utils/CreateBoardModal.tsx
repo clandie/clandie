@@ -7,6 +7,7 @@ interface IModalProps {
   user: string;
   userId: number;
   addBoard: (id: number, name: string) => void;
+  boards: { _id: number; name: string }[] | [];
 }
 
 interface IModalState {
@@ -35,7 +36,11 @@ class CreateBoardModal extends Component<IModalProps, IModalState> {
     addBoard(Number(userId), this.state.createName);
   }
   render() {
-    const { show, close, user } = this.props;
+    const { show, close, user, boards } = this.props;
+    let header = 'Create a new board!';
+    if (boards.length === 0) {
+      header = `Welcome ${user}, create your first board!`;
+    }
     return (
       <div className="createBoard">
         <Modal
@@ -48,7 +53,7 @@ class CreateBoardModal extends Component<IModalProps, IModalState> {
         >
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">
-              Welcome {user}, create your first board!
+              {header}
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>

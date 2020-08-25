@@ -15,7 +15,7 @@ interface IModalProps {
 
 class BoardModal extends Component<IModalProps> {
   render() {
-    const { boards, show, user, close } = this.props;
+    const { boards, show, user, close, userId, addBoard } = this.props;
     const boardCards = [];
     for (let i = 0; i < boards.length; i++) {
       boardCards.push(
@@ -35,8 +35,9 @@ class BoardModal extends Component<IModalProps> {
           show={show}
           close={close}
           user={user}
-          userId={this.props.userId}
-          addBoard={this.props.addBoard}
+          userId={userId}
+          addBoard={addBoard}
+          boards={boards}
         />
       );
     }
