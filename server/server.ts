@@ -12,11 +12,11 @@ const PORT = 3000;
 const app: express.Application = express();
 
 import schema from './schema';
-import { Query } from './resolvers/queryResolvers';
-import { Mutation } from './resolvers/mutationResolvers';
-import { User } from './resolvers/userResolvers';
-import { Board } from './resolvers/boardResolvers';
-import { Job } from './resolvers/jobResolvers';
+import userResolvers, { User } from './resolvers/userResolvers';
+import boardResolvers, { Board } from './resolvers/boardResolvers';
+import jobResolvers, { Job } from './resolvers/jobResolvers';
+import Interview from './resolvers/interviewResolvers';
+import Contact from './resolvers/contactResolvers';
 import db from './models/dbModel';
 
 // app.use(cors());
@@ -33,8 +33,20 @@ const startApolloServer = async () => {
   const server = await new ApolloServer({
     typeDefs: schema,
     resolvers: {
-      Query,
-      Mutation,
+      Query: {
+        ...userResolvers.Query,
+        ...boardResolvers.Query,
+        ...jobResolvers.Query,
+        ...Interview.Query,
+        ...Contact.Query,
+      },
+      Mutation: {
+        ...userResolvers.Mutation,
+        ...boardResolvers.Mutation,
+        ...jobResolvers.Mutation,
+        ...Interview.Mutation,
+        ...Contact.Mutation,
+      },
       User,
       Board,
       Job,

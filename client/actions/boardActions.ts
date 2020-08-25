@@ -23,8 +23,8 @@ export const createBoard = (boardObj: types.IBoardInput): AppThunk => async (
 ) => {
   const userId = boardObj.user_id;
   const boardName = boardObj.name;
-  const query = `mutation CreateBoard($boardName: String!, $userId: Int!) {
-    createBoard(name: $boardName, _id: $userId) {
+  const query = `mutation CreateBoard($boardName: String!, $userId: ID!) {
+    createBoard(name: $boardName, id: $userId) {
       _id,
       name,
     }
@@ -36,6 +36,7 @@ export const createBoard = (boardObj: types.IBoardInput): AppThunk => async (
   })
     .then((res) => res.json())
     .then((boardData) => {
+      console.log('data', boardData);
       const { createBoard } = boardData.data;
       const newBoard = {
         id: createBoard._id,
