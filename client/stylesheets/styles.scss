@@ -161,6 +161,22 @@ body,
       border: 1px solid $lavender;
     }
 
+    .board-options {
+      display: flex;
+      flex-direction: row;
+
+      .addBoard-btn {
+        margin: 5px;
+        background-color: $teal;
+        color: white;
+      }
+
+      .addBoard-btn:hover {
+        background-color: $dark-teal;
+        border: 1px solid $dark-teal;
+      }
+    }
+
     h1 {
       text-align: center;
       padding: 10px;

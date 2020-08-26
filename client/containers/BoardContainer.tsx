@@ -115,7 +115,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
       user_id: id,
     };
     this.props.createBoard(boardObj);
-    this.setState({ showBoardModal: false });
+    this.setState({ showBoardModal: false, showCreateBoard: false });
   }
 
   // reset state
@@ -190,13 +190,18 @@ class BoardContainer extends Component<BoardProps, BoardState> {
         />
         <div className="boardContainer">
           <div className="boardHeader">
-            <DropdownButton
-              id="dropdown-basic-button"
-              title={this.props.boardName || ''}
-            >
-              {this.state.dropdownItems}
-            </DropdownButton>
-            <Button onClick={this.renderCreateBoard}> + </Button>
+            <div className="board-options">
+              <DropdownButton
+                id="dropdown-basic-button"
+                title={this.props.boardName || ''}
+              >
+                {this.state.dropdownItems}
+              </DropdownButton>
+              <Button className="addBoard-btn" onClick={this.renderCreateBoard}>
+                {' '}
+                +{' '}
+              </Button>
+            </div>
             <h1>{this.props.boardName}</h1>
             <Button className="sign-out" onClick={this.handleSignout}>
               Sign Out
