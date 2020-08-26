@@ -32,6 +32,7 @@ class CreateBoardModal extends Component<IModalProps, IModalState> {
   handleSubmit(e: any) {
     const { addBoard, userId } = this.props;
     e.preventDefault();
+    if (this.state.createName.length === 0) alert('Please input a board name');
     // * userId must be converted to a number since it is typed as a string, most likely because TAppState is typed any - will have to look into this
     addBoard(Number(userId), this.state.createName);
   }
