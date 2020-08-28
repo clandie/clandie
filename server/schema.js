@@ -64,6 +64,7 @@ const typeDefs = gql`
     _id: ID!
     users_id: ID!
     jobs: [Job!]
+    userBoards: [Board!]
   }
 
   type Job {

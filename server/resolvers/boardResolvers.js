@@ -20,6 +20,18 @@ module.exports = {
       const jobs = await postgresDB.query(text, params);
       return jobs.rows;
     },
+
+    userBoards: async (parent, args, { postgresDB }) => {
+      try {
+        const text = `SELECT * FROM boards WHERE users_id=$1`;
+        const params = [parent.users_id];
+        const boards = await postgresDB.query(text, params);
+        // TODO: possibly throw new error here on certain conditions
+        return boards.rows;
+      } catch (err) {
+        console.log(err);
+      }
+    },
   },
 
   BoardResult: {
