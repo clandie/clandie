@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import BoardModal from '../components/modals/BoardModal';
 import CreateJobModal from '../components/modals/CreateJobModal';
 import CreateBoardModal from '../components/modals/CreateBoardModal';
+import JobDetailsModal from '../components/modals/JobDetailsModal';
 import { TAppState } from '../store';
 import * as actions from '../actions/boardActions';
 import * as userActions from '../actions/userActions';
@@ -58,6 +59,7 @@ interface BoardState {
   showBoardModal: boolean;
   showJobModal: boolean;
   showCreateBoard: boolean;
+  showDetailsModal: boolean;
   currentColumn: string | null;
   dropdownItems: JSX.Element[] | [];
 }
@@ -70,6 +72,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
       showBoardModal: false,
       showJobModal: false,
       showCreateBoard: false,
+      showDetailsModal: false,
       currentColumn: null,
       dropdownItems: [],
     };
@@ -189,6 +192,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
           addBoard={this.addBoard}
           boards={this.props.boards}
         />
+        <JobDetailsModal show={this.state.showDetailsModal} />
         <div className="boardContainer">
           <div className="boardHeader">
             <div className="board-options">
