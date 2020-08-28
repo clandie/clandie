@@ -61,6 +61,17 @@ interface BoardState {
   showCreateBoard: boolean;
   showDetailsModal: boolean;
   currentColumn: string | null;
+  selectedJob: {
+    _id: number;
+    status: string;
+    company: string;
+    title: string;
+    location: string | null;
+    notes: string | null;
+    salary: string | null;
+    url: string | null;
+  } | null;
+
   dropdownItems: JSX.Element[] | [];
 }
 
@@ -74,6 +85,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
       showCreateBoard: false,
       showDetailsModal: false,
       currentColumn: null,
+      selectedJob: null,
       dropdownItems: [],
     };
 
@@ -84,6 +96,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
     this.addBoard = this.addBoard.bind(this);
     this.createDropdown = this.createDropdown.bind(this);
     this.renderCreateBoard = this.renderCreateBoard.bind(this);
+    this.renderDetailsModal = this.renderDetailsModal.bind(this);
   }
 
   // render modal if board name isn't set
@@ -137,12 +150,26 @@ class BoardContainer extends Component<BoardProps, BoardState> {
       showBoardModal: false,
       showJobModal: false,
       showCreateBoard: false,
+      showDetailsModal: false,
       currentColumn: null,
     });
   }
 
   renderCreateBoard() {
     this.setState({ showCreateBoard: true });
+  }
+
+  renderDetailsModal(jobId: number) {
+    console.log('clicked job card');
+    const { allJobs } = this.props;
+    let selectedJob;
+    for (let i = 0; i < allJobs.length; i++) {
+      if (allJobs[i]._id === jobId) {
+        selectedJob = allJobs[i];
+        console.log('selected', selectedJob);
+      }
+    }
+    this.setState({ selectedJob, showDetailsModal: true });
   }
 
   // create dropdown item for each board - selected board will become the active board
@@ -192,7 +219,11 @@ class BoardContainer extends Component<BoardProps, BoardState> {
           addBoard={this.addBoard}
           boards={this.props.boards}
         />
-        <JobDetailsModal show={this.state.showDetailsModal} />
+        <JobDetailsModal
+          show={this.state.showDetailsModal}
+          close={this.handleClose}
+          selectedJob={this.state.selectedJob}
+        />
         <div className="boardContainer">
           <div className="boardHeader">
             <div className="board-options">
@@ -219,6 +250,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
             open={this.handleOpen}
             getJob={this.props.getJob}
             allJobs={this.props.allJobs}
+            details={this.renderDetailsModal}
           />
         </div>
       </>
