@@ -57,10 +57,6 @@ class JobDetailsModal extends Component<IDetailsModalProps> {
               <Contacts />
             </Tab>
           </Tabs>
-          {/* <div className="detailsNotes">
-            <h4>Notes</h4>
-            <input className="notesSections"></input>
-          </div> */}
         </Modal.Body>
       </Modal>
     );
