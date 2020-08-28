@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
-import BoardCard from './BoardCard';
+import BoardCard from '../../utils/BoardCard';
 import CreateBoardModal from './CreateBoardModal';
 
 interface IModalProps {
