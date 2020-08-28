@@ -1,6 +1,7 @@
 import * as types from '../constants/types';
 import { SET_BOARD, GET_BOARD, CLEAR_BOARD } from '../constants/actionTypes';
 import { AppThunk } from '../store';
+import { getJob } from './jobActions';
 
 /**
  * Redux thunk w/ TS - refer to AppThunk in store.ts
@@ -45,6 +46,8 @@ export const createBoard = (boardObj: types.IBoardInput): AppThunk => async (
       dispatch(setBoard(newBoard));
       // dispatch getBoard after creating a new board to update state
       dispatch(getBoard(userId));
+      // dispatch getJob so that the new board renders it's own jobs aka no jobs
+      dispatch(getJob(createBoard._id));
     })
     .catch((err) => {
       console.log('addBoard fetch action error', err);

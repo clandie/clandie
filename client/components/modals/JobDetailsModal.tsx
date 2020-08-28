@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Tab, Tabs, Modal } from 'react-bootstrap';
+import Details from '../tabs/Details';
+import Interviews from '../tabs/Interviews';
+import Contacts from '../tabs/Contacts';
 
 interface IDetailsModalProps {
   show: boolean;
@@ -44,9 +47,15 @@ class JobDetailsModal extends Component<IDetailsModalProps> {
         </Modal.Header>
         <Modal.Body>
           <Tabs id="details-tab">
-            <Tab eventKey="details" title="Details"></Tab>
-            <Tab eventKey="interviews" title="Interviews"></Tab>
-            <Tab eventKey="contacts" title="Contacts"></Tab>
+            <Tab eventKey="details" title="Details">
+              <Details />
+            </Tab>
+            <Tab eventKey="interviews" title="Interviews">
+              <Interviews />
+            </Tab>
+            <Tab eventKey="contacts" title="Contacts">
+              <Contacts />
+            </Tab>
           </Tabs>
           {/* <div className="detailsNotes">
             <h4>Notes</h4>
