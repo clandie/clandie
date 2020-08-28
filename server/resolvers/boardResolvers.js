@@ -46,6 +46,7 @@ module.exports = {
       try {
         if (name === '' || !name) throw new UserInputError();
         // getting all boards from user to ensure no duplicate board names
+        // ? is this the best way to handle this error?
         const getText = `SELECT * FROM boards WHERE users_id=$1`;
         const getParams = [id];
         const allUserBoardsRaw = await postgresDB.query(getText, getParams);
