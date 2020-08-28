@@ -14,7 +14,7 @@ const app: express.Application = express();
 import schema from './schema';
 
 import userResolvers, { User, UserResult } from './resolvers/userResolvers';
-import boardResolvers, { Board } from './resolvers/boardResolvers';
+import boardResolvers, { Board, BoardResult } from './resolvers/boardResolvers';
 import jobResolvers, { Job } from './resolvers/jobResolvers';
 import Interview from './resolvers/interviewResolvers';
 import Contact from './resolvers/contactResolvers';
@@ -52,6 +52,7 @@ const startApolloServer = async () => {
       Board,
       Job,
       UserResult,
+      BoardResult,
     },
     engine: {
       reportSchema: true,

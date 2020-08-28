@@ -1,3 +1,5 @@
+const { UserInputError } = require('apollo-server');
+
 module.exports = {
   Query: {
     // get boards through args upon user login
@@ -17,6 +19,13 @@ module.exports = {
       const params = [boardId];
       const jobs = await postgresDB.query(text, params);
       return jobs.rows;
+    },
+  },
+
+  BoardResult: {
+    __resolveType: (board, context, info) => {
+      if (board.name) return 'Board';
+      if (board.message) return 'BadUserInput';
     },
   },
 
@@ -46,15 +55,24 @@ module.exports = {
     },
 
     updateBoard: async (parent, { name, boardID }, { postgresDB }) => {
-      const text = `
+      try {
+        if (name === '' || !name) throw new UserInputError();
+        const text = `
         UPDATE boards
         SET name=$1
         WHERE _id=$2
         RETURNING *
       `;
-      const params = [name, boardID];
-      const updatedBoard = await postgresDB.query(text, params);
-      return updatedBoard.rows[0];
+        const params = [name, boardID];
+        const updatedBoard = await postgresDB.query(text, params);
+        return updatedBoard.rows[0];
+      } catch (err) {
+        if (err.extensions.code === 'BAD_USER_INPUT') {
+          err.extensions.message = 'Please enter a new name for your board.';
+          return err.extensions;
+        }
+        return err;
+      }
     },
   },
 };

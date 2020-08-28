@@ -6,6 +6,8 @@ const typeDefs = gql`
 
   union UserResult = User | Unauthenticated
 
+  union BoardResult = Board | BadUserInput
+
   type Query {
     user(email: String!, password: String!): UserResult!
     users: [User!]
@@ -26,7 +28,7 @@ const typeDefs = gql`
 
     createBoard(name: String!, id: ID!): Board!
     deleteBoard(id: ID!): Board!
-    updateBoard(name: String, boardID: ID!): Board!
+    updateBoard(name: String, boardID: ID!): BoardResult!
 
     createJob(status: String!, company: String!, title: String!, id: ID!): Job!
     deleteJob(id: ID!): Job!
@@ -41,16 +43,20 @@ const typeDefs = gql`
     # updateContact(): Contact!
   }
 
+  type Unauthenticated {
+    message: String
+  }
+
+  type BadUserInput {
+    message: String
+  }
+
   type User {
     _id: ID!
     name: String!
     email: String!
     password: String!
     boards: [Board!]
-  }
-
-  type Unauthenticated {
-    message: String
   }
 
   type Board {
