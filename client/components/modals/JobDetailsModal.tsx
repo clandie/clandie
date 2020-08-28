@@ -48,10 +48,10 @@ class JobDetailsModal extends Component<IDetailsModalProps> {
             <Tab eventKey="interviews" title="Interviews"></Tab>
             <Tab eventKey="contacts" title="Contacts"></Tab>
           </Tabs>
-          <div className="detailsNotes">
+          {/* <div className="detailsNotes">
             <h4>Notes</h4>
             <input className="notesSections"></input>
-          </div>
+          </div> */}
         </Modal.Body>
       </Modal>
     );
