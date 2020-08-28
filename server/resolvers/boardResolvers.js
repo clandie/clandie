@@ -45,6 +45,15 @@ module.exports = {
     createBoard: async (parent, { name, id }, { postgresDB }) => {
       try {
         if (name === '' || !name) throw new UserInputError();
+        // getting all boards from user to ensure no duplicate board names
+        const getText = `SELECT * FROM boards WHERE users_id=$1`;
+        const getParams = [id];
+        const allUserBoardsRaw = await postgresDB.query(getText, getParams);
+        const allUserBoardsArray = allUserBoardsRaw.rows;
+        allUserBoardsArray.forEach((board) => {
+          if (board.name === name) throw new UserInputError();
+        });
+        // entering new board to db
         const text = `
         INSERT INTO 
         boards (name, users_id) 
@@ -56,7 +65,8 @@ module.exports = {
         return newBoard.rows[0];
       } catch (err) {
         if (err.extensions.code === 'BAD_USER_INPUT') {
-          err.extensions.message = 'Please enter a name for your board.';
+          err.extensions.message =
+            'Please enter a name for your board, or make sure that you are not using a duplicate name.';
           return err.extensions;
         }
         return err;
