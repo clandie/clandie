@@ -3,6 +3,7 @@ import Board from '../utils/Board';
 import { connect } from 'react-redux';
 import BoardModal from '../utils/BoardModal';
 import CreateJobModal from '../utils/CreateJobModal';
+import CreateBoardModal from '../utils/CreateBoardModal';
 import { TAppState } from '../store';
 import * as actions from '../actions/boardActions';
 import * as userActions from '../actions/userActions';
@@ -56,6 +57,7 @@ type BoardProps = ReturnType<typeof mapStateToProps> &
 interface BoardState {
   showBoardModal: boolean;
   showJobModal: boolean;
+  showCreateBoard: boolean;
   currentColumn: string | null;
   dropdownItems: JSX.Element[] | [];
 }
@@ -67,6 +69,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
     this.state = {
       showBoardModal: false,
       showJobModal: false,
+      showCreateBoard: false,
       currentColumn: null,
       dropdownItems: [],
     };
@@ -77,6 +80,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
     this.handleClose = this.handleClose.bind(this);
     this.addBoard = this.addBoard.bind(this);
     this.createDropdown = this.createDropdown.bind(this);
+    this.renderCreateBoard = this.renderCreateBoard.bind(this);
   }
 
   // render modal if board name isn't set
@@ -111,7 +115,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
       user_id: id,
     };
     this.props.createBoard(boardObj);
-    this.setState({ showBoardModal: false });
+    this.setState({ showBoardModal: false, showCreateBoard: false });
   }
 
   // reset state
@@ -129,8 +133,13 @@ class BoardContainer extends Component<BoardProps, BoardState> {
     this.setState({
       showBoardModal: false,
       showJobModal: false,
+      showCreateBoard: false,
       currentColumn: null,
     });
+  }
+
+  renderCreateBoard() {
+    this.setState({ showCreateBoard: true });
   }
 
   // create dropdown item for each board - selected board will become the active board
@@ -153,6 +162,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
   }
 
   render() {
+    // below modals will render based on local state which is determined by user's actions
     return (
       <>
         <BoardModal
@@ -171,14 +181,28 @@ class BoardContainer extends Component<BoardProps, BoardState> {
           boardId={this.props.boardId}
           createJob={this.props.createJob}
         />
+        <CreateBoardModal
+          show={this.state.showCreateBoard}
+          close={this.handleClose}
+          user={this.props.user}
+          userId={this.props.userId}
+          addBoard={this.addBoard}
+          boards={this.props.boards}
+        />
         <div className="boardContainer">
           <div className="boardHeader">
-            <DropdownButton
-              id="dropdown-basic-button"
-              title={this.props.boardName || ''}
-            >
-              {this.state.dropdownItems}
-            </DropdownButton>
+            <div className="board-options">
+              <DropdownButton
+                id="dropdown-basic-button"
+                title={this.props.boardName || ''}
+              >
+                {this.state.dropdownItems}
+              </DropdownButton>
+              <Button className="addBoard-btn" onClick={this.renderCreateBoard}>
+                {' '}
+                +{' '}
+              </Button>
+            </div>
             <h1>{this.props.boardName}</h1>
             <Button className="sign-out" onClick={this.handleSignout}>
               Sign Out
