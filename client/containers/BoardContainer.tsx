@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Board from '../utils/Board';
 import { connect } from 'react-redux';
-import BoardModal from '../utils/BoardModal';
-import CreateJobModal from '../utils/CreateJobModal';
-import CreateBoardModal from '../utils/CreateBoardModal';
+import BoardModal from '../components/modals/BoardModal';
+import CreateJobModal from '../components/modals/CreateJobModal';
+import CreateBoardModal from '../components/modals/CreateBoardModal';
 import { TAppState } from '../store';
 import * as actions from '../actions/boardActions';
 import * as userActions from '../actions/userActions';

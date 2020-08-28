@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, Form, Button } from 'react-bootstrap';
-import { IJobInput } from '../constants/types';
+import { IJobInput } from '../../constants/types';
 
 interface IJobModalProps {
   show: boolean;
