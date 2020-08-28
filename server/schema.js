@@ -19,10 +19,6 @@ const typeDefs = gql`
     interviews(id: ID!): [Interview!]
   }
 
-  type Unauthenticated {
-    message: String
-  }
-
   type Mutation {
     createUser(name: String!, email: String!, password: String!): User!
     deleteUser(email: String!): User!
@@ -30,6 +26,7 @@ const typeDefs = gql`
 
     createBoard(name: String!, id: ID!): Board!
     deleteBoard(id: ID!): Board!
+    updateBoard(name: String, boardID: ID!): Board!
 
     createJob(status: String!, company: String!, title: String!, id: ID!): Job!
     deleteJob(id: ID!): Job!
@@ -50,6 +47,10 @@ const typeDefs = gql`
     email: String!
     password: String!
     boards: [Board!]
+  }
+
+  type Unauthenticated {
+    message: String
   }
 
   type Board {

@@ -44,5 +44,17 @@ module.exports = {
       const deletedBoard = await postgresDB.query(text, params);
       return deletedBoard.rows[0];
     },
+
+    updateBoard: async (parent, { name, boardID }, { postgresDB }) => {
+      const text = `
+        UPDATE boards
+        SET name=$1
+        WHERE _id=$2
+        RETURNING *
+      `;
+      const params = [name, boardID];
+      const updatedBoard = await postgresDB.query(text, params);
+      return updatedBoard.rows[0];
+    },
   },
 };
