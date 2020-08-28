@@ -31,15 +31,24 @@ module.exports = {
 
   Mutation: {
     createBoard: async (parent, { name, id }, { postgresDB }) => {
-      const text = `
+      try {
+        if (name === '' || !name) throw new UserInputError();
+        const text = `
         INSERT INTO 
         boards (name, users_id) 
         VALUES ($1, $2) 
         RETURNING *
       `;
-      const params = [name, id];
-      const newBoard = await postgresDB.query(text, params);
-      return newBoard.rows[0];
+        const params = [name, id];
+        const newBoard = await postgresDB.query(text, params);
+        return newBoard.rows[0];
+      } catch (err) {
+        if (err.extensions.code === 'BAD_USER_INPUT') {
+          err.extensions.message = 'Please enter a name for your board.';
+          return err.extensions;
+        }
+        return err;
+      }
     },
 
     deleteBoard: async (parent, { id }, { postgresDB }) => {
