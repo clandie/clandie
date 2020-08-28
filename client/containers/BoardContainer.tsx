@@ -162,6 +162,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
   }
 
   render() {
+    // below modals will render based on local state which is determined by user's actions
     return (
       <>
         <BoardModal

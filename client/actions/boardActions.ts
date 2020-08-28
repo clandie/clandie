@@ -43,6 +43,8 @@ export const createBoard = (boardObj: types.IBoardInput): AppThunk => async (
         name: createBoard.name,
       };
       dispatch(setBoard(newBoard));
+      // dispatch getBoard after creating a new board to update state
+      dispatch(getBoard(userId));
     })
     .catch((err) => {
       console.log('addBoard fetch action error', err);
