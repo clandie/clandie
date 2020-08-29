@@ -74,8 +74,14 @@ export const verifyUser = (userObj: types.ILoginState): AppThunk => async (
   const userPassword = `${userObj.password}`;
   const query = `query VerifyUser($userEmail: String!, $userPassword: String!) { 
     user(email: $userEmail, password: $userPassword) {
-      _id
-      name
+      __typename
+      ...on User {
+        _id
+        name
+      }
+      ... on Unauthenticated {
+        message
+      }
     }
   }`;
 
