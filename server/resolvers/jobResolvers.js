@@ -68,18 +68,23 @@ module.exports = {
         notes,
         jobID,
       } = args;
-      let finalText = ``;
 
+      // generate query text for PostgresQL based on user input
+      let finalText = ``;
       const generateQueryText = () => {
         const text = `UPDATE jobs SET `;
         const arrayOfArgs = Object.keys(args);
         let i = 0;
         for (i; i < arrayOfArgs.length - 1; i++) {
+          /* If the user wanted to update a field, add to text string. If they did not
+          want to update a certain field we recieve an empty string, so we remove this 
+          argument from our list of args, decrementing i to account for the missing arg. */
           if (args[arrayOfArgs[i]] !== '') {
             text += `${arrayOfArgs[i]}=$${i + 1}`;
-            text += i === arrayOfArgs.length - 2 ? ` ` : `, `;
+            text += `, `;
           } else arrayOfArgs.splice(i--, 1);
         }
+        // account for extra comma at end of argument list
         text[text.length - 2] === ','
           ? (finalText = text.slice(0, text.length - 2))
           : (finalText = text);
