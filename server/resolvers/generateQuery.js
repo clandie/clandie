@@ -20,4 +20,14 @@ const generateUpdateText = (table, args) => {
   return finalText;
 };
 
-module.exports = { generateUpdateText };
+const generateUpdateParams = (paramsUnfiltered) => {
+  const params = [];
+  for (let i = 0; i < paramsUnfiltered.length; i++) {
+    if (paramsUnfiltered[i] !== '' && paramsUnfiltered[i] !== null) {
+      params.push(paramsUnfiltered[i]);
+    }
+  }
+  return params;
+};
+
+module.exports = { generateUpdateText, generateUpdateParams };
