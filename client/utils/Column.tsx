@@ -4,11 +4,23 @@ import JobCard from './JobCard';
 
 interface IColumnProps {
   name: string;
-  allJobs: { status: string; company: string; title: string }[] | [];
+  allJobs:
+    | {
+        _id: number;
+        status: string;
+        company: string;
+        title: string;
+        location: string | null;
+        notes: string | null;
+        salary: string | null;
+        url: string | null;
+      }[]
+    | [];
   open: (e: any) => void;
+  details: (jobId: number) => void;
 }
 const Column = (props: IColumnProps) => {
-  const { allJobs, name } = props;
+  const { allJobs, name, details } = props;
   const jobs = [];
   // place cards into the correct column
 
@@ -16,7 +28,12 @@ const Column = (props: IColumnProps) => {
     for (let i = 0; i < allJobs.length; i++) {
       if (allJobs[i].status === name) {
         jobs.push(
-          <JobCard company={allJobs[i].company} title={allJobs[i].title} />
+          <JobCard
+            company={allJobs[i].company}
+            title={allJobs[i].title}
+            jobId={allJobs[i]._id}
+            details={details}
+          />
         );
       }
     }

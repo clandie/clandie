@@ -4,9 +4,21 @@ import Column from './Column';
 interface IBoardProps {
   boardId: number;
   boardName: string;
-  allJobs: { status: string; company: string; title: string }[] | [];
+  allJobs:
+    | {
+        _id: number;
+        status: string;
+        company: string;
+        title: string;
+        location: string | null;
+        notes: string | null;
+        salary: string | null;
+        url: string | null;
+      }[]
+    | [];
   open: (e: any) => void;
   getJob: (boardId: number) => void;
+  details: (jobId: number) => void;
 }
 
 interface IBoardState {
@@ -37,18 +49,43 @@ class Board extends Component<IBoardProps, IBoardState> {
 
   // render each column
   render() {
-    const { open, allJobs } = this.props;
+    const { open, allJobs, details } = this.props;
     return (
       <div className="board">
-        <Column name={'opportunities'} open={open} allJobs={allJobs} />
+        <Column
+          name={'opportunities'}
+          open={open}
+          allJobs={allJobs}
+          details={details}
+        />
         <span className="divider"></span>
-        <Column name={'applied'} open={open} allJobs={allJobs} />
+        <Column
+          name={'applied'}
+          open={open}
+          allJobs={allJobs}
+          details={details}
+        />
         <span className="divider"></span>
-        <Column name={'interviews'} open={open} allJobs={allJobs} />
+        <Column
+          name={'interviews'}
+          open={open}
+          allJobs={allJobs}
+          details={details}
+        />
         <span className="divider"></span>
-        <Column name={'offers'} open={open} allJobs={allJobs} />
+        <Column
+          name={'offers'}
+          open={open}
+          allJobs={allJobs}
+          details={details}
+        />
         <span className="divider"></span>
-        <Column name={'rejected'} open={open} allJobs={allJobs} />
+        <Column
+          name={'rejected'}
+          open={open}
+          allJobs={allJobs}
+          details={details}
+        />
       </div>
     );
   }

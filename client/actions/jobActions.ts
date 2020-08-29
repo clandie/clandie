@@ -16,9 +16,14 @@ export const clearJob = () => ({
 export const getJob = (boardId: number): AppThunk => async (dispatch) => {
   const query = `query GetJob($boardId: ID!){
     jobs(id: $boardId) {
+      _id,
       status,
       company,
       title,
+      location,
+      salary,
+      url,
+      notes,
     }
   }`;
   fetch('/graphql', {
