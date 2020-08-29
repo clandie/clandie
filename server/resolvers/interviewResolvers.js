@@ -1,3 +1,4 @@
+const { UserInputError } = require('apollo-server');
 const { generateUpdateText, generateUpdateParams } = require('./generateQuery');
 
 module.exports = {
@@ -37,14 +38,27 @@ module.exports = {
     },
 
     updateInterview: async (parent, args, { postgresDB }) => {
-      const { title, date, time, notes, interviewID } = args;
-      const text = generateUpdateText('interviews', args);
+      try {
+        // console.log(args);
+        // console.log('here');
+        const { title, date, time, notes, interviewID } = args;
+        if (title === '' && date === '' && time === '' && notes === '') {
+          // console.log('in conditional');
+          throw new UserInputError();
+        }
+        const text = generateUpdateText('interviews', args);
 
-      const unfilteredParams = [title, date, time, notes, interviewID];
-      const params = generateUpdateParams(unfilteredParams);
+        const unfilteredParams = [title, date, time, notes, interviewID];
+        const params = generateUpdateParams(unfilteredParams);
 
-      const updatedInterview = await postgresDB.query(text, params);
-      return updatedInterview.rows[0];
+        const updatedInterview = await postgresDB.query(text, params);
+        return updatedInterview.rows[0];
+      } catch (err) {
+        if (err.extensions.code === 'BAD_USER_INPUT')
+          err.extensions.message =
+            'Please enter information that you would like to update.';
+        console.log('An error occurred in updateInterview:', err);
+      }
     },
   },
 };
