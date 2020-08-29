@@ -81,7 +81,7 @@ module.exports = {
           argument from our list of args, decrementing i to account for the missing arg. */
           if (args[arrayOfArgs[i]] !== '') {
             text += `${arrayOfArgs[i]}=$${i + 1}`;
-            text += i === arrayOfArgs.length - 2 ? ` ` : `, `;
+            text += `, `;
           } else arrayOfArgs.splice(i--, 1);
         }
         // account for extra comma at end of argument list
