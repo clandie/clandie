@@ -1,4 +1,4 @@
-const { generateUpdateText } = require('./generateQuery');
+const { generateUpdateText, generateUpdateParams } = require('./generateQuery');
 
 module.exports = {
   Query: {
@@ -83,12 +83,7 @@ module.exports = {
         notes,
         jobID,
       ];
-      const params = [];
-      for (let i = 0; i < paramsUnfiltered.length; i++) {
-        if (paramsUnfiltered[i] !== '' && paramsUnfiltered[i] !== null) {
-          params.push(paramsUnfiltered[i]);
-        }
-      }
+      const params = generateUpdateParams(paramsUnfiltered);
 
       const updatedJob = await postgresDB.query(text, params);
       return updatedJob.rows[0];
