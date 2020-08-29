@@ -55,7 +55,14 @@ const typeDefs = gql`
 
     createContact(name: String!, jobID: ID!): Contact!
     deleteContact(contactID: ID!): Contact!
-    # updateContact(): Contact!
+    updateContact(
+      name: String
+      title: String
+      phone: String
+      email: String
+      notes: String
+      contactID: ID
+    ): Contact!
   }
 
   type Unauthenticated {
