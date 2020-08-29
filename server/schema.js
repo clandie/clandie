@@ -5,8 +5,8 @@ const typeDefs = gql`
   scalar Date
 
   union UserResult = User | Unauthenticated
-
   union BoardResult = Board | BadUserInput
+  # union JobResult = Job | BadUserInput
 
   type Query {
     user(email: String!, password: String!): UserResult!
@@ -32,7 +32,16 @@ const typeDefs = gql`
 
     createJob(status: String!, company: String!, title: String!, id: ID!): Job!
     deleteJob(id: ID!): Job!
-    # updateJob(): Job!
+    updateJob(
+      status: String
+      company: String
+      title: String
+      location: String
+      salary: String
+      url: String
+      notes: String
+      jobID: ID!
+    ): Job!
 
     createInterview(title: String!, jobsID: ID!): Interview!
     deleteInterview(interviewID: ID!): Interview!
