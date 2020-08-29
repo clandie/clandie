@@ -12,8 +12,9 @@ const PORT = 3000;
 const app: express.Application = express();
 
 import schema from './schema';
-import userResolvers, { User } from './resolvers/userResolvers';
-import boardResolvers, { Board } from './resolvers/boardResolvers';
+
+import userResolvers, { User, UserResult } from './resolvers/userResolvers';
+import boardResolvers, { Board, BoardResult } from './resolvers/boardResolvers';
 import jobResolvers, { Job } from './resolvers/jobResolvers';
 import Interview from './resolvers/interviewResolvers';
 import Contact from './resolvers/contactResolvers';
@@ -50,6 +51,8 @@ const startApolloServer = async () => {
       User,
       Board,
       Job,
+      UserResult,
+      BoardResult,
     },
     engine: {
       reportSchema: true,

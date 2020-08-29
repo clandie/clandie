@@ -4,8 +4,12 @@ const { gql } = require('apollo-server');
 const typeDefs = gql`
   scalar Date
 
+  union UserResult = User | Unauthenticated
+  union BoardResult = Board | BadUserInput
+  # union JobResult = Job | BadUserInput
+
   type Query {
-    user(email: String!, password: String!): User!
+    user(email: String!, password: String!): UserResult!
     users: [User!]
 
     boards(id: ID!): [Board!]
@@ -22,12 +26,22 @@ const typeDefs = gql`
     deleteUser(email: String!): User!
     # updateUser(name: String, email: String, password: String): User!
 
-    createBoard(name: String!, id: ID!): Board!
+    createBoard(name: String!, id: ID!): BoardResult!
     deleteBoard(id: ID!): Board!
+    updateBoard(name: String, boardID: ID!): BoardResult!
 
     createJob(status: String!, company: String!, title: String!, id: ID!): Job!
     deleteJob(id: ID!): Job!
-    # updateJob(): Job!
+    updateJob(
+      status: String
+      company: String
+      title: String
+      location: String
+      salary: String
+      url: String
+      notes: String
+      jobID: ID!
+    ): Job!
 
     createInterview(title: String!, jobsID: ID!): Interview!
     deleteInterview(interviewID: ID!): Interview!
@@ -36,6 +50,14 @@ const typeDefs = gql`
     createContact(name: String!, jobID: ID!): Contact!
     deleteContact(contactID: ID!): Contact!
     # updateContact(): Contact!
+  }
+
+  type Unauthenticated {
+    message: String
+  }
+
+  type BadUserInput {
+    message: String
   }
 
   type User {
@@ -51,6 +73,7 @@ const typeDefs = gql`
     _id: ID!
     users_id: ID!
     jobs: [Job!]
+    userBoards: [Board!]
   }
 
   type Job {
