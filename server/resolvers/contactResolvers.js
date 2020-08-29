@@ -1,3 +1,5 @@
+const { generateUpdateText, generateUpdateParams } = require('./generateQuery');
+
 module.exports = {
   Query: {
     contacts: async (parent, { id }, { postgresDB }) => {
@@ -32,6 +34,23 @@ module.exports = {
       const params = [contactID];
       const deletedContact = await postgresDB.query(text, params);
       return deletedContact.rows[0];
+    },
+
+    updateContact: async (parent, args, { postgresDB }) => {
+      const { name, title, phone, email, notes, contactID } = args;
+      const text = generateUpdateText('contacts', args);
+
+      const params = generateUpdateParams([
+        name,
+        title,
+        phone,
+        email,
+        notes,
+        contactID,
+      ]);
+
+      const updatedContact = await postgresDB.query(text, params);
+      return updatedContact.rows[0];
     },
   },
 };
