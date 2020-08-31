@@ -12,6 +12,13 @@ module.exports = {
     },
   },
 
+  InterviewResult: {
+    __resolveType: (interview, context, info) => {
+      if (interview.title) return 'Interview';
+      if (interview.message) return 'BadUserInput';
+    },
+  },
+
   Mutation: {
     createInterview: async (parent, { title, jobsID }, { postgresDB }) => {
       const text = `
@@ -58,6 +65,7 @@ module.exports = {
           err.extensions.message =
             'Please enter information that you would like to update.';
         console.log('An error occurred in updateInterview:', err);
+        return err.extensions;
       }
     },
   },
