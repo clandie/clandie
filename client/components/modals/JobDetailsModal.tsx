@@ -13,12 +13,13 @@ interface IDetailsModalProps {
     status: string;
     company: string;
     title: string;
-    location: string | null;
-    notes: string | null;
-    salary: string | null;
-    url: string | null;
+    location: string;
+    notes: string;
+    salary: string;
+    url: string;
   } | null;
-  updateDetails: (detailsObj: IDetails) => void;
+  updateDetails: (detailsObj: IDetails, boardId: number) => void;
+  boardId: number;
 }
 
 class JobDetailsModal extends Component<IDetailsModalProps> {
@@ -53,6 +54,7 @@ class JobDetailsModal extends Component<IDetailsModalProps> {
               <Details
                 updateDetails={this.props.updateDetails}
                 selectedJob={selectedJob}
+                boardId={this.props.boardId}
               />
             </Tab>
             <Tab eventKey="interviews" title="Interviews">

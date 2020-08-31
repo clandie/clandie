@@ -74,10 +74,11 @@ export const createJob = (jobObj: types.IJobInput): AppThunk => async (
     });
 };
 
-export const updateDetails = (detailsObj: types.IDetails): AppThunk => async (
-  dispatch
-) => {
-  const {
+export const updateDetails = (
+  detailsObj: types.IDetails,
+  boardId: number
+): AppThunk => async (dispatch) => {
+  let {
     status,
     company,
     title,
@@ -87,6 +88,12 @@ export const updateDetails = (detailsObj: types.IDetails): AppThunk => async (
     notes,
     jobId,
   } = detailsObj;
+  if (salary && typeof salary !== 'string') salary = salary.toString();
+  if (location === null) location = '';
+  if (salary === null) salary = '';
+  if (url === null) url = '';
+  if (notes === null) notes = '';
+
   const query = `mutation UpdateDetails($status: String!, $company: String!, $title: String!, $location: String!, $salary: String!, $url: String!, $notes: String!, $jobId: ID!) {
     updateJob(status: $status, company: $company, title: $title, location: $location, salary: $salary, url: $url, notes: $notes, jobID: $jobId) {
       company,
@@ -118,6 +125,9 @@ export const updateDetails = (detailsObj: types.IDetails): AppThunk => async (
     .then((res) => res.json())
     .then((data) => {
       console.log('data', data);
+    })
+    .then(() => {
+      dispatch(getJob(boardId));
     })
     .catch((err) => {
       console.log('err in update details action', err);

@@ -37,7 +37,7 @@ export interface IDetails {
   company: string;
   title: string;
   location?: string;
-  salary?: string;
+  salary?: string | number;
   url?: string;
   notes?: string;
   jobId: number;

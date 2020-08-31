@@ -3,17 +3,18 @@ import { Form, Col, Button } from 'react-bootstrap';
 import { IDetails } from '../../constants/types';
 
 interface IDetailProps {
-  updateDetails: (detailsObj: IDetails) => void;
+  updateDetails: (detailsObj: IDetails, boardId: number) => void;
   selectedJob: {
     _id: number;
     status: string;
     company: string;
     title: string;
-    location: string | null;
-    notes: string | null;
-    salary: string | null;
-    url: string | null;
+    location: string;
+    notes: string;
+    salary: string;
+    url: string;
   } | null;
+  boardId: number;
 }
 interface IDetailState {
   // company?: string;
@@ -40,6 +41,19 @@ class Details extends Component<IDetailProps, IDetailState> {
     this.handleSave = this.handleSave.bind(this);
   }
 
+  componentDidMount() {
+    const { selectedJob } = this.props;
+
+    if (selectedJob !== null) {
+      this.setState({
+        location: selectedJob.location,
+        salary: selectedJob.salary,
+        url: selectedJob.url,
+        notes: selectedJob.notes,
+      });
+    }
+  }
+
   handleChange(e: any) {
     const { name, value } = e.target;
     this.setState({ [name]: value });
@@ -47,7 +61,7 @@ class Details extends Component<IDetailProps, IDetailState> {
 
   handleSave(e: any) {
     e.preventDefault();
-    const { selectedJob, updateDetails } = this.props;
+    const { selectedJob, updateDetails, boardId } = this.props;
     if (selectedJob !== null) {
       const detailsObj: IDetails = {
         status: selectedJob.status,
@@ -59,7 +73,7 @@ class Details extends Component<IDetailProps, IDetailState> {
         notes: this.state.notes,
         jobId: selectedJob._id,
       };
-      updateDetails(detailsObj);
+      updateDetails(detailsObj, boardId);
 
       console.log('details', detailsObj);
     }
@@ -75,7 +89,7 @@ class Details extends Component<IDetailProps, IDetailState> {
               <Form.Control
                 type="text"
                 name="location"
-                placeholder="Location"
+                placeholder={this.state.location}
                 onChange={this.handleChange}
               />
             </Form.Group>
@@ -85,7 +99,7 @@ class Details extends Component<IDetailProps, IDetailState> {
               <Form.Control
                 type="text"
                 name="salary"
-                placeholder="Salary"
+                placeholder={this.state.salary}
                 onChange={this.handleChange}
               />
             </Form.Group>
@@ -95,7 +109,16 @@ class Details extends Component<IDetailProps, IDetailState> {
             <Form.Control
               type="text"
               name="url"
-              placeholder="URL"
+              placeholder={this.state.url}
+              onChange={this.handleChange}
+            />
+          </Form.Group>
+          <Form.Group controlId="exampleForm.ControlTextarea1">
+            <Form.Label>Notes</Form.Label>
+            <Form.Control
+              as="textarea"
+              name="notes"
+              placeholder={this.state.notes}
               onChange={this.handleChange}
             />
           </Form.Group>
