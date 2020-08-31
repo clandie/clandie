@@ -16,7 +16,7 @@ import schema from './schema';
 import userResolvers, { User, UserResult } from './resolvers/userResolvers';
 import boardResolvers, { Board, BoardResult } from './resolvers/boardResolvers';
 import jobResolvers, { Job } from './resolvers/jobResolvers';
-import Interview from './resolvers/interviewResolvers';
+import Interview, { InterviewResult } from './resolvers/interviewResolvers';
 import Contact from './resolvers/contactResolvers';
 import db from './models/dbModel';
 
@@ -53,6 +53,7 @@ const startApolloServer = async () => {
       Job,
       UserResult,
       BoardResult,
+      InterviewResult,
     },
     engine: {
       reportSchema: true,
