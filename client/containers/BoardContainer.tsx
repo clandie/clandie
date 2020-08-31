@@ -50,6 +50,10 @@ const mapDispatchToProps = (dispatch: any) => ({
     console.log('dispatched clear job');
     dispatch(jobActions.clearJob());
   },
+  updateDetails: (detailsObj: types.IDetails, boardId: number) => {
+    console.log('dispatched update details');
+    dispatch(jobActions.updateDetails(detailsObj, boardId));
+  },
 });
 
 type BoardProps = ReturnType<typeof mapStateToProps> &
@@ -66,10 +70,10 @@ interface BoardState {
     status: string;
     company: string;
     title: string;
-    location: string | null;
-    notes: string | null;
-    salary: string | null;
-    url: string | null;
+    location: string;
+    notes: string;
+    salary: string;
+    url: string;
   } | null;
 
   dropdownItems: JSX.Element[] | [];
@@ -223,6 +227,8 @@ class BoardContainer extends Component<BoardProps, BoardState> {
           show={this.state.showDetailsModal}
           close={this.handleClose}
           selectedJob={this.state.selectedJob}
+          updateDetails={this.props.updateDetails}
+          boardId={this.props.boardId}
         />
         <div className="boardContainer">
           <div className="boardHeader">

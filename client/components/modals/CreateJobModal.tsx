@@ -42,6 +42,7 @@ class CreateJobModal extends Component<IJobModalProps, IJobModalState> {
     };
     this.props.createJob(jobObj);
     this.props.close();
+    this.setState({ company: '', title: '' });
   }
 
   render() {
