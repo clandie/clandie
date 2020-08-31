@@ -60,7 +60,7 @@ const typeDefs = gql`
       interviewID: ID!
     ): InterviewResult!
 
-    createContact(name: String!, jobID: ID!): Contact!
+    createContact(name: String!, jobID: ID!): ContactResult!
     deleteContact(contactID: ID!): Contact!
     updateContact(
       name: String

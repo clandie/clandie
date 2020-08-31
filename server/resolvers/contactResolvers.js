@@ -21,15 +21,23 @@ module.exports = {
 
   Mutation: {
     createContact: async (parent, { name, jobID }, { postgresDB }) => {
-      const text = `
+      try {
+        if (name === '') throw new UserInputError();
+        const text = `
         INSERT INTO
         contacts (name, title, phone, email, notes, jobs_id)
         VALUES( $1, $2, $3, $4, $5, $6)
         RETURNING *
       `;
-      const params = [name, null, null, null, null, jobID];
-      const newContact = await postgresDB.query(text, params);
-      return newContact.rows[0];
+        const params = [name, null, null, null, null, jobID];
+        const newContact = await postgresDB.query(text, params);
+        return newContact.rows[0];
+      } catch (err) {
+        if (err.extensions.code === 'BAD_USER_INPUT')
+          err.extensions.message = 'Please enter the name of your contact.';
+        console.log('An error occurred in updateInterview:', err);
+        return err.extensions;
+      }
     },
 
     deleteContact: async (parent, { contactID }, { postgresDB }) => {
