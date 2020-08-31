@@ -1,20 +1,39 @@
 import React, { Component } from 'react';
 import { Form, Col, Button } from 'react-bootstrap';
+import { IDetails } from '../../constants/types';
 
-interface IDetailProps {}
+interface IDetailProps {
+  updateDetails: (detailsObj: IDetails) => void;
+  selectedJob: {
+    _id: number;
+    status: string;
+    company: string;
+    title: string;
+    location: string | null;
+    notes: string | null;
+    salary: string | null;
+    url: string | null;
+  } | null;
+}
 interface IDetailState {
-  location?: string | null;
-  salary?: string | null;
-  url?: string | null;
+  // company?: string;
+  // title?: string;
+  location?: string;
+  salary?: string;
+  url?: string;
+  notes?: string;
 }
 class Details extends Component<IDetailProps, IDetailState> {
   constructor(props: IDetailProps) {
     super(props);
 
     this.state = {
-      location: null,
-      salary: null,
-      url: null,
+      // company: '',
+      // title: '',
+      location: '',
+      salary: '',
+      url: '',
+      notes: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -28,13 +47,22 @@ class Details extends Component<IDetailProps, IDetailState> {
 
   handleSave(e: any) {
     e.preventDefault();
-    const detailsObj: IDetailState = {
-      location: this.state.location,
-      salary: this.state.salary,
-      url: this.state.url,
-    };
+    const { selectedJob, updateDetails } = this.props;
+    if (selectedJob !== null) {
+      const detailsObj: IDetails = {
+        status: selectedJob.status,
+        company: selectedJob.company,
+        title: selectedJob.title,
+        location: this.state.location,
+        salary: this.state.salary,
+        url: this.state.url,
+        notes: this.state.notes,
+        jobId: selectedJob._id,
+      };
+      updateDetails(detailsObj);
 
-    console.log('details', detailsObj);
+      console.log('details', detailsObj);
+    }
   }
 
   render() {

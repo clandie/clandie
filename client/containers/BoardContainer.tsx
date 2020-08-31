@@ -50,6 +50,10 @@ const mapDispatchToProps = (dispatch: any) => ({
     console.log('dispatched clear job');
     dispatch(jobActions.clearJob());
   },
+  updateDetails: (detailsObj: types.IDetails) => {
+    console.log('dispatched update details');
+    dispatch(jobActions.updateDetails(detailsObj));
+  },
 });
 
 type BoardProps = ReturnType<typeof mapStateToProps> &
@@ -223,6 +227,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
           show={this.state.showDetailsModal}
           close={this.handleClose}
           selectedJob={this.state.selectedJob}
+          updateDetails={this.props.updateDetails}
         />
         <div className="boardContainer">
           <div className="boardHeader">

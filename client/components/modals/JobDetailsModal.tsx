@@ -3,6 +3,7 @@ import { Tab, Tabs, Modal } from 'react-bootstrap';
 import Details from '../tabs/Details';
 import Interviews from '../tabs/Interviews';
 import Contacts from '../tabs/Contacts';
+import { IDetails } from '../../constants/types';
 
 interface IDetailsModalProps {
   show: boolean;
@@ -17,6 +18,7 @@ interface IDetailsModalProps {
     salary: string | null;
     url: string | null;
   } | null;
+  updateDetails: (detailsObj: IDetails) => void;
 }
 
 class JobDetailsModal extends Component<IDetailsModalProps> {
@@ -48,7 +50,10 @@ class JobDetailsModal extends Component<IDetailsModalProps> {
         <Modal.Body>
           <Tabs id="details-tab">
             <Tab eventKey="details" title="Details">
-              <Details />
+              <Details
+                updateDetails={this.props.updateDetails}
+                selectedJob={selectedJob}
+              />
             </Tab>
             <Tab eventKey="interviews" title="Interviews">
               <Interviews />

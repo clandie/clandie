@@ -73,3 +73,53 @@ export const createJob = (jobObj: types.IJobInput): AppThunk => async (
       console.log('error in create job action', err);
     });
 };
+
+export const updateDetails = (detailsObj: types.IDetails): AppThunk => async (
+  dispatch
+) => {
+  const {
+    status,
+    company,
+    title,
+    location,
+    salary,
+    url,
+    notes,
+    jobId,
+  } = detailsObj;
+  const query = `mutation UpdateDetails($status: String!, $company: String!, $title: String!, $location: String!, $salary: String!, $url: String!, $notes: String!, $jobId: ID!) {
+    updateJob(status: $status, company: $company, title: $title, location: $location, salary: $salary, url: $url, notes: $notes, jobID: $jobId) {
+      company,
+      title,
+      location,
+      salary,
+      url,
+      notes
+    }
+  }`;
+
+  fetch('/graphql', {
+    method: 'POST',
+    body: JSON.stringify({
+      query,
+      variables: {
+        status,
+        company,
+        title,
+        location,
+        salary,
+        url,
+        notes,
+        jobId,
+      },
+    }),
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log('data', data);
+    })
+    .catch((err) => {
+      console.log('err in update details action', err);
+    });
+};
