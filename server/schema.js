@@ -45,11 +45,24 @@ const typeDefs = gql`
 
     createInterview(title: String!, jobsID: ID!): Interview!
     deleteInterview(interviewID: ID!): Interview!
-    # updateInterview(): Interview!
+    updateInterview(
+      title: String
+      date: String
+      time: String
+      notes: String
+      interviewID: ID!
+    ): Interview!
 
     createContact(name: String!, jobID: ID!): Contact!
     deleteContact(contactID: ID!): Contact!
-    # updateContact(): Contact!
+    updateContact(
+      name: String
+      title: String
+      phone: String
+      email: String
+      notes: String
+      contactID: ID
+    ): Contact!
   }
 
   type Unauthenticated {
@@ -86,7 +99,6 @@ const typeDefs = gql`
     url: String
     notes: String
     boards_id: ID!
-    interviews_id: ID!
     contacts: [Contact!]
     interviews: [Interview!]
   }
@@ -98,7 +110,6 @@ const typeDefs = gql`
     phone: String
     email: String
     notes: String
-    # connect to job thru jobs_id
     jobs_id: ID!
   }
 
@@ -108,6 +119,7 @@ const typeDefs = gql`
     date: Date
     time: Date
     notes: String
+    jobs_id: ID!
   }
 `;
 
