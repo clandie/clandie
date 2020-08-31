@@ -26,8 +26,14 @@ export const createBoard = (boardObj: types.IBoardInput): AppThunk => async (
   const boardName = boardObj.name;
   const query = `mutation CreateBoard($boardName: String!, $userId: ID!) {
     createBoard(name: $boardName, id: $userId) {
-      _id,
-      name,
+      __typename
+      ... on Board {
+        _id,
+        name,
+      }
+      ... on BadUserInput {
+        message
+      }
     }
   }`;
   fetch('/graphql', {
