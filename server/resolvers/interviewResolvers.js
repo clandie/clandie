@@ -12,17 +12,33 @@ module.exports = {
     },
   },
 
+  InterviewResult: {
+    __resolveType: (interview, context, info) => {
+      if (interview.title) return 'Interview';
+      if (interview.message) return 'BadUserInput';
+    },
+  },
+
   Mutation: {
     createInterview: async (parent, { title, jobsID }, { postgresDB }) => {
-      const text = `
+      try {
+        if (title === '') throw new UserInputError();
+        const text = `
         INSERT INTO
         interviews (title, date, time, notes, jobs_id)
         VALUES ($1, $2, $3, $4, $5)
         RETURNING *
       `;
-      const params = [title, null, null, null, jobsID];
-      const newInterview = await postgresDB.query(text, params);
-      return newInterview.rows[0];
+        const params = [title, null, null, null, jobsID];
+        const newInterview = await postgresDB.query(text, params);
+        return newInterview.rows[0];
+      } catch (err) {
+        if (err.extensions.code === 'BAD_USER_INPUT')
+          err.extensions.message =
+            'Please enter a title to create this interview.';
+        console.log('An error occurred in updateInterview:', err);
+        return err.extensions;
+      }
     },
 
     deleteInterview: async (parent, { interviewID }, { postgresDB }) => {
@@ -58,6 +74,7 @@ module.exports = {
           err.extensions.message =
             'Please enter information that you would like to update.';
         console.log('An error occurred in updateInterview:', err);
+        return err.extensions;
       }
     },
   },

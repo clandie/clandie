@@ -6,7 +6,9 @@ const typeDefs = gql`
 
   union UserResult = User | Unauthenticated
   union BoardResult = Board | BadUserInput
-  # union JobResult = Job | BadUserInput
+  union JobResult = Job | BadUserInput
+  union ContactResult = Contact | BadUserInput
+  union InterviewResult = Interview | BadUserInput
 
   type Query {
     user(email: String!, password: String!): UserResult!
@@ -30,7 +32,12 @@ const typeDefs = gql`
     deleteBoard(id: ID!): Board!
     updateBoard(name: String, boardID: ID!): BoardResult!
 
-    createJob(status: String!, company: String!, title: String!, id: ID!): Job!
+    createJob(
+      status: String!
+      company: String!
+      title: String!
+      id: ID!
+    ): JobResult!
     deleteJob(id: ID!): Job!
     updateJob(
       status: String
@@ -41,9 +48,9 @@ const typeDefs = gql`
       url: String
       notes: String
       jobID: ID!
-    ): Job!
+    ): JobResult!
 
-    createInterview(title: String!, jobsID: ID!): Interview!
+    createInterview(title: String!, jobsID: ID!): InterviewResult!
     deleteInterview(interviewID: ID!): Interview!
     updateInterview(
       title: String
@@ -51,9 +58,9 @@ const typeDefs = gql`
       time: String
       notes: String
       interviewID: ID!
-    ): Interview!
+    ): InterviewResult!
 
-    createContact(name: String!, jobID: ID!): Contact!
+    createContact(name: String!, jobID: ID!): ContactResult!
     deleteContact(contactID: ID!): Contact!
     updateContact(
       name: String
@@ -62,7 +69,7 @@ const typeDefs = gql`
       email: String
       notes: String
       contactID: ID
-    ): Contact!
+    ): ContactResult!
   }
 
   type Unauthenticated {
