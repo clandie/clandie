@@ -1,3 +1,5 @@
+const { generateUpdateText, generateUpdateParams } = require('./generateQuery');
+
 module.exports = {
   Query: {
     jobs: async (parent, { id }, { postgresDB }) => {
@@ -69,28 +71,7 @@ module.exports = {
         jobID,
       } = args;
 
-      // generate query text for PostgresQL based on user input
-      let finalText = ``;
-      const generateQueryText = () => {
-        const text = `UPDATE jobs SET `;
-        const arrayOfArgs = Object.keys(args);
-        let i = 0;
-        for (i; i < arrayOfArgs.length - 1; i++) {
-          /* If the user wanted to update a field, add to text string. If they did not
-          want to update a certain field we recieve an empty string, so we remove this 
-          argument from our list of args, decrementing i to account for the missing arg. */
-          if (args[arrayOfArgs[i]] !== '') {
-            text += `${arrayOfArgs[i]}=$${i + 1}`;
-            text += `, `;
-          } else arrayOfArgs.splice(i--, 1);
-        }
-        // account for extra comma at end of argument list
-        text[text.length - 2] === ','
-          ? (finalText = text.slice(0, text.length - 2))
-          : (finalText = text);
-        finalText += ` WHERE _id=$${i + 1} RETURNING *`;
-      };
-      generateQueryText();
+      const text = generateUpdateText('jobs', args);
 
       const paramsUnfiltered = [
         status,
@@ -102,14 +83,9 @@ module.exports = {
         notes,
         jobID,
       ];
-      const params = [];
-      for (let i = 0; i < paramsUnfiltered.length; i++) {
-        if (paramsUnfiltered[i] !== '' && paramsUnfiltered[i] !== null) {
-          params.push(paramsUnfiltered[i]);
-        }
-      }
+      const params = generateUpdateParams(paramsUnfiltered);
 
-      const updatedJob = await postgresDB.query(finalText, params);
+      const updatedJob = await postgresDB.query(text, params);
       return updatedJob.rows[0];
     },
   },
