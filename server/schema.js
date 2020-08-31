@@ -7,7 +7,7 @@ const typeDefs = gql`
   union UserResult = User | Unauthenticated
   union BoardResult = Board | BadUserInput
   union JobResult = Job | BadUserInput
-  # union ContactResult = Contact | BadUserInput
+  union ContactResult = Contact | BadUserInput
   union InterviewResult = Interview | BadUserInput
 
   type Query {
@@ -64,7 +64,7 @@ const typeDefs = gql`
       email: String
       notes: String
       contactID: ID
-    ): Contact!
+    ): ContactResult!
   }
 
   type Unauthenticated {

@@ -17,7 +17,7 @@ import userResolvers, { User, UserResult } from './resolvers/userResolvers';
 import boardResolvers, { Board, BoardResult } from './resolvers/boardResolvers';
 import jobResolvers, { Job, JobResult } from './resolvers/jobResolvers';
 import Interview, { InterviewResult } from './resolvers/interviewResolvers';
-import Contact from './resolvers/contactResolvers';
+import Contact, { ContactResult } from './resolvers/contactResolvers';
 import db from './models/dbModel';
 
 // app.use(cors());
@@ -54,6 +54,7 @@ const startApolloServer = async () => {
       UserResult,
       BoardResult,
       JobResult,
+      ContactResult,
       InterviewResult,
     },
     engine: {
