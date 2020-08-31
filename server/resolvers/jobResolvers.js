@@ -42,16 +42,25 @@ module.exports = {
       { status, company, title, id },
       { postgresDB }
     ) => {
-      // TODO: Add error handling for bad user input
-      const text = `
+      try {
+        if (status === '' || company === '' || title === '')
+          throw new UserInputError();
+        const text = `
         INSERT INTO 
         jobs (status, company, title, location, salary, url, notes, boards_id) 
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
         RETURNING *
       `;
-      const params = [status, company, title, null, null, null, null, id];
-      const newJob = await postgresDB.query(text, params);
-      return newJob.rows[0];
+        const params = [status, company, title, null, null, null, null, id];
+        const newJob = await postgresDB.query(text, params);
+        return newJob.rows[0];
+      } catch (err) {
+        if (err.extensions.code === 'BAD_USER_INPUT')
+          err.extensions.message =
+            'Please enter a company and title in order to add a job.';
+        console.log('An error occurred in updateInterview:', err);
+        return err.extensions;
+      }
     },
 
     deleteJob: async (parent, { id }, { postgresDB }) => {
