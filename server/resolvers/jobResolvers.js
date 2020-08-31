@@ -1,3 +1,4 @@
+const { UserInputError } = require('apollo-server');
 const { generateUpdateText, generateUpdateParams } = require('./generateQuery');
 
 module.exports = {
@@ -25,6 +26,13 @@ module.exports = {
       const params = [jobId];
       const interviews = await postgresDB.query(text, params);
       return interviews.rows;
+    },
+  },
+
+  JobResult: {
+    __resolveType: (job, context, info) => {
+      if (job.company) return 'Job';
+      if (job.message) return 'BadUserInput';
     },
   },
 
@@ -60,33 +68,52 @@ module.exports = {
     },
 
     updateJob: async (parent, args, { postgresDB }) => {
-      const {
-        status,
-        company,
-        title,
-        location,
-        salary,
-        url,
-        notes,
-        jobID,
-      } = args;
+      try {
+        const {
+          status,
+          company,
+          title,
+          location,
+          salary,
+          url,
+          notes,
+          jobID,
+        } = args;
 
-      const text = generateUpdateText('jobs', args);
+        if (
+          status === '' &&
+          company === '' &&
+          title === '' &&
+          location === '' &&
+          salary === '' &&
+          url === '' &&
+          notes === ''
+        )
+          throw new UserInputError();
 
-      const paramsUnfiltered = [
-        status,
-        company,
-        title,
-        location,
-        salary === '' ? null : salary,
-        url,
-        notes,
-        jobID,
-      ];
-      const params = generateUpdateParams(paramsUnfiltered);
+        const text = generateUpdateText('jobs', args);
 
-      const updatedJob = await postgresDB.query(text, params);
-      return updatedJob.rows[0];
+        const paramsUnfiltered = [
+          status,
+          company,
+          title,
+          location,
+          salary === '' ? null : salary,
+          url,
+          notes,
+          jobID,
+        ];
+        const params = generateUpdateParams(paramsUnfiltered);
+
+        const updatedJob = await postgresDB.query(text, params);
+        return updatedJob.rows[0];
+      } catch (err) {
+        if (err.extensions.code === 'BAD_USER_INPUT')
+          err.extensions.message =
+            'Please enter information that you would like to update.';
+        console.log('An error occurred in updateInterview:', err);
+        return err.extensions;
+      }
     },
   },
 };

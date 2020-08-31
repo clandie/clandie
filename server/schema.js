@@ -6,7 +6,7 @@ const typeDefs = gql`
 
   union UserResult = User | Unauthenticated
   union BoardResult = Board | BadUserInput
-  # union JobResult = Job | BadUserInput
+  union JobResult = Job | BadUserInput
   # union ContactResult = Contact | BadUserInput
   union InterviewResult = Interview | BadUserInput
 
@@ -43,7 +43,7 @@ const typeDefs = gql`
       url: String
       notes: String
       jobID: ID!
-    ): Job!
+    ): JobResult!
 
     createInterview(title: String!, jobsID: ID!): Interview!
     deleteInterview(interviewID: ID!): Interview!
