@@ -50,7 +50,7 @@ const typeDefs = gql`
       jobID: ID!
     ): JobResult!
 
-    createInterview(title: String!, jobsID: ID!): Interview!
+    createInterview(title: String!, jobsID: ID!): InterviewResult!
     deleteInterview(interviewID: ID!): Interview!
     updateInterview(
       title: String
