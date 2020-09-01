@@ -55,19 +55,20 @@ module.exports = {
 
     updateInterview: async (parent, args, { postgresDB }) => {
       try {
-        // console.log(args);
-        // console.log('here');
         const { title, date, time, notes, interviewID } = args;
         if (title === '') throw new UserInputError();
 
         const text = generateUpdateText('interviews', args);
 
-        const unfilteredParams = [title, date, time, notes, interviewID];
-        const params = generateUpdateParams(unfilteredParams);
+        // TODO: probably not the best way to handle this, come back later
+        date = date === '' ? null : date;
+        time = time === '' ? null : time;
+        const params = [title, date, time, notes, interviewID];
 
         const updatedInterview = await postgresDB.query(text, params);
         return updatedInterview.rows[0];
       } catch (err) {
+        console.log(err);
         if (err.extensions.code === 'BAD_USER_INPUT')
           err.extensions.message = 'Please add a title for your interview.';
         console.log('An error occurred in updateInterview:', err);
