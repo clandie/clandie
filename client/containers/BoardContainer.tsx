@@ -54,6 +54,10 @@ const mapDispatchToProps = (dispatch: any) => ({
     console.log('dispatched update details');
     dispatch(jobActions.updateDetails(detailsObj, boardId));
   },
+  deleteJob: (jobId: number, boardId: number) => {
+    console.log('dispatched delete job');
+    dispatch(jobActions.deleteJob(jobId, boardId));
+  },
 });
 
 type BoardProps = ReturnType<typeof mapStateToProps> &
@@ -229,6 +233,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
           selectedJob={this.state.selectedJob}
           updateDetails={this.props.updateDetails}
           boardId={this.props.boardId}
+          deleteJob={this.props.deleteJob}
         />
         <div className="boardContainer">
           <div className="boardHeader">

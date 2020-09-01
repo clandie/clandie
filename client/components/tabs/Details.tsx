@@ -15,6 +15,8 @@ interface IDetailProps {
     url: string;
   } | null;
   boardId: number;
+  deleteJob: (jobId: number, boardId: number) => void;
+  close: () => void;
 }
 interface IDetailState {
   // company?: string;
@@ -74,12 +76,13 @@ class Details extends Component<IDetailProps, IDetailState> {
         jobId: selectedJob._id,
       };
       updateDetails(detailsObj, boardId);
-
-      console.log('details', detailsObj);
     }
   }
 
   render() {
+    const { selectedJob, boardId, deleteJob, close } = this.props;
+    let jobId: number;
+    if (selectedJob !== null) jobId = selectedJob._id;
     return (
       <div className="detailsTab">
         <Form>
@@ -124,6 +127,15 @@ class Details extends Component<IDetailProps, IDetailState> {
           </Form.Group>
           <Button type="submit" onClick={this.handleSave}>
             Save
+          </Button>
+          <Button
+            className="delete"
+            onClick={() => {
+              deleteJob(jobId, boardId);
+              close();
+            }}
+          >
+            Delete
           </Button>
         </Form>
       </div>

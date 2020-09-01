@@ -140,3 +140,31 @@ export const updateDetails = (
       console.log('err in update details action', err);
     });
 };
+
+export const deleteJob = (jobId: number, boardId: number): AppThunk => async (
+  dispatch
+) => {
+  const query = `mutation DeleteJob($jobId: ID!) {
+    deleteJob(id: $jobId) {
+      company,
+      title,
+    }
+  }`;
+
+  fetch('/graphql', {
+    method: 'POST',
+    body: JSON.stringify({
+      query,
+      variables: { jobId },
+    }),
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log('deletedJob', data);
+      dispatch(getJob(boardId));
+    })
+    .catch((err) => {
+      console.log('err in delete job action', err);
+    });
+};
