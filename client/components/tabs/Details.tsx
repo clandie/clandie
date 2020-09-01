@@ -129,7 +129,7 @@ class Details extends Component<IDetailProps, IDetailState> {
             Save
           </Button>
           <Button
-            className="delete"
+            className="delete-btn"
             onClick={() => {
               deleteJob(jobId, boardId);
               close();
