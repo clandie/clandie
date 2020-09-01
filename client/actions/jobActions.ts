@@ -80,3 +80,91 @@ export const createJob = (jobObj: types.IJobInput): AppThunk => async (
       console.log('error in create job action', err);
     });
 };
+
+export const updateDetails = (
+  detailsObj: types.IDetails,
+  boardId: number
+): AppThunk => async (dispatch) => {
+  let {
+    status,
+    company,
+    title,
+    location,
+    salary,
+    url,
+    notes,
+    jobId,
+  } = detailsObj;
+  if (salary && typeof salary !== 'string') salary = salary.toString();
+  if (location === null) location = '';
+  if (salary === null) salary = '';
+  if (url === null) url = '';
+  if (notes === null) notes = '';
+
+  const query = `mutation UpdateDetails($status: String!, $company: String!, $title: String!, $location: String!, $salary: String!, $url: String!, $notes: String!, $jobId: ID!) {
+    updateJob(status: $status, company: $company, title: $title, location: $location, salary: $salary, url: $url, notes: $notes, jobID: $jobId) {
+      company,
+      title,
+      location,
+      salary,
+      url,
+      notes
+    }
+  }`;
+
+  fetch('/graphql', {
+    method: 'POST',
+    body: JSON.stringify({
+      query,
+      variables: {
+        status,
+        company,
+        title,
+        location,
+        salary,
+        url,
+        notes,
+        jobId,
+      },
+    }),
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log('data', data);
+    })
+    .then(() => {
+      dispatch(getJob(boardId));
+    })
+    .catch((err) => {
+      console.log('err in update details action', err);
+    });
+};
+
+export const deleteJob = (jobId: number, boardId: number): AppThunk => async (
+  dispatch
+) => {
+  const query = `mutation DeleteJob($jobId: ID!) {
+    deleteJob(id: $jobId) {
+      company,
+      title,
+    }
+  }`;
+
+  fetch('/graphql', {
+    method: 'POST',
+    body: JSON.stringify({
+      query,
+      variables: { jobId },
+    }),
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log('deletedJob', data);
+      dispatch(getJob(boardId));
+    })
+    .catch((err) => {
+      console.log('err in delete job action', err);
+    });
+};

@@ -250,4 +250,11 @@ body,
 
 .detailsTab {
   margin: 20px;
+
+  .delete-btn {
+    float: right;
+    background-color: $dark-lav;
+    color: white;
+    border: 1px solid $dark-lav;
+  }
 }
