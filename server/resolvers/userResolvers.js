@@ -18,6 +18,7 @@ module.exports = {
         if (!user.rows[0]) throw new AuthenticationError();
         return user.rows[0];
       } catch (err) {
+        console.log(err);
         if (err.extensions.code === 'UNAUTHENTICATED') {
           err.extensions.message =
             'User is not authenticated. Please log in or create an account.';
