@@ -103,12 +103,18 @@ export const updateDetails = (
 
   const query = `mutation UpdateDetails($status: String!, $company: String!, $title: String!, $location: String!, $salary: String!, $url: String!, $notes: String!, $jobId: ID!) {
     updateJob(status: $status, company: $company, title: $title, location: $location, salary: $salary, url: $url, notes: $notes, jobID: $jobId) {
-      company,
-      title,
-      location,
-      salary,
-      url,
-      notes
+      __typename
+      ... on Job {
+        company,
+        title,
+        location,
+        salary,
+        url,
+        notes
+      }
+      ... on BadUserInput {
+        message
+      }
     }
   }`;
 
