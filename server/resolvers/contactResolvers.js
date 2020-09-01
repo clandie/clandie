@@ -55,14 +55,7 @@ module.exports = {
     updateContact: async (parent, args, { postgresDB }) => {
       try {
         const { name, title, phone, email, notes, contactID } = args;
-        if (
-          name === '' &&
-          title === '' &&
-          phone === '' &&
-          email === '' &&
-          notes === ''
-        )
-          throw new UserInputError();
+        if (name === '' &&) throw new UserInputError();
 
         const text = generateUpdateText('contacts', args);
 
@@ -80,7 +73,7 @@ module.exports = {
       } catch (err) {
         if (err.extensions.code === 'BAD_USER_INPUT')
           err.extensions.message =
-            'Please enter information that you would like to update.';
+            'Please make sure that you entered a name for this contact.';
         console.log('An error occurred in updateInterview:', err);
         return err.extensions;
       }
