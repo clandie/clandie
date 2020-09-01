@@ -58,10 +58,8 @@ module.exports = {
         // console.log(args);
         // console.log('here');
         const { title, date, time, notes, interviewID } = args;
-        if (title === '' && date === '' && time === '' && notes === '') {
-          // console.log('in conditional');
-          throw new UserInputError();
-        }
+        if (title === '') throw new UserInputError();
+
         const text = generateUpdateText('interviews', args);
 
         const unfilteredParams = [title, date, time, notes, interviewID];
@@ -71,8 +69,7 @@ module.exports = {
         return updatedInterview.rows[0];
       } catch (err) {
         if (err.extensions.code === 'BAD_USER_INPUT')
-          err.extensions.message =
-            'Please enter information that you would like to update.';
+          err.extensions.message = 'Please add a title for your interview.';
         console.log('An error occurred in updateInterview:', err);
         return err.extensions;
       }
