@@ -93,7 +93,7 @@ module.exports = {
 
         const text = generateUpdateText('jobs', args);
 
-        const paramsUnfiltered = [
+        const params = [
           status,
           company,
           title,
@@ -103,7 +103,6 @@ module.exports = {
           notes,
           jobID,
         ];
-        const params = generateUpdateParams(paramsUnfiltered);
 
         const updatedJob = await postgresDB.query(text, params);
         return updatedJob.rows[0];
