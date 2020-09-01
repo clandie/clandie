@@ -89,20 +89,11 @@ module.exports = {
           jobID,
         } = args;
 
-        if (
-          status === '' &&
-          company === '' &&
-          title === '' &&
-          location === '' &&
-          salary === '' &&
-          url === '' &&
-          notes === ''
-        )
-          throw new UserInputError();
+        if (company === '' && title === '') throw new UserInputError();
 
         const text = generateUpdateText('jobs', args);
 
-        const paramsUnfiltered = [
+        const params = [
           status,
           company,
           title,
@@ -112,14 +103,13 @@ module.exports = {
           notes,
           jobID,
         ];
-        const params = generateUpdateParams(paramsUnfiltered);
 
         const updatedJob = await postgresDB.query(text, params);
         return updatedJob.rows[0];
       } catch (err) {
         if (err.extensions.code === 'BAD_USER_INPUT')
           err.extensions.message =
-            'Please enter information that you would like to update.';
+            'Please make sure that your job has a company and title.';
         console.log('An error occurred in updateInterview:', err);
         return err.extensions;
       }
