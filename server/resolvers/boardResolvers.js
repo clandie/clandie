@@ -100,7 +100,8 @@ module.exports = {
         return updatedBoard.rows[0];
       } catch (err) {
         if (err.extensions.code === 'BAD_USER_INPUT') {
-          err.extensions.message = 'Please enter a new name for your board.';
+          err.extensions.message =
+            'Please enter a name for your board, or make sure that you are not using a duplicate name.';
           return err.extensions;
         }
         return err;
