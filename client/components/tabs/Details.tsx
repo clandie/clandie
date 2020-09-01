@@ -125,9 +125,6 @@ class Details extends Component<IDetailProps, IDetailState> {
               onChange={this.handleChange}
             />
           </Form.Group>
-          <Button type="submit" onClick={this.handleSave}>
-            Save
-          </Button>
           <Button
             className="delete-btn"
             onClick={() => {
@@ -136,6 +133,9 @@ class Details extends Component<IDetailProps, IDetailState> {
             }}
           >
             Delete
+          </Button>
+          <Button className="save-btn" type="submit" onClick={this.handleSave}>
+            Save
           </Button>
         </Form>
       </div>
