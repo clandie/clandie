@@ -6,7 +6,9 @@ const typeDefs = gql`
 
   union UserResult = User | Unauthenticated
   union BoardResult = Board | BadUserInput
-  # union JobResult = Job | BadUserInput
+  union JobResult = Job | BadUserInput
+  union ContactResult = Contact | BadUserInput
+  union InterviewResult = Interview | BadUserInput
 
   type Query {
     user(email: String!, password: String!): UserResult!
@@ -30,7 +32,12 @@ const typeDefs = gql`
     deleteBoard(id: ID!): Board!
     updateBoard(name: String, boardID: ID!): BoardResult!
 
-    createJob(status: String!, company: String!, title: String!, id: ID!): Job!
+    createJob(
+      status: String!
+      company: String!
+      title: String!
+      id: ID!
+    ): JobResult!
     deleteJob(id: ID!): Job!
     updateJob(
       status: String
@@ -41,15 +48,28 @@ const typeDefs = gql`
       url: String
       notes: String
       jobID: ID!
-    ): Job!
+    ): JobResult!
 
-    createInterview(title: String!, jobsID: ID!): Interview!
+    createInterview(title: String!, jobsID: ID!): InterviewResult!
     deleteInterview(interviewID: ID!): Interview!
-    # updateInterview(): Interview!
+    updateInterview(
+      title: String
+      date: String
+      time: String
+      notes: String
+      interviewID: ID!
+    ): InterviewResult!
 
-    createContact(name: String!, jobID: ID!): Contact!
+    createContact(name: String!, jobID: ID!): ContactResult!
     deleteContact(contactID: ID!): Contact!
-    # updateContact(): Contact!
+    updateContact(
+      name: String
+      title: String
+      phone: String
+      email: String
+      notes: String
+      contactID: ID
+    ): ContactResult!
   }
 
   type Unauthenticated {
@@ -86,7 +106,6 @@ const typeDefs = gql`
     url: String
     notes: String
     boards_id: ID!
-    interviews_id: ID!
     contacts: [Contact!]
     interviews: [Interview!]
   }
@@ -98,7 +117,6 @@ const typeDefs = gql`
     phone: String
     email: String
     notes: String
-    # connect to job thru jobs_id
     jobs_id: ID!
   }
 
@@ -108,6 +126,7 @@ const typeDefs = gql`
     date: Date
     time: Date
     notes: String
+    jobs_id: ID!
   }
 `;
 

@@ -1,3 +1,6 @@
+const { UserInputError } = require('apollo-server');
+const { generateUpdateText, generateUpdateParams } = require('./generateQuery');
+
 module.exports = {
   Query: {
     jobs: async (parent, { id }, { postgresDB }) => {
@@ -26,22 +29,38 @@ module.exports = {
     },
   },
 
+  JobResult: {
+    __resolveType: (job, context, info) => {
+      if (job.company) return 'Job';
+      if (job.message) return 'BadUserInput';
+    },
+  },
+
   Mutation: {
     createJob: async (
       parent,
       { status, company, title, id },
       { postgresDB }
     ) => {
-      // TODO: Add error handling for bad user input
-      const text = `
+      try {
+        if (status === '' || company === '' || title === '')
+          throw new UserInputError();
+        const text = `
         INSERT INTO 
         jobs (status, company, title, location, salary, url, notes, boards_id) 
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
         RETURNING *
       `;
-      const params = [status, company, title, null, null, null, null, id];
-      const newJob = await postgresDB.query(text, params);
-      return newJob.rows[0];
+        const params = [status, company, title, null, null, null, null, id];
+        const newJob = await postgresDB.query(text, params);
+        return newJob.rows[0];
+      } catch (err) {
+        if (err.extensions.code === 'BAD_USER_INPUT')
+          err.extensions.message =
+            'Please enter a company and title in order to add a job.';
+        console.log('An error occurred in updateInterview:', err);
+        return err.extensions;
+      }
     },
 
     deleteJob: async (parent, { id }, { postgresDB }) => {
@@ -58,59 +77,42 @@ module.exports = {
     },
 
     updateJob: async (parent, args, { postgresDB }) => {
-      const {
-        status,
-        company,
-        title,
-        location,
-        salary,
-        url,
-        notes,
-        jobID,
-      } = args;
+      try {
+        const {
+          status,
+          company,
+          title,
+          location,
+          salary,
+          url,
+          notes,
+          jobID,
+        } = args;
 
-      // generate query text for PostgresQL based on user input
-      let finalText = ``;
-      const generateQueryText = () => {
-        const text = `UPDATE jobs SET `;
-        const arrayOfArgs = Object.keys(args);
-        let i = 0;
-        for (i; i < arrayOfArgs.length - 1; i++) {
-          /* If the user wanted to update a field, add to text string. If they did not
-          want to update a certain field we recieve an empty string, so we remove this 
-          argument from our list of args, decrementing i to account for the missing arg. */
-          if (args[arrayOfArgs[i]] !== '') {
-            text += `${arrayOfArgs[i]}=$${i + 1}`;
-            text += `, `;
-          } else arrayOfArgs.splice(i--, 1);
-        }
-        // account for extra comma at end of argument list
-        text[text.length - 2] === ','
-          ? (finalText = text.slice(0, text.length - 2))
-          : (finalText = text);
-        finalText += ` WHERE _id=$${i + 1} RETURNING *`;
-      };
-      generateQueryText();
+        if (company === '' && title === '') throw new UserInputError();
 
-      const paramsUnfiltered = [
-        status,
-        company,
-        title,
-        location,
-        salary === '' ? null : salary,
-        url,
-        notes,
-        jobID,
-      ];
-      const params = [];
-      for (let i = 0; i < paramsUnfiltered.length; i++) {
-        if (paramsUnfiltered[i] !== '' && paramsUnfiltered[i] !== null) {
-          params.push(paramsUnfiltered[i]);
-        }
+        const text = generateUpdateText('jobs', args);
+
+        const params = [
+          status,
+          company,
+          title,
+          location,
+          salary,
+          url,
+          notes,
+          jobID,
+        ];
+
+        const updatedJob = await postgresDB.query(text, params);
+        return updatedJob.rows[0];
+      } catch (err) {
+        if (err.extensions.code === 'BAD_USER_INPUT')
+          err.extensions.message =
+            'Please make sure that your job has a company and title.';
+        console.log('An error occurred in updateInterview:', err);
+        return err.extensions;
       }
-
-      const updatedJob = await postgresDB.query(finalText, params);
-      return updatedJob.rows[0];
     },
   },
 };

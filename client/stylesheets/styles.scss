@@ -250,4 +250,14 @@ body,
 
 .detailsTab {
   margin: 20px;
+
+  .delete-btn {
+    background-color: $dark-lav;
+    color: white;
+    border: 1px solid $dark-lav;
+  }
+
+  .save-btn {
+    float: right;
+  }
 }

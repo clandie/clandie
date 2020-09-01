@@ -15,9 +15,9 @@ import schema from './schema';
 
 import userResolvers, { User, UserResult } from './resolvers/userResolvers';
 import boardResolvers, { Board, BoardResult } from './resolvers/boardResolvers';
-import jobResolvers, { Job } from './resolvers/jobResolvers';
-import Interview from './resolvers/interviewResolvers';
-import Contact from './resolvers/contactResolvers';
+import jobResolvers, { Job, JobResult } from './resolvers/jobResolvers';
+import Interview, { InterviewResult } from './resolvers/interviewResolvers';
+import Contact, { ContactResult } from './resolvers/contactResolvers';
 import db from './models/dbModel';
 
 // app.use(cors());
@@ -53,6 +53,9 @@ const startApolloServer = async () => {
       Job,
       UserResult,
       BoardResult,
+      JobResult,
+      ContactResult,
+      InterviewResult,
     },
     engine: {
       reportSchema: true,

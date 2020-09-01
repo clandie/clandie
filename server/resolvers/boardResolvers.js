@@ -1,4 +1,5 @@
 const { UserInputError } = require('apollo-server');
+const { generateUpdateText, generateUpdateParams } = require('./generateQuery');
 
 module.exports = {
   Query: {
@@ -86,21 +87,25 @@ module.exports = {
       return deletedBoard.rows[0];
     },
 
-    updateBoard: async (parent, { name, boardID }, { postgresDB }) => {
+    updateBoard: async (parent, args, { postgresDB }) => {
       try {
         if (name === '' || !name) throw new UserInputError();
-        const text = `
-        UPDATE boards
-        SET name=$1
-        WHERE _id=$2
-        RETURNING *
-      `;
+
+        const { name, boardID } = args;
+        const text = generateUpdateText('boards', args);
+        //   const text = `
+        //   UPDATE boards
+        //   SET name=$1
+        //   WHERE _id=$2
+        //   RETURNING *
+        // `;
         const params = [name, boardID];
         const updatedBoard = await postgresDB.query(text, params);
         return updatedBoard.rows[0];
       } catch (err) {
         if (err.extensions.code === 'BAD_USER_INPUT') {
-          err.extensions.message = 'Please enter a new name for your board.';
+          err.extensions.message =
+            'Please enter a name for your board, or make sure that you are not using a duplicate name.';
           return err.extensions;
         }
         return err;
