@@ -98,7 +98,7 @@ module.exports = {
           company,
           title,
           location,
-          salary === '' ? null : salary,
+          salary,
           url,
           notes,
           jobID,
