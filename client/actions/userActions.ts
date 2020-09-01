@@ -92,14 +92,13 @@ export const verifyUser = (userObj: types.ILoginState): AppThunk => async (
   })
     .then((res) => res.json())
     .then((userAuthed) => {
-      if (userAuthed.data !== null) {
+      if (userAuthed.data.user._id) {
         console.log('success!');
         dispatch(setUserInfo(userAuthed.data.user));
         userId = userAuthed.data.user._id;
-        console.log(userId);
-      }
+      } else if (userAuthed.data.user.message)
+        return alert(userAuthed.data.user.message);
     })
-
     .then(() => {
       dispatch(getBoard(userId));
     })
