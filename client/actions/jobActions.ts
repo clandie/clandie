@@ -140,6 +140,7 @@ export const updateDetails = (
       console.log('data', data);
     })
     .then(() => {
+      //* refactor this - return jobs array from graphql query and dispatch object
       dispatch(getJob(boardId));
     })
     .catch((err) => {

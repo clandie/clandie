@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Column from './Column';
+import { DragDropContext } from 'react-beautiful-dnd';
 
 interface IBoardProps {
   boardId: number;
@@ -47,46 +48,52 @@ class Board extends Component<IBoardProps, IBoardState> {
     });
   }
 
+  onDragEnd = () => {
+    // TODO: reordering logic
+  };
+
   // render each column
   render() {
     const { open, allJobs, details } = this.props;
     return (
-      <div className="board">
-        <Column
-          name={'opportunities'}
-          open={open}
-          allJobs={allJobs}
-          details={details}
-        />
-        <span className="divider"></span>
-        <Column
-          name={'applied'}
-          open={open}
-          allJobs={allJobs}
-          details={details}
-        />
-        <span className="divider"></span>
-        <Column
-          name={'interviews'}
-          open={open}
-          allJobs={allJobs}
-          details={details}
-        />
-        <span className="divider"></span>
-        <Column
-          name={'offers'}
-          open={open}
-          allJobs={allJobs}
-          details={details}
-        />
-        <span className="divider"></span>
-        <Column
-          name={'rejected'}
-          open={open}
-          allJobs={allJobs}
-          details={details}
-        />
-      </div>
+      <DragDropContext onDragEnd={this.onDragEnd}>
+        <div className="board">
+          <Column
+            name={'opportunities'}
+            open={open}
+            allJobs={allJobs}
+            details={details}
+          />
+          <span className="divider"></span>
+          <Column
+            name={'applied'}
+            open={open}
+            allJobs={allJobs}
+            details={details}
+          />
+          <span className="divider"></span>
+          <Column
+            name={'interviews'}
+            open={open}
+            allJobs={allJobs}
+            details={details}
+          />
+          <span className="divider"></span>
+          <Column
+            name={'offers'}
+            open={open}
+            allJobs={allJobs}
+            details={details}
+          />
+          <span className="divider"></span>
+          <Column
+            name={'rejected'}
+            open={open}
+            allJobs={allJobs}
+            details={details}
+          />
+        </div>
+      </DragDropContext>
     );
   }
 }

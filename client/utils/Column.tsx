@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import JobCard from './JobCard';
+import { Droppable } from 'react-beautiful-dnd';
 
 interface IColumnProps {
   name: string;
@@ -21,7 +22,8 @@ interface IColumnProps {
 }
 const Column = (props: IColumnProps) => {
   const { allJobs, name, details } = props;
-  const jobs = [];
+  //* fix typing for jobs
+  const jobs: any[] = [];
   // place cards into the correct column
 
   if (allJobs !== undefined) {
@@ -33,6 +35,7 @@ const Column = (props: IColumnProps) => {
             title={allJobs[i].title}
             jobId={allJobs[i]._id}
             details={details}
+            index={i}
           />
         );
       }
@@ -40,19 +43,28 @@ const Column = (props: IColumnProps) => {
   }
 
   return (
-    <div className="column">
-      <h1>{props.name}</h1>
-      <Button
-        variant="light"
-        id={props.name}
-        className="addBtn"
-        onClick={(e) => props.open(e)}
-        block
-      >
-        +
-      </Button>
-      <div className="jobList">{jobs}</div>
-    </div>
+    <Droppable droppableId={props.name}>
+      {(provided) => (
+        <div
+          {...provided.droppableProps}
+          ref={provided.innerRef}
+          className="column"
+        >
+          <h1>{props.name}</h1>
+          <Button
+            variant="light"
+            id={props.name}
+            className="addBtn"
+            onClick={(e) => props.open(e)}
+            block
+          >
+            +
+          </Button>
+          <div className="jobList">{jobs}</div>
+          {provided.placeholder}
+        </div>
+      )}
+    </Droppable>
   );
 };
 
