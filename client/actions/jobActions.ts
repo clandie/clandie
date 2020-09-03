@@ -111,6 +111,7 @@ export const updateDetails = (
         salary,
         url,
         notes
+        # query for board here using board id, then query for all jobs associated with this board
       }
       ... on BadUserInput {
         message
