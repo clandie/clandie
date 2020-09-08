@@ -31,9 +31,9 @@ module.exports = {
   User: {
     boards: async (parent, args, { postgresDB }) => {
       try {
-        const id = parent._id;
+        const usersId = parent._id;
         const text = 'SELECT * FROM boards WHERE users_id=$1';
-        const params = [id];
+        const params = [usersId];
         const boards = await postgresDB.query(text, params);
         return boards.rows;
       } catch (err) {

@@ -3,13 +3,16 @@ const { generateUpdateText, generateUpdateParams } = require('./generateQuery');
 
 module.exports = {
   Query: {
-    // get boards through args upon user login
-    boards: async (parent, { id }, { postgresDB }) => {
-      const usersID = id;
-      const text = `SELECT * FROM boards WHERE users_id=$1`;
-      const params = [usersID];
-      const boards = await postgresDB.query(text, params);
-      return boards.rows;
+    boards: async (parent, { userID }, { postgresDB }) => {
+      try {
+        const text = `SELECT * FROM boards WHERE users_id=$1`;
+        const params = [userID];
+        const boards = await postgresDB.query(text, params);
+        return boards.rows;
+      } catch (err) {
+        console.log('An error occurred in boards resolver: ', err);
+        return err;
+      }
     },
   },
 

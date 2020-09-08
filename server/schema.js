@@ -12,9 +12,8 @@ const typeDefs = gql`
 
   type Query {
     user(email: String!, password: String!): UserResult!
-    users: [User!]
 
-    boards(id: ID!): [Board!]
+    boards(userID: ID!): [Board!]
 
     jobs(id: ID!): [Job!]
 

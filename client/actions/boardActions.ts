@@ -63,7 +63,7 @@ export const createBoard = (boardObj: types.IBoardInput): AppThunk => async (
 export const getBoard = (userId: number): AppThunk => async (dispatch) => {
   const query = `
   query GetBoard($userId: ID!) {
-    boards(id: $userId) {
+    boards(userID: $userId) {
       _id
       name
     }
