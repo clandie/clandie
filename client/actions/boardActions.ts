@@ -1,7 +1,11 @@
 import * as types from '../constants/types';
-import { SET_BOARD, GET_BOARD, CLEAR_BOARD } from '../constants/actionTypes';
+import {
+  SET_BOARD,
+  GET_BOARD,
+  CLEAR_BOARD,
+  GET_JOB,
+} from '../constants/actionTypes';
 import { AppThunk } from '../store';
-import { getJob } from './jobActions';
 
 /**
  * Redux thunk w/ TS - refer to AppThunk in store.ts
@@ -25,11 +29,15 @@ export const createBoard = (boardObj: types.IBoardInput): AppThunk => async (
   const userId = boardObj.user_id;
   const boardName = boardObj.name;
   const query = `mutation CreateBoard($boardName: String!, $userId: ID!) {
-    createBoard(name: $boardName, id: $userId) {
+    createBoard(name: $boardName, userID: $userId) {
       __typename
       ... on Board {
-        _id,
-        name,
+        _id
+        name
+        userBoards {
+          _id
+          name
+        }
       }
       ... on BadUserInput {
         message
@@ -43,17 +51,22 @@ export const createBoard = (boardObj: types.IBoardInput): AppThunk => async (
   })
     .then((res) => res.json())
     .then((boardData) => {
-      console.log('data', boardData);
       const { createBoard } = boardData.data;
       const newBoard = {
         id: createBoard._id,
         name: createBoard.name,
       };
       dispatch(setBoard(newBoard));
-      // dispatch getBoard after creating a new board to update state
-      dispatch(getBoard(userId));
-      // dispatch getJob so that the new board renders it's own jobs aka no jobs
-      dispatch(getJob(createBoard._id));
+      // dispatch get board after creating a new board to update state
+      dispatch({
+        type: GET_BOARD,
+        payload: createBoard.userBoards,
+      });
+      // dispatch get job so that the new board renders it's own jobs aka no jobs
+      dispatch({
+        type: GET_JOB,
+        payload: [],
+      });
     })
     .catch((err) => {
       console.log('addBoard fetch action error', err);
@@ -63,7 +76,7 @@ export const createBoard = (boardObj: types.IBoardInput): AppThunk => async (
 export const getBoard = (userId: number): AppThunk => async (dispatch) => {
   const query = `
   query GetBoard($userId: ID!) {
-    boards(id: $userId) {
+    boards(userID: $userId) {
       _id
       name
     }

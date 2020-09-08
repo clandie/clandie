@@ -17,19 +17,21 @@ class BoardModal extends Component<IModalProps> {
   render() {
     const { boards, show, user, close, userId, addBoard } = this.props;
     const boardCards = [];
-    for (let i = 0; i < boards.length; i++) {
-      boardCards.push(
-        <BoardCard
-          key={boards[i]._id}
-          id={boards[i]._id}
-          name={boards[i].name}
-          select={this.props.selectBoard}
-        />
-      );
+    if (boards !== undefined) {
+      for (let i = 0; i < boards.length; i++) {
+        boardCards.push(
+          <BoardCard
+            key={boards[i]._id}
+            id={boards[i]._id}
+            name={boards[i].name}
+            select={this.props.selectBoard}
+          />
+        );
+      }
     }
 
     // first time users will get a modal that asks them to create a board
-    if (boards.length === 0) {
+    if (boards && boards.length === 0) {
       return (
         <CreateBoardModal
           show={show}

@@ -15,7 +15,7 @@ export const clearJob = () => ({
 
 export const getJob = (boardId: number): AppThunk => async (dispatch) => {
   const query = `query GetJob($boardId: ID!){
-    jobs(id: $boardId) {
+    jobs(boardID: $boardId) {
       _id,
       status,
       company,
@@ -36,6 +36,7 @@ export const getJob = (boardId: number): AppThunk => async (dispatch) => {
   })
     .then((res) => res.json())
     .then((allJobs) => {
+      console.log('ALL JOBS: ', allJobs);
       dispatch({
         type: GET_JOB,
         payload: allJobs.data.jobs,
@@ -48,12 +49,19 @@ export const createJob = (jobObj: types.IJobInput): AppThunk => async (
 ) => {
   const { status, company, title, board_id } = jobObj;
   const query = `mutation CreateJob($status: String!, $company: String!, $title: String!, $board_id: ID!) {
-   createJob(status: $status, company: $company, title: $title, id: $board_id) { 
+   createJob(status: $status, company: $company, title: $title, boardID: $board_id) { 
       __typename
       ... on Job {
-        status,
-        company,
-        title
+        allJobs {
+          _id
+          status
+          company
+          title
+          location
+          salary
+          url
+          notes
+        }
       }
       ... on BadUserInput {
         message
@@ -71,9 +79,10 @@ export const createJob = (jobObj: types.IJobInput): AppThunk => async (
     .then((res) => res.json())
     .then((newJob) => {
       console.log('new job created', newJob);
-    })
-    .then(() => {
-      dispatch(getJob(board_id));
+      dispatch({
+        type: GET_JOB,
+        payload: newJob.data.createJob.allJobs,
+      });
     })
 
     .catch((err) => {
@@ -105,12 +114,16 @@ export const updateDetails = (
     updateJob(status: $status, company: $company, title: $title, location: $location, salary: $salary, url: $url, notes: $notes, jobID: $jobId) {
       __typename
       ... on Job {
-        company,
-        title,
-        location,
-        salary,
-        url,
-        notes
+        allJobs {
+          _id
+          status
+          company
+          title
+          location
+          salary
+          url
+          notes
+        }
       }
       ... on BadUserInput {
         message
@@ -138,10 +151,10 @@ export const updateDetails = (
     .then((res) => res.json())
     .then((data) => {
       console.log('data', data);
-    })
-    .then(() => {
-      //* refactor this - return jobs array from graphql query and dispatch object
-      dispatch(getJob(boardId));
+      dispatch({
+        type: GET_JOB,
+        payload: data.data.updateJob.allJobs,
+      });
     })
     .catch((err) => {
       console.log('err in update details action', err);
@@ -152,9 +165,17 @@ export const deleteJob = (jobId: number, boardId: number): AppThunk => async (
   dispatch
 ) => {
   const query = `mutation DeleteJob($jobId: ID!) {
-    deleteJob(id: $jobId) {
-      company,
-      title,
+    deleteJob(jobID: $jobId) {
+      allJobs {
+        _id
+        status
+        company
+        title
+        location
+        salary
+        url
+        notes
+      }
     }
   }`;
 
@@ -169,7 +190,10 @@ export const deleteJob = (jobId: number, boardId: number): AppThunk => async (
     .then((res) => res.json())
     .then((data) => {
       console.log('deletedJob', data);
-      dispatch(getJob(boardId));
+      dispatch({
+        type: GET_JOB,
+        payload: data.data.deleteJob.allJobs,
+      });
     })
     .catch((err) => {
       console.log('err in delete job action', err);
