@@ -15,7 +15,7 @@ export const clearJob = () => ({
 
 export const getJob = (boardId: number): AppThunk => async (dispatch) => {
   const query = `query GetJob($boardId: ID!){
-    jobs(id: $boardId) {
+    jobs(boardID: $boardId) {
       _id,
       status,
       company,
@@ -36,6 +36,7 @@ export const getJob = (boardId: number): AppThunk => async (dispatch) => {
   })
     .then((res) => res.json())
     .then((allJobs) => {
+      console.log('ALL JOBS: ', allJobs);
       dispatch({
         type: GET_JOB,
         payload: allJobs.data.jobs,
