@@ -76,13 +76,13 @@ interface SetBoard {
   };
 }
 
-interface BoardData {
-  boards: { _id: number; name: string }[];
-}
+// interface BoardData {
+//   boards: { _id: number; name: string }[];
+// }
 
 interface GetBoard {
   type: typeof GET_BOARD;
-  payload: BoardData;
+  payload: { _id: number; name: string }[];
 }
 
 interface SelectBoard {
