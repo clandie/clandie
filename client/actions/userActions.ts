@@ -9,13 +9,13 @@
  * ************************************
  */
 
-// import { ThunkAction } from 'redux-thunk';
-// import { UserState } from '../constants/stateTypes';
-// import { UserActionTypes, ADD_USER } from '../constants/actionTypes';
 import * as types from '../constants/types';
-import { SET_USER_INFO, CLEAR_USER_INFO } from '../constants/actionTypes';
+import {
+  SET_USER_INFO,
+  CLEAR_USER_INFO,
+  GET_BOARD,
+} from '../constants/actionTypes';
 import { AppThunk } from '../store';
-import { getBoard } from './boardActions';
 
 /**
  * Redux thunk w/ TS - refer to AppThunk in store.ts
@@ -37,7 +37,6 @@ export const clearUserInfo = () => ({
 export const addUser = (userObj: types.ISignupState): AppThunk => async (
   dispatch
 ) => {
-  console.log('adduser thunk', userObj);
   // fetch request to create user in db
   const userName = `${userObj.name}`;
   const userEmail = `${userObj.email}`;
@@ -58,7 +57,6 @@ export const addUser = (userObj: types.ISignupState): AppThunk => async (
   })
     .then((res) => res.json())
     .then((newUser) => {
-      console.log('user added', newUser);
       dispatch(setUserInfo(newUser.data.createUser));
     })
     .catch((err) => {
@@ -69,7 +67,7 @@ export const addUser = (userObj: types.ISignupState): AppThunk => async (
 export const verifyUser = (userObj: types.ILoginState): AppThunk => async (
   dispatch
 ) => {
-  let userId: number;
+  // let userId: number;
   const userEmail = `${userObj.email}`;
   const userPassword = `${userObj.password}`;
   const query = `query VerifyUser($userEmail: String!, $userPassword: String!) { 
@@ -78,6 +76,10 @@ export const verifyUser = (userObj: types.ILoginState): AppThunk => async (
       ...on User {
         _id
         name
+        boards {
+          _id
+          name
+        }
       }
       ... on Unauthenticated {
         message
@@ -92,15 +94,14 @@ export const verifyUser = (userObj: types.ILoginState): AppThunk => async (
   })
     .then((res) => res.json())
     .then((userAuthed) => {
-      if (userAuthed.data.user._id) {
-        console.log('success!');
-        dispatch(setUserInfo(userAuthed.data.user));
-        userId = userAuthed.data.user._id;
-      } else if (userAuthed.data.user.message)
-        return alert(userAuthed.data.user.message);
-    })
-    .then(() => {
-      dispatch(getBoard(userId));
+      const { user } = userAuthed.data;
+      if (user._id) {
+        dispatch(setUserInfo(user));
+        dispatch({
+          type: GET_BOARD,
+          payload: user.boards,
+        });
+      } else if (user.message) return alert(user.message);
     })
     .catch((err) => {
       console.log('verifyUser action fetch error', err);

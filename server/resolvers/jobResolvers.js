@@ -41,6 +41,18 @@ module.exports = {
         return err;
       }
     },
+    allJobs: async (parent, args, { postgresDB }) => {
+      try {
+        const boardId = parent.boards_id;
+        const text = 'SELECT * FROM jobs WHERE boards_id=$1';
+        const params = [boardId];
+        const jobs = await postgresDB.query(text, params);
+        return jobs.rows;
+      } catch (err) {
+        console.log('An error occurred in Job.allJobs resolver: ', err);
+        return err;
+      }
+    },
   },
 
   JobResult: {
