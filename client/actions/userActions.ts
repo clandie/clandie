@@ -9,9 +9,6 @@
  * ************************************
  */
 
-// import { ThunkAction } from 'redux-thunk';
-// import { UserState } from '../constants/stateTypes';
-// import { UserActionTypes, ADD_USER } from '../constants/actionTypes';
 import * as types from '../constants/types';
 import {
   SET_USER_INFO,
@@ -19,7 +16,6 @@ import {
   GET_BOARD,
 } from '../constants/actionTypes';
 import { AppThunk } from '../store';
-// import { getBoard } from './boardActions';
 
 /**
  * Redux thunk w/ TS - refer to AppThunk in store.ts
@@ -41,7 +37,6 @@ export const clearUserInfo = () => ({
 export const addUser = (userObj: types.ISignupState): AppThunk => async (
   dispatch
 ) => {
-  console.log('adduser thunk', userObj);
   // fetch request to create user in db
   const userName = `${userObj.name}`;
   const userEmail = `${userObj.email}`;
@@ -62,7 +57,6 @@ export const addUser = (userObj: types.ISignupState): AppThunk => async (
   })
     .then((res) => res.json())
     .then((newUser) => {
-      console.log('user added', newUser);
       dispatch(setUserInfo(newUser.data.createUser));
     })
     .catch((err) => {
@@ -102,7 +96,6 @@ export const verifyUser = (userObj: types.ILoginState): AppThunk => async (
     .then((userAuthed) => {
       const { user } = userAuthed.data;
       if (user._id) {
-        console.log('success!', user.boards);
         dispatch(setUserInfo(user));
         dispatch({
           type: GET_BOARD,
