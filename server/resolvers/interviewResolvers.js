@@ -3,12 +3,16 @@ const { generateUpdateText, generateUpdateParams } = require('./generateQuery');
 
 module.exports = {
   Query: {
-    interviews: async (parent, { id }, { postgresDB }) => {
-      const jobsID = id;
-      const text = `SELECT * FROM interviews WHERE jobs_id=$1`;
-      const params = [jobsID];
-      const interviews = await postgresDB.query(text, params);
-      return interviews.rows;
+    interviews: async (parent, { jobID }, { postgresDB }) => {
+      try {
+        const text = `SELECT * FROM interviews WHERE jobs_id=$1`;
+        const params = [jobID];
+        const interviews = await postgresDB.query(text, params);
+        return interviews.rows;
+      } catch (err) {
+        console.log('An error occurred in interviews resolver: ', err);
+        return err;
+      }
     },
   },
 
@@ -33,24 +37,29 @@ module.exports = {
         const newInterview = await postgresDB.query(text, params);
         return newInterview.rows[0];
       } catch (err) {
+        console.log('An error occurred in updateInterview resolver:', err);
         if (err.extensions.code === 'BAD_USER_INPUT')
           err.extensions.message =
             'Please enter a title to create this interview.';
-        console.log('An error occurred in updateInterview:', err);
         return err.extensions;
       }
     },
 
     deleteInterview: async (parent, { interviewID }, { postgresDB }) => {
-      const text = `
-        DELETE FROM
-        interviews
-        WHERE _id=$1
-        RETURNING *
-      `;
-      const params = [interviewID];
-      const deletedInterview = await postgresDB.query(text, params);
-      return deletedInterview.rows[0];
+      try {
+        const text = `
+          DELETE FROM
+          interviews
+          WHERE _id=$1
+          RETURNING *
+        `;
+        const params = [interviewID];
+        const deletedInterview = await postgresDB.query(text, params);
+        return deletedInterview.rows[0];
+      } catch (err) {
+        console.log('An error occurred in deleteInterview resolver: ', err);
+        return err;
+      }
     },
 
     updateInterview: async (parent, args, { postgresDB }) => {
@@ -60,7 +69,6 @@ module.exports = {
 
         const text = generateUpdateText('interviews', args);
 
-        // TODO: probably not the best way to handle this, come back later
         date = date === '' ? null : date;
         time = time === '' ? null : time;
         const params = [title, date, time, notes, interviewID];
@@ -68,10 +76,9 @@ module.exports = {
         const updatedInterview = await postgresDB.query(text, params);
         return updatedInterview.rows[0];
       } catch (err) {
-        console.log(err);
+        console.log('An error occurred in updateInterview resolver: ', err);
         if (err.extensions.code === 'BAD_USER_INPUT')
           err.extensions.message = 'Please add a title for your interview.';
-        console.log('An error occurred in updateInterview:', err);
         return err.extensions;
       }
     },

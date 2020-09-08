@@ -19,7 +19,7 @@ const typeDefs = gql`
 
     contacts(id: ID!): [Contact!]
 
-    interviews(id: ID!): [Interview!]
+    interviews(jobID: ID!): [Interview!]
   }
 
   type Mutation {
