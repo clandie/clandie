@@ -38,10 +38,12 @@ module.exports = {
         return newInterview.rows[0];
       } catch (err) {
         console.log('An error occurred in updateInterview resolver:', err);
-        if (err.extensions.code === 'BAD_USER_INPUT')
+        if (err.extensions.code === 'BAD_USER_INPUT') {
           err.extensions.message =
             'Please enter a title to create this interview.';
-        return err.extensions;
+          return err.extensions;
+        }
+        return err;
       }
     },
 
@@ -77,9 +79,11 @@ module.exports = {
         return updatedInterview.rows[0];
       } catch (err) {
         console.log('An error occurred in updateInterview resolver: ', err);
-        if (err.extensions.code === 'BAD_USER_INPUT')
+        if (err.extensions.code === 'BAD_USER_INPUT') {
           err.extensions.message = 'Please add a title for your interview.';
-        return err.extensions;
+          return err.extensions;
+        }
+        return err;
       }
     },
   },
