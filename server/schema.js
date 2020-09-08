@@ -12,15 +12,14 @@ const typeDefs = gql`
 
   type Query {
     user(email: String!, password: String!): UserResult!
-    users: [User!]
 
-    boards(id: ID!): [Board!]
+    boards(userID: ID!): [Board!]
 
-    jobs(id: ID!): [Job!]
+    jobs(boardID: ID!): [Job!]
 
-    contacts(id: ID!): [Contact!]
+    contacts(jobID: ID!): [Contact!]
 
-    interviews(id: ID!): [Interview!]
+    interviews(jobID: ID!): [Interview!]
   }
 
   type Mutation {
@@ -28,17 +27,17 @@ const typeDefs = gql`
     deleteUser(email: String!): User!
     # updateUser(name: String, email: String, password: String): User!
 
-    createBoard(name: String!, id: ID!): BoardResult!
-    deleteBoard(id: ID!): Board!
+    createBoard(name: String!, userID: ID!): BoardResult!
+    deleteBoard(boardID: ID!): Board!
     updateBoard(name: String, boardID: ID!): BoardResult!
 
     createJob(
       status: String!
       company: String!
       title: String!
-      id: ID!
+      boardID: ID!
     ): JobResult!
-    deleteJob(id: ID!): Job!
+    deleteJob(jobID: ID!): Job!
     updateJob(
       status: String
       company: String

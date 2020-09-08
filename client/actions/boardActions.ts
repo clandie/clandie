@@ -25,7 +25,7 @@ export const createBoard = (boardObj: types.IBoardInput): AppThunk => async (
   const userId = boardObj.user_id;
   const boardName = boardObj.name;
   const query = `mutation CreateBoard($boardName: String!, $userId: ID!) {
-    createBoard(name: $boardName, id: $userId) {
+    createBoard(name: $boardName, userID: $userId) {
       __typename
       ... on Board {
         _id,
@@ -63,7 +63,7 @@ export const createBoard = (boardObj: types.IBoardInput): AppThunk => async (
 export const getBoard = (userId: number): AppThunk => async (dispatch) => {
   const query = `
   query GetBoard($userId: ID!) {
-    boards(id: $userId) {
+    boards(userID: $userId) {
       _id
       name
     }
