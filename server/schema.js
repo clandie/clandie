@@ -17,7 +17,7 @@ const typeDefs = gql`
 
     jobs(boardID: ID!): [Job!]
 
-    contacts(id: ID!): [Contact!]
+    contacts(jobID: ID!): [Contact!]
 
     interviews(jobID: ID!): [Interview!]
   }
