@@ -38,7 +38,7 @@ module.exports = {
         return newContact.rows[0];
       } catch (err) {
         console.log('An error occurred in updateInterview resolver: ', err);
-        if (err.extensions.code === 'BAD_USER_INPUT') {
+        if (err.extensions && err.extensions.code === 'BAD_USER_INPUT') {
           err.extensions.message = 'Please enter the name of your contact.';
           return err.extensions;
         }
@@ -76,7 +76,7 @@ module.exports = {
         return updatedContact.rows[0];
       } catch (err) {
         console.log('An error occurred in updateInterview resolver: ', err);
-        if (err.extensions.code === 'BAD_USER_INPUT') {
+        if (err.extensions && err.extensions.code === 'BAD_USER_INPUT') {
           err.extensions.message =
             'Please make sure that you entered a name for this contact.';
           return err.extensions;

@@ -75,7 +75,7 @@ module.exports = {
         return newBoard.rows[0];
       } catch (err) {
         console.log('An error occurred in createBoard resolver: ', err);
-        if (err.extensions.code === 'BAD_USER_INPUT') {
+        if (err.extensions && err.extensions.code === 'BAD_USER_INPUT') {
           err.extensions.message =
             'Please enter a name for your board, or make sure that you are not using a duplicate name.';
           return err.extensions;
@@ -113,7 +113,7 @@ module.exports = {
         return updatedBoard.rows[0];
       } catch (err) {
         console.log('An error occurred in updateBoard: ', err);
-        if (err.extensions.code === 'BAD_USER_INPUT') {
+        if (err.extensions && err.extensions.code === 'BAD_USER_INPUT') {
           err.extensions.message =
             'Please enter a name for your board, or make sure that you are not using a duplicate name.';
           return err.extensions;

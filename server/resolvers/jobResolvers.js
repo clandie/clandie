@@ -91,7 +91,7 @@ module.exports = {
         return newJob.rows[0];
       } catch (err) {
         console.log('An error occurred in createJob resolver: ', err);
-        if (err.extensions.code === 'BAD_USER_INPUT') {
+        if (err.extensions && err.extensions.code === 'BAD_USER_INPUT') {
           err.extensions.message =
             'Please enter a company and title in order to add a job.';
           return err.extensions;
@@ -149,7 +149,7 @@ module.exports = {
         return updatedJob.rows[0];
       } catch (err) {
         console.log('An error occurred in updateJob resolver: ', err);
-        if (err.extensions.code === 'BAD_USER_INPUT') {
+        if (err.extensions && err.extensions.code === 'BAD_USER_INPUT') {
           err.extensions.message =
             'Please make sure that your job has a company and title.';
           return err.extensions;
