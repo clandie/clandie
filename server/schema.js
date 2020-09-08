@@ -15,7 +15,7 @@ const typeDefs = gql`
 
     boards(userID: ID!): [Board!]
 
-    jobs(id: ID!): [Job!]
+    jobs(boardID: ID!): [Job!]
 
     contacts(id: ID!): [Contact!]
 
@@ -35,9 +35,9 @@ const typeDefs = gql`
       status: String!
       company: String!
       title: String!
-      id: ID!
+      boardID: ID!
     ): JobResult!
-    deleteJob(id: ID!): Job!
+    deleteJob(jobID: ID!): Job!
     updateJob(
       status: String
       company: String
