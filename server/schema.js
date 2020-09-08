@@ -107,6 +107,7 @@ const typeDefs = gql`
     boards_id: ID!
     contacts: [Contact!]
     interviews: [Interview!]
+    allJobs: [Job!]
   }
 
   type Contact {
