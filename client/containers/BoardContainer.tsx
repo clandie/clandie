@@ -184,19 +184,21 @@ class BoardContainer extends Component<BoardProps, BoardState> {
   createDropdown() {
     const { boards, boardName } = this.props;
     const items: JSX.Element[] = [];
-    for (let i = 0; i < boards.length; i++) {
-      if (boards[i].name !== boardName) {
-        items.push(
-          <Dropdown.Item
-            id="dropItem"
-            onClick={() => this.selectBoard(boards[i]._id, boards[i].name)}
-          >
-            {boards[i].name}
-          </Dropdown.Item>
-        );
+    if (boards) {
+      for (let i = 0; i < boards.length; i++) {
+        if (boards[i].name !== boardName) {
+          items.push(
+            <Dropdown.Item
+              id="dropItem"
+              onClick={() => this.selectBoard(boards[i]._id, boards[i].name)}
+            >
+              {boards[i].name}
+            </Dropdown.Item>
+          );
+        }
       }
+      this.setState({ dropdownItems: items });
     }
-    this.setState({ dropdownItems: items });
   }
 
   render() {

@@ -37,9 +37,9 @@ class Board extends Component<IBoardProps, IBoardState> {
   }
 
   componentDidMount() {
-    this.props.getJob(this.props.boardId);
-
     const { boardId, boardName } = this.props;
+    if (boardId) this.props.getJob(this.props.boardId);
+
     //once board mounts, update id and name
     this.setState({
       id: boardId,

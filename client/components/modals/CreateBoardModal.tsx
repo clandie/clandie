@@ -39,7 +39,7 @@ class CreateBoardModal extends Component<IModalProps, IModalState> {
   render() {
     const { show, close, user, boards } = this.props;
     let header = 'Create a new board!';
-    if (boards.length === 0) {
+    if (boards && boards.length === 0) {
       header = `Welcome ${user}, create your first board!`;
     }
     return (
