@@ -1,5 +1,4 @@
 const { UserInputError } = require('apollo-server');
-const { generateUpdateText, generateUpdateParams } = require('./generateQuery');
 
 module.exports = {
   Query: {
@@ -64,12 +63,20 @@ module.exports = {
       }
     },
 
-    updateInterview: async (parent, args, { postgresDB }) => {
+    updateInterview: async (
+      parent,
+      { title, date, time, notes, interviewID },
+      { postgresDB }
+    ) => {
       try {
-        const { title, date, time, notes, interviewID } = args;
         if (title === '') throw new UserInputError();
 
-        const text = generateUpdateText('interviews', args);
+        const text = `
+          UPDATE interviews
+          SET title=$1, date=$2, time=$3, notes=$4
+          WHERE _id=$5
+          RETURNING *
+        `;
 
         date = date === '' ? null : date;
         time = time === '' ? null : time;
