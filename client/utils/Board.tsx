@@ -48,6 +48,7 @@ class Board extends Component<IBoardProps, IBoardState> {
     });
   }
 
+  // TODO: need to retype result
   onDragEnd = (result: any) => {
     // TODO: reordering logic
     const { destination, source, draggableId } = result;
