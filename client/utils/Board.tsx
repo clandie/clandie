@@ -48,8 +48,19 @@ class Board extends Component<IBoardProps, IBoardState> {
     });
   }
 
-  onDragEnd = () => {
+  onDragEnd = (result: any) => {
     // TODO: reordering logic
+    const { destination, source, draggableId } = result;
+
+    if (!destination) {
+      return;
+    }
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
   };
 
   // render each column
