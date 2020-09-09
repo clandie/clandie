@@ -106,7 +106,7 @@ export const updateDetails = (
   } = detailsObj;
   if (salary && typeof salary !== 'string') salary = salary.toString();
   if (location === null) location = '';
-  if (salary === null) salary = '';
+  if (salary === null || salary === 0) salary = '';
   if (url === null) url = '';
   if (notes === null) notes = '';
 

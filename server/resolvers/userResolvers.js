@@ -11,7 +11,7 @@ module.exports = {
         return user.rows[0];
       } catch (err) {
         console.log('An error occurred in user resolver: ', err);
-        if (err.extensions.code === 'UNAUTHENTICATED') {
+        if (err.extensions && err.extensions.code === 'UNAUTHENTICATED') {
           err.extensions.message =
             'User is not authenticated. Please log in or create an account.';
           return err.extensions;

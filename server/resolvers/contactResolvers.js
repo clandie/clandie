@@ -1,5 +1,4 @@
 const { UserInputError } = require('apollo-server');
-const { generateUpdateText } = require('./generateQuery');
 
 module.exports = {
   Query: {
@@ -38,7 +37,7 @@ module.exports = {
         return newContact.rows[0];
       } catch (err) {
         console.log('An error occurred in updateInterview resolver: ', err);
-        if (err.extensions.code === 'BAD_USER_INPUT') {
+        if (err.extensions && err.extensions.code === 'BAD_USER_INPUT') {
           err.extensions.message = 'Please enter the name of your contact.';
           return err.extensions;
         }
@@ -63,12 +62,20 @@ module.exports = {
       }
     },
 
-    updateContact: async (parent, args, { postgresDB }) => {
+    updateContact: async (
+      parent,
+      { name, title, phone, email, notes, contactID },
+      { postgresDB }
+    ) => {
       try {
-        const { name, title, phone, email, notes, contactID } = args;
         if (name === '') throw new UserInputError();
 
-        const text = generateUpdateText('contacts', args);
+        const text = `
+          UPDATE contacts
+          SET name=$1, title=$2, phone=$3, email=$4, notes=$5
+          WHERE _id=$6
+          RETURNING *
+        `;
 
         const params = [name, title, phone, email, notes, contactID];
 
@@ -76,7 +83,7 @@ module.exports = {
         return updatedContact.rows[0];
       } catch (err) {
         console.log('An error occurred in updateInterview resolver: ', err);
-        if (err.extensions.code === 'BAD_USER_INPUT') {
+        if (err.extensions && err.extensions.code === 'BAD_USER_INPUT') {
           err.extensions.message =
             'Please make sure that you entered a name for this contact.';
           return err.extensions;

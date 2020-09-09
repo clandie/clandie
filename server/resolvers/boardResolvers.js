@@ -1,5 +1,4 @@
 const { UserInputError } = require('apollo-server');
-const { generateUpdateText, generateUpdateParams } = require('./generateQuery');
 
 module.exports = {
   Query: {
@@ -75,7 +74,7 @@ module.exports = {
         return newBoard.rows[0];
       } catch (err) {
         console.log('An error occurred in createBoard resolver: ', err);
-        if (err.extensions.code === 'BAD_USER_INPUT') {
+        if (err.extensions && err.extensions.code === 'BAD_USER_INPUT') {
           err.extensions.message =
             'Please enter a name for your board, or make sure that you are not using a duplicate name.';
           return err.extensions;
@@ -101,19 +100,23 @@ module.exports = {
       }
     },
 
-    updateBoard: async (parent, args, { postgresDB }) => {
+    updateBoard: async (parent, { name, boardID }, { postgresDB }) => {
       try {
         if (name === '' || !name) throw new UserInputError();
 
-        const { name, boardID } = args;
-        const text = generateUpdateText('boards', args);
+        const text = `
+          UPDATE boards
+          SET name=$1
+          WHERE _id=$2
+          RETURNING *
+        `;
         const params = [name, boardID];
 
         const updatedBoard = await postgresDB.query(text, params);
         return updatedBoard.rows[0];
       } catch (err) {
         console.log('An error occurred in updateBoard: ', err);
-        if (err.extensions.code === 'BAD_USER_INPUT') {
+        if (err.extensions && err.extensions.code === 'BAD_USER_INPUT') {
           err.extensions.message =
             'Please enter a name for your board, or make sure that you are not using a duplicate name.';
           return err.extensions;

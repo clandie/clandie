@@ -1,5 +1,4 @@
 const { UserInputError } = require('apollo-server');
-const { generateUpdateText, generateUpdateParams } = require('./generateQuery');
 
 module.exports = {
   Query: {
@@ -91,7 +90,7 @@ module.exports = {
         return newJob.rows[0];
       } catch (err) {
         console.log('An error occurred in createJob resolver: ', err);
-        if (err.extensions.code === 'BAD_USER_INPUT') {
+        if (err.extensions && err.extensions.code === 'BAD_USER_INPUT') {
           err.extensions.message =
             'Please enter a company and title in order to add a job.';
           return err.extensions;
@@ -117,39 +116,39 @@ module.exports = {
       }
     },
 
-    updateJob: async (parent, args, { postgresDB }) => {
+    updateJob: async (
+      parent,
+      { status, company, title, location, salary, url, notes, jobID },
+      { postgresDB }
+    ) => {
       try {
-        const {
-          status,
-          company,
-          title,
-          location,
-          salary,
-          url,
-          notes,
-          jobID,
-        } = args;
+        if (company === '' || title === '') throw new UserInputError();
 
-        if (company === '' && title === '') throw new UserInputError();
-
-        const text = generateUpdateText('jobs', args);
+        const jobIDInt = Number(jobID);
+        const salaryInt = salary === '' ? null : Number(salary);
+        const text = `
+          UPDATE jobs
+          SET status=$1, company=$2, title=$3, location=$4, salary=$5, url=$6, notes=$7
+          WHERE _id=$8
+          RETURNING *
+        `;
 
         const params = [
           status,
           company,
           title,
           location,
-          salary,
+          salaryInt,
           url,
           notes,
-          jobID,
+          jobIDInt,
         ];
 
         const updatedJob = await postgresDB.query(text, params);
         return updatedJob.rows[0];
       } catch (err) {
         console.log('An error occurred in updateJob resolver: ', err);
-        if (err.extensions.code === 'BAD_USER_INPUT') {
+        if (err.extensions && err.extensions.code === 'BAD_USER_INPUT') {
           err.extensions.message =
             'Please make sure that your job has a company and title.';
           return err.extensions;

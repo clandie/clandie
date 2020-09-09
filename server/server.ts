@@ -76,15 +76,14 @@ const startApolloServer = async () => {
     res.status(404).send('Page Not Found');
   });
 
-  // global error handler
+  // global error handler will only catch errors for serving files - all other errors caught by graphql
   app.use(
     (err: Error, req: Request, res: Response, next: NextFunction): Response => {
-      const defaultErr = {
-        log: 'Express error handler caught unknown middleware error',
+      const errorObj = {
+        log: 'Express error handler caught unknown error',
         status: 400,
         message: { err: 'error occurred' },
       };
-      const errorObj = Object.assign({}, defaultErr, err);
       console.log(errorObj.log);
       return res.status(errorObj.status).json(errorObj.message);
     }
