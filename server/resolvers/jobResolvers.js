@@ -57,8 +57,9 @@ module.exports = {
 
   JobResult: {
     __resolveType: (job, context, info) => {
-      if (job.company) return 'Job';
+      console.log('job in __resolvetype', job);
       if (job.message) return 'BadUserInput';
+      if (job.company) return 'Job';
     },
   },
 
@@ -117,22 +118,20 @@ module.exports = {
       }
     },
 
-    updateJob: async (parent, args, { postgresDB }) => {
+    updateJob: async (
+      parent,
+      { status, company, title, location, salary, url, notes, jobID },
+      { postgresDB }
+    ) => {
       try {
-        const {
-          status,
-          company,
-          title,
-          location,
-          salary,
-          url,
-          notes,
-          jobID,
-        } = args;
+        if (company === '' || title === '') throw new UserInputError();
 
-        if (company === '' && title === '') throw new UserInputError();
-
-        const text = generateUpdateText('jobs', args);
+        const text = `
+          UPDATE jobs
+          SET status=$1, company=$2, title=$3, location=$4, salary=$5, url=$6, notes=$7
+          WHERE _id=$8
+          RETURNING *
+        `;
 
         const params = [
           status,
@@ -146,6 +145,7 @@ module.exports = {
         ];
 
         const updatedJob = await postgresDB.query(text, params);
+        console.log(updatedJob.rows);
         return updatedJob.rows[0];
       } catch (err) {
         console.log('An error occurred in updateJob resolver: ', err);
