@@ -125,6 +125,8 @@ module.exports = {
       try {
         if (company === '' || title === '') throw new UserInputError();
 
+        const jobIDInt = Number(jobID);
+        const salaryInt = Number(salary);
         const text = `
           UPDATE jobs
           SET status=$1, company=$2, title=$3, location=$4, salary=$5, url=$6, notes=$7
@@ -137,14 +139,13 @@ module.exports = {
           company,
           title,
           location,
-          salary,
+          salaryInt,
           url,
           notes,
-          jobID,
+          jobIDInt,
         ];
 
         const updatedJob = await postgresDB.query(text, params);
-        console.log(updatedJob.rows);
         return updatedJob.rows[0];
       } catch (err) {
         console.log('An error occurred in updateJob resolver: ', err);
