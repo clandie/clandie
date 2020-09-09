@@ -50,8 +50,8 @@ class Board extends Component<IBoardProps, IBoardState> {
 
   // TODO: need to retype result
   onDragEnd = (result: any) => {
-    // TODO: reordering logic
-    const { destination, source, draggableId } = result;
+    // TODO: reordering logic - include draggableId
+    const { destination, source } = result;
 
     if (!destination) {
       return;
