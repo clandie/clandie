@@ -56,9 +56,8 @@ module.exports = {
 
   JobResult: {
     __resolveType: (job, context, info) => {
-      console.log('job in __resolvetype', job);
-      if (job.message) return 'BadUserInput';
       if (job.company) return 'Job';
+      if (job.message) return 'BadUserInput';
     },
   },
 
@@ -126,7 +125,7 @@ module.exports = {
         if (company === '' || title === '') throw new UserInputError();
 
         const jobIDInt = Number(jobID);
-        const salaryInt = Number(salary);
+        const salaryInt = salary === '' ? null : Number(salary);
         const text = `
           UPDATE jobs
           SET status=$1, company=$2, title=$3, location=$4, salary=$5, url=$6, notes=$7
