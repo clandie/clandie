@@ -48,6 +48,7 @@ const typeDefs = gql`
       notes: String
       jobID: ID!
     ): JobResult!
+    updateStatus(jobID: ID!, status: String!): Job!
 
     createInterview(title: String!, jobsID: ID!): InterviewResult!
     deleteInterview(interviewID: ID!): Interview!

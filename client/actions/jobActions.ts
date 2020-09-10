@@ -198,3 +198,9 @@ export const deleteJob = (jobId: number, boardId: number): AppThunk => async (
       console.log('err in delete job action', err);
     });
 };
+
+export const updateStatus = (jobId: number, status: string): AppThunk => async (
+  dispatch
+) => {
+  // drag and drop action
+};
