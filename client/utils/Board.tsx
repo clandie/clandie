@@ -21,6 +21,7 @@ interface IBoardProps {
   getJob: (boardId: number) => void;
   details: (jobId: number) => void;
   updateStatus: (jobId: number, status: string) => void;
+  updateJobs: (allJobs: any[]) => void;
 }
 
 interface IBoardState {
@@ -50,11 +51,9 @@ class Board extends Component<IBoardProps, IBoardState> {
   }
 
   // TODO: need to retype result
-  onDragEnd = async (result: any) => {
-    console.log('drag result', result);
-    // TODO: reordering logic - include draggableId
+  onDragEnd = (result: any) => {
     const { destination, source, draggableId } = result;
-
+    // if no destination or if dropped in same location, return
     if (!destination) {
       return;
     }
@@ -64,16 +63,19 @@ class Board extends Component<IBoardProps, IBoardState> {
     ) {
       return;
     }
+    // update state before updating db
+    // TODO: deep clone allJobs array instead of using slice
+    const { allJobs, updateJobs } = this.props;
+    const copy = allJobs.slice();
+    for (let i = 0; i < copy.length; i++) {
+      if (copy[i]._id === draggableId) {
+        copy[i].status = destination.droppableId;
+      }
+    }
+    updateJobs(copy);
 
-    await new Promise(() => {
-      console.log('in promise');
-      return this.props.updateStatus(draggableId, destination.droppableId);
-    });
-
-    // when dropped in a different column, we must update the status
-    // console.log(draggableId, destination.droppableId);
-    // await this.props.updateStatus(draggableId, destination.droppableId);
-    console.log('updated');
+    // update in database
+    this.props.updateStatus(draggableId, destination.droppableId);
   };
 
   // render each column

@@ -11,6 +11,7 @@ import * as userActions from '../actions/userActions';
 import * as jobActions from '../actions/jobActions';
 import * as types from '../constants/types';
 import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
+import { GET_JOB } from '../constants/actionTypes';
 
 const mapStateToProps = (store: TAppState) => ({
   boardId: store.boards.id,
@@ -61,6 +62,14 @@ const mapDispatchToProps = (dispatch: any) => ({
   updateStatus: (jobId: number, status: string) => {
     console.log('dispatched update status');
     dispatch(jobActions.updateStatus(jobId, status));
+  },
+  // updateJobs is for dnd functionality - update state before updating db
+  updateJobs: (allJobs: any[]) => {
+    console.log('dispatched update jobs');
+    dispatch({
+      type: GET_JOB,
+      payload: allJobs,
+    });
   },
 });
 
@@ -269,6 +278,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
             allJobs={this.props.allJobs}
             details={this.renderDetailsModal}
             updateStatus={this.props.updateStatus}
+            updateJobs={this.props.updateJobs}
           />
         </div>
       </>
