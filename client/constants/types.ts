@@ -42,3 +42,11 @@ export interface IDetails {
   notes?: string;
   jobId: number;
 }
+
+export interface IInterviews {
+  title: String;
+  date: Date;
+  time: Date;
+  notes: String;
+  jobs_id: Number;
+}
