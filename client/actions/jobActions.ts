@@ -90,10 +90,9 @@ export const createJob = (jobObj: types.IJobInput): AppThunk => async (
     });
 };
 
-export const updateDetails = (
-  detailsObj: types.IDetails,
-  boardId: number
-): AppThunk => async (dispatch) => {
+export const updateDetails = (detailsObj: types.IDetails): AppThunk => async (
+  dispatch
+) => {
   let {
     status,
     company,

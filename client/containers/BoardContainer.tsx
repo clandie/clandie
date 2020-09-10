@@ -50,9 +50,9 @@ const mapDispatchToProps = (dispatch: any) => ({
     console.log('dispatched clear job');
     dispatch(jobActions.clearJob());
   },
-  updateDetails: (detailsObj: types.IDetails, boardId: number) => {
+  updateDetails: (detailsObj: types.IDetails) => {
     console.log('dispatched update details');
-    dispatch(jobActions.updateDetails(detailsObj, boardId));
+    dispatch(jobActions.updateDetails(detailsObj));
   },
   deleteJob: (jobId: number, boardId: number) => {
     console.log('dispatched delete job');

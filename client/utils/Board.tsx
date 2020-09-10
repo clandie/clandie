@@ -50,8 +50,9 @@ class Board extends Component<IBoardProps, IBoardState> {
 
   // TODO: need to retype result
   onDragEnd = (result: any) => {
+    console.log('drag result', result);
     // TODO: reordering logic - include draggableId
-    const { destination, source } = result;
+    const { destination, source, draggableId } = result;
 
     if (!destination) {
       return;
@@ -62,6 +63,8 @@ class Board extends Component<IBoardProps, IBoardState> {
     ) {
       return;
     }
+
+    // when dropped in a different column, we must update the status
   };
 
   // render each column
