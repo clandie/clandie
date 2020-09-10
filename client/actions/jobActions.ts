@@ -203,7 +203,7 @@ export const updateStatus = (jobId: number, status: string): AppThunk => async (
   dispatch
 ) => {
   // drag and drop action
-  const query = `mutation UpdateStatus($jobId: ID!, status: String!) {
+  const query = `mutation UpdateStatus($jobId: ID!, $status: String!) {
     updateStatus(jobID: $jobId, status: $status) {
       allJobs {
         _id

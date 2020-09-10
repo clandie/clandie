@@ -20,6 +20,7 @@ interface IBoardProps {
   open: (e: any) => void;
   getJob: (boardId: number) => void;
   details: (jobId: number) => void;
+  updateStatus: (jobId: number, status: string) => void;
 }
 
 interface IBoardState {
@@ -49,7 +50,7 @@ class Board extends Component<IBoardProps, IBoardState> {
   }
 
   // TODO: need to retype result
-  onDragEnd = (result: any) => {
+  onDragEnd = async (result: any) => {
     console.log('drag result', result);
     // TODO: reordering logic - include draggableId
     const { destination, source, draggableId } = result;
@@ -65,6 +66,9 @@ class Board extends Component<IBoardProps, IBoardState> {
     }
 
     // when dropped in a different column, we must update the status
+    // console.log(draggableId, destination.droppableId);
+    await this.props.updateStatus(draggableId, destination.droppableId);
+    console.log('updated');
   };
 
   // render each column

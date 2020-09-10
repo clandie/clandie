@@ -165,7 +165,8 @@ module.exports = {
         WHERE _id=$2
         RETURNING *
       `;
-        const params = [jobID, status];
+        const params = [status, jobID];
+        console.log('will update');
         const updatedStatus = await postgresDB.query(text, params);
         console.log('update complete', updatedStatus.rows);
         return updatedStatus.rows[0];
