@@ -167,6 +167,7 @@ module.exports = {
       `;
         const params = [jobID, status];
         const updatedStatus = await postgresDB.query(text, params);
+        console.log('update complete', updatedStatus.rows);
         return updatedStatus.rows[0];
       } catch (err) {
         console.log('An error occured in updateStatus resolver: ', err);

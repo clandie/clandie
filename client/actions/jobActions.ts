@@ -203,4 +203,38 @@ export const updateStatus = (jobId: number, status: string): AppThunk => async (
   dispatch
 ) => {
   // drag and drop action
+  const query = `mutation UpdateStatus($jobId: ID!, status: String!) {
+    updateStatus(jobID: $jobId, status: $status) {
+      allJobs {
+        _id
+        status
+        company
+        title
+        location
+        salary
+        url
+        notes
+      }
+    }
+  }`;
+
+  fetch('/graphql', {
+    method: 'POST',
+    body: JSON.stringify({
+      query,
+      variables: { jobId, status },
+    }),
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log('updatedStatus', data);
+      dispatch({
+        type: GET_JOB,
+        payload: data.data.updateStatus.allJobs,
+      });
+    })
+    .catch((err) => {
+      console.log('err in update status action', err);
+    });
 };
