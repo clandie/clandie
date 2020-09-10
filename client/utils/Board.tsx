@@ -65,9 +65,14 @@ class Board extends Component<IBoardProps, IBoardState> {
       return;
     }
 
+    await new Promise(() => {
+      console.log('in promise');
+      return this.props.updateStatus(draggableId, destination.droppableId);
+    });
+
     // when dropped in a different column, we must update the status
     // console.log(draggableId, destination.droppableId);
-    await this.props.updateStatus(draggableId, destination.droppableId);
+    // await this.props.updateStatus(draggableId, destination.droppableId);
     console.log('updated');
   };
 
