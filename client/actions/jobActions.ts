@@ -90,10 +90,9 @@ export const createJob = (jobObj: types.IJobInput): AppThunk => async (
     });
 };
 
-export const updateDetails = (
-  detailsObj: types.IDetails,
-  boardId: number
-): AppThunk => async (dispatch) => {
+export const updateDetails = (detailsObj: types.IDetails): AppThunk => async (
+  dispatch
+) => {
   let {
     status,
     company,
@@ -197,5 +196,45 @@ export const deleteJob = (jobId: number, boardId: number): AppThunk => async (
     })
     .catch((err) => {
       console.log('err in delete job action', err);
+    });
+};
+
+export const updateStatus = (jobId: number, status: string): AppThunk => async (
+  dispatch
+) => {
+  // drag and drop action
+  const query = `mutation UpdateStatus($jobId: ID!, $status: String!) {
+    updateStatus(jobID: $jobId, status: $status) {
+      allJobs {
+        _id
+        status
+        company
+        title
+        location
+        salary
+        url
+        notes
+      }
+    }
+  }`;
+
+  fetch('/graphql', {
+    method: 'POST',
+    body: JSON.stringify({
+      query,
+      variables: { jobId, status },
+    }),
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log('updatedStatus', data);
+      dispatch({
+        type: GET_JOB,
+        payload: data.data.updateStatus.allJobs,
+      });
+    })
+    .catch((err) => {
+      console.log('err in update status action', err);
     });
 };

@@ -156,5 +156,24 @@ module.exports = {
         return err;
       }
     },
+
+    updateStatus: async (parent, { jobID, status }, { postgresDB }) => {
+      try {
+        const text = `
+        UPDATE jobs
+        SET status=$1
+        WHERE _id=$2
+        RETURNING *
+      `;
+        const params = [status, jobID];
+        console.log('will update');
+        const updatedStatus = await postgresDB.query(text, params);
+        console.log('update complete', updatedStatus.rows);
+        return updatedStatus.rows[0];
+      } catch (err) {
+        console.log('An error occured in updateStatus resolver: ', err);
+        return err;
+      }
+    },
   },
 };

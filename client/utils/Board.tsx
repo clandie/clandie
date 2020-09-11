@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Column from './Column';
 import { DragDropContext } from 'react-beautiful-dnd';
+import _ from 'lodash';
 
 interface IBoardProps {
   boardId: number;
@@ -20,6 +21,8 @@ interface IBoardProps {
   open: (e: any) => void;
   getJob: (boardId: number) => void;
   details: (jobId: number) => void;
+  updateStatus: (jobId: number, status: string) => void;
+  updateJobs: (allJobs: any[]) => void;
 }
 
 interface IBoardState {
@@ -50,9 +53,8 @@ class Board extends Component<IBoardProps, IBoardState> {
 
   // TODO: need to retype result
   onDragEnd = (result: any) => {
-    // TODO: reordering logic - include draggableId
-    const { destination, source } = result;
-
+    const { destination, source, draggableId } = result;
+    // if no destination or if dropped in same location, return
     if (!destination) {
       return;
     }
@@ -62,6 +64,19 @@ class Board extends Component<IBoardProps, IBoardState> {
     ) {
       return;
     }
+    // update state before updating db
+    const { allJobs, updateJobs } = this.props;
+    // using lodash to deep clone allJobs array
+    const copy = _.cloneDeep(allJobs);
+    for (let i = 0; i < copy.length; i++) {
+      if (copy[i]._id === draggableId) {
+        copy[i].status = destination.droppableId;
+      }
+    }
+    updateJobs(copy);
+
+    // update in database
+    this.props.updateStatus(draggableId, destination.droppableId);
   };
 
   // render each column
