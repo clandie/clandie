@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Column from './Column';
 import { DragDropContext } from 'react-beautiful-dnd';
+import _ from 'lodash';
 
 interface IBoardProps {
   boardId: number;
@@ -64,9 +65,9 @@ class Board extends Component<IBoardProps, IBoardState> {
       return;
     }
     // update state before updating db
-    // TODO: deep clone allJobs array instead of using slice
     const { allJobs, updateJobs } = this.props;
-    const copy = allJobs.slice();
+    // using lodash to deep clone allJobs array
+    const copy = _.cloneDeep(allJobs);
     for (let i = 0; i < copy.length; i++) {
       if (copy[i]._id === draggableId) {
         copy[i].status = destination.droppableId;
