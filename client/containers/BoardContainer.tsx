@@ -9,6 +9,7 @@ import { TAppState } from '../store';
 import * as actions from '../actions/boardActions';
 import * as userActions from '../actions/userActions';
 import * as jobActions from '../actions/jobActions';
+import * as interviewActions from '../actions/interviewActions';
 import * as types from '../constants/types';
 import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
 import { GET_JOB } from '../constants/actionTypes';
@@ -70,6 +71,10 @@ const mapDispatchToProps = (dispatch: any) => ({
       type: GET_JOB,
       payload: allJobs,
     });
+  },
+  getInterview: (jobId: number) => {
+    console.log('dispatched get interview');
+    dispatch(interviewActions.getInterview(jobId));
   },
 });
 
@@ -249,6 +254,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
           updateDetails={this.props.updateDetails}
           boardId={this.props.boardId}
           deleteJob={this.props.deleteJob}
+          getInterview={this.props.getInterview}
         />
         <div className="boardContainer">
           <div className="boardHeader">

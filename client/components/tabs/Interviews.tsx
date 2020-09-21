@@ -7,8 +7,8 @@ import InterviewCard from '../../utils/InterviewCard';
 // import { ControlLabel } from 'react-bootstrap';
 // console.log('react bootstrap date picker:', DatePicker);
 
-interface IInterviewProps {
-  jobId: number;
+interface IInterviewsProps {
+  jobId: number | null;
   allInterviews:
     | {
         _id: number;
@@ -20,10 +20,28 @@ interface IInterviewProps {
     | [];
 }
 
-class Interviews extends Component {
-  constructor(props: IInterviewProps) {
+interface IInterviewsState {
+  interviews:
+    | {
+        title: string;
+        date: Date;
+        time: Date;
+        notes: string;
+      }[]
+    | [];
+}
+
+class Interviews extends Component<IInterviewsProps, IInterviewsState> {
+  constructor(props: IInterviewsProps) {
     super(props);
+    // this.state = {
+    //   interviews: [],
+    // };
   }
+
+  // componentDidMount() {
+  //   this.props.getInterview()
+  // }
 
   render() {
     // iterate over array of interviews to be rendered instead of rendering one InterviewCard

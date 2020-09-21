@@ -27,6 +27,10 @@ export const GET_JOB = 'GET_JOB;';
 export const CREATE_JOB = 'CREATE_JOB';
 export const CLEAR_JOB = 'CLEAR_JOB';
 
+// Interview Action Types
+export const GET_INTERVIEW = 'GET_INTERVIEW';
+export const CREATE_INTERVIEW = 'CREATE_INTERVIEW';
+
 //USER ACTION TYPES
 
 interface AddUser {
@@ -120,6 +124,26 @@ interface ClearJob {
   type: typeof CLEAR_JOB;
 }
 
+interface GetInterview {
+  type: typeof GET_INTERVIEW;
+  payload: {
+    interviews: {
+      title: string;
+      date: Date;
+      time: Date;
+      notes: string;
+    }[];
+  };
+}
+
+interface CreateInterview {
+  type: typeof CREATE_INTERVIEW;
+  payload: {
+    title: string;
+    job_id: number;
+  };
+}
+
 export type UserActionTypes =
   | AddUser
   | VerifyUser
@@ -134,3 +158,5 @@ export type BoardActionTypes =
   | ClearBoard;
 
 export type JobActionTypes = GetJob | CreateJob | ClearJob;
+
+export type InterviewActionTypes = GetInterview | CreateInterview;
