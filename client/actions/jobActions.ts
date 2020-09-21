@@ -24,6 +24,13 @@ export const getJob = (boardId: number): AppThunk => async (dispatch) => {
       salary,
       url,
       notes,
+      interviews{
+        _id,
+        title,
+        date,
+        time,
+        notes
+      }
     }
   }`;
   fetch('/graphql', {

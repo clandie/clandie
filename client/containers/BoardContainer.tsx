@@ -13,6 +13,7 @@ import * as interviewActions from '../actions/interviewActions';
 import * as types from '../constants/types';
 import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
 import { GET_JOB } from '../constants/actionTypes';
+// import Interviews from '../components/tabs/Interviews';
 
 const mapStateToProps = (store: TAppState) => ({
   boardId: store.boards.id,
@@ -96,6 +97,15 @@ interface BoardState {
     notes: string;
     salary: string;
     url: string;
+    interviews:
+      | {
+          _id: number;
+          title: string;
+          date: Date;
+          time: Date;
+          notes: string;
+        }[]
+      | null;
   } | null;
 
   dropdownItems: JSX.Element[] | [];
@@ -189,10 +199,12 @@ class BoardContainer extends Component<BoardProps, BoardState> {
     console.log('clicked job card');
     const { allJobs } = this.props;
     let selectedJob;
+    // let allInterviews;
     for (let i = 0; i < allJobs.length; i++) {
       if (allJobs[i]._id === jobId) {
         selectedJob = allJobs[i];
         console.log('selected', selectedJob);
+        // allInterviews = selectedJob[Interviews];
       }
     }
     this.setState({ selectedJob, showDetailsModal: true });
@@ -251,6 +263,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
           show={this.state.showDetailsModal}
           close={this.handleClose}
           selectedJob={this.state.selectedJob}
+          // allInterviews={this.state.selectedJob.interviews}
           updateDetails={this.props.updateDetails}
           boardId={this.props.boardId}
           deleteJob={this.props.deleteJob}

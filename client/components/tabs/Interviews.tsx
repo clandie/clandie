@@ -17,7 +17,7 @@ interface IInterviewsProps {
         time: Date;
         notes: string;
       }[]
-    | [];
+    | null;
 }
 
 interface IInterviewsState {
@@ -45,16 +45,32 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
 
   render() {
     // iterate over array of interviews to be rendered instead of rendering one InterviewCard
+    const { allInterviews } = this.props;
+    const interviews = [];
+    if (allInterviews) {
+      for (let i = 0; i < allInterviews.length; i++) {
+        interviews.push(
+          <InterviewCard
+            title={allInterviews[i].title}
+            date={allInterviews[i].date}
+            time={allInterviews[i].time}
+            notes={allInterviews[i].notes}
+            jobId={allInterviews[i]._id}
+          ></InterviewCard>
+        );
+      }
+    }
 
     return (
       <div className="interviewsTab">
-        <InterviewCard
+        {/* <InterviewCard
           title={'test'}
           date={new Date()}
           time={new Date()}
           notes={'hi'}
           jobId={1}
-        />
+        /> */}
+        {interviews}
         <Accordion defaultActiveKey="0">
           <Card>
             <Accordion.Toggle as={Card.Header} eventKey="1">

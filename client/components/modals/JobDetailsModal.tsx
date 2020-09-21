@@ -17,6 +17,15 @@ interface IDetailsModalProps {
     notes: string;
     salary: string;
     url: string;
+    interviews:
+      | {
+          _id: number;
+          title: string;
+          date: Date;
+          time: Date;
+          notes: string;
+        }[]
+      | null;
   } | null;
   updateDetails: (detailsObj: IDetails, boardId: number) => void;
   boardId: number;
@@ -30,12 +39,14 @@ class JobDetailsModal extends Component<IDetailsModalProps> {
   render() {
     const { selectedJob } = this.props;
     // must check if selectedJob is not null so we don't get a type error
-    let company, title, allInterviews;
+    let company, title;
     let jobId = null;
+    let allInterviews = null;
     if (selectedJob !== null) {
       company = selectedJob.company;
       title = selectedJob.title;
-      allInterviews = this.props.getInterview(selectedJob._id);
+      // allInterviews = this.props.getInterview(selectedJob._id);
+      allInterviews = selectedJob.interviews;
       jobId = selectedJob._id;
     }
 
