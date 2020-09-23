@@ -4,7 +4,7 @@ import { IJobInput } from '../../constants/types';
 
 interface IJobModalProps {
   show: boolean;
-  column: string | null;
+  column: { columnName: string | null; columnOrder: number | null };
   boardId: number;
   createJob: (jobObj: IJobInput) => void;
   close: () => void;
@@ -35,10 +35,11 @@ class CreateJobModal extends Component<IJobModalProps, IJobModalState> {
   handleSave(e: any) {
     e.preventDefault();
     const jobObj: IJobInput = {
-      status: this.props.column,
+      status: this.props.column.columnName,
       company: this.state.company,
       title: this.state.title,
       board_id: this.props.boardId,
+      list_order: this.props.column.columnOrder,
     };
     this.props.createJob(jobObj);
     this.props.close();

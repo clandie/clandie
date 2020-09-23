@@ -24,6 +24,7 @@ export const getJob = (boardId: number): AppThunk => async (dispatch) => {
       salary,
       url,
       notes,
+      list_order,
     }
   }`;
   fetch('/graphql', {
@@ -44,12 +45,12 @@ export const getJob = (boardId: number): AppThunk => async (dispatch) => {
     });
 };
 
-export const createJob = (jobObj: types.IJobInput): AppThunk => async (
+export const createJob = (jobObj: types.IAddJobInput): AppThunk => async (
   dispatch
 ) => {
-  const { status, company, title, board_id } = jobObj;
-  const query = `mutation CreateJob($status: String!, $company: String!, $title: String!, $board_id: ID!) {
-   createJob(status: $status, company: $company, title: $title, boardID: $board_id) { 
+  const { status, company, title, board_id, list_order } = jobObj;
+  const query = `mutation CreateJob($status: String!, $company: String!, $title: String!, $board_id: ID!, $list_order: Int!) {
+   createJob(status: $status, company: $company, title: $title, boardID: $board_id, list_order: $list_order) { 
       __typename
       ... on Job {
         allJobs {
@@ -61,6 +62,7 @@ export const createJob = (jobObj: types.IJobInput): AppThunk => async (
           salary
           url
           notes
+          list_order
         }
       }
       ... on BadUserInput {
@@ -68,17 +70,28 @@ export const createJob = (jobObj: types.IJobInput): AppThunk => async (
       }
     }
   }`;
+
   fetch('/graphql', {
     method: 'POST',
     body: JSON.stringify({
       query,
-      variables: { status, company, title, board_id },
+      variables: { status, company, title, board_id, list_order },
     }),
     headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
   })
     .then((res) => res.json())
     .then((newJob) => {
       console.log('new job created', newJob);
+      // let actionStr, statusStr;
+      // if (status !== null) {
+      //   statusStr = status.toUpperCase();
+      //   actionStr = `UPDATE_${statusStr}`;
+      // }
+      const actionStr = `UPDATE_${status.toUpperCase()}`;
+      dispatch({
+        type: actionStr,
+        payload: [],
+      });
       dispatch({
         type: GET_JOB,
         payload: newJob.data.createJob.allJobs,

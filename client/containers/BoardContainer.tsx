@@ -20,6 +20,7 @@ const mapStateToProps = (store: TAppState) => ({
   user: store.users.name,
   userId: store.users.id,
   allJobs: store.jobs.jobs,
+  columns: store.columns,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
@@ -81,7 +82,7 @@ interface BoardState {
   showJobModal: boolean;
   showCreateBoard: boolean;
   showDetailsModal: boolean;
-  currentColumn: string | null;
+  currentColumn: { columnName: string | null; columnOrder: number | null };
   selectedJob: {
     _id: number;
     status: string;
@@ -91,6 +92,7 @@ interface BoardState {
     notes: string;
     salary: string;
     url: string;
+    list_order: number;
   } | null;
 
   dropdownItems: JSX.Element[] | [];
@@ -105,7 +107,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
       showJobModal: false,
       showCreateBoard: false,
       showDetailsModal: false,
-      currentColumn: null,
+      currentColumn: { columnName: null, columnOrder: null },
       selectedJob: null,
       dropdownItems: [],
     };
@@ -163,7 +165,13 @@ class BoardContainer extends Component<BoardProps, BoardState> {
   }
 
   handleOpen(e: any) {
-    this.setState({ showJobModal: true, currentColumn: e.target.id });
+    console.log('e.target.id', this.props.columns[e.target.id]);
+    //determine list order for column
+    const order = this.props.columns[e.target.id];
+    this.setState({
+      showJobModal: true,
+      currentColumn: { columnName: e.target.id, columnOrder: order },
+    });
   }
 
   handleClose() {
@@ -172,7 +180,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
       showJobModal: false,
       showCreateBoard: false,
       showDetailsModal: false,
-      currentColumn: null,
+      currentColumn: { columnName: null, columnOrder: null },
     });
   }
 

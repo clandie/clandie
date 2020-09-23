@@ -16,6 +16,7 @@ interface IBoardProps {
         notes: string | null;
         salary: string | null;
         url: string | null;
+        list_order: number;
       }[]
     | [];
   open: (e: any) => void;

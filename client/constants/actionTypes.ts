@@ -27,6 +27,13 @@ export const GET_JOB = 'GET_JOB;';
 export const CREATE_JOB = 'CREATE_JOB';
 export const CLEAR_JOB = 'CLEAR_JOB';
 
+// Column Action Types
+export const UPDATE_OPPORTUNITIES = 'UPDATE_OPPORTUNITIES';
+export const UPDATE_APPLIED = 'UPDATE_APPLIED';
+export const UPDATE_INTERVIEWS = 'UPDATE_INTERVIEWS';
+export const UPDATE_OFFERS = 'UPDATE_OFFERS';
+export const UPDATE_REJECTED = 'UPDATE_REJECTED';
+
 //USER ACTION TYPES
 
 interface AddUser {
@@ -120,6 +127,33 @@ interface ClearJob {
   type: typeof CLEAR_JOB;
 }
 
+// COLUMN ACTION TYPES
+
+interface UpdateOpportunities {
+  type: typeof UPDATE_OPPORTUNITIES;
+  payload: any[];
+}
+
+interface UpdateApplied {
+  type: typeof UPDATE_APPLIED;
+  payload: any[];
+}
+
+interface UpdateInterviews {
+  type: typeof UPDATE_INTERVIEWS;
+  payload: any[];
+}
+
+interface UpdateOffers {
+  type: typeof UPDATE_OFFERS;
+  payload: any[];
+}
+
+interface UpdateRejected {
+  type: typeof UPDATE_REJECTED;
+  payload: any[];
+}
+
 export type UserActionTypes =
   | AddUser
   | VerifyUser
@@ -134,3 +168,10 @@ export type BoardActionTypes =
   | ClearBoard;
 
 export type JobActionTypes = GetJob | CreateJob | ClearJob;
+
+export type ColumnActionTypes =
+  | UpdateOpportunities
+  | UpdateApplied
+  | UpdateInterviews
+  | UpdateOffers
+  | UpdateRejected;

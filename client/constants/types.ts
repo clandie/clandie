@@ -30,6 +30,15 @@ export interface IJobInput {
   company?: string;
   title?: string;
   board_id: number;
+  list_order: number | null;
+}
+
+export interface IAddJobInput {
+  status: string;
+  company: string;
+  title: string;
+  board_id: number;
+  list_order: number;
 }
 
 export interface IDetails {
