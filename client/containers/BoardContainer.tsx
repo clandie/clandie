@@ -82,7 +82,7 @@ interface BoardState {
   showJobModal: boolean;
   showCreateBoard: boolean;
   showDetailsModal: boolean;
-  currentColumn: { columnName: string | null; columnOrder: number | null };
+  currentColumn: { columnName: string; columnOrder: number | null };
   selectedJob: {
     _id: number;
     status: string;
@@ -107,7 +107,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
       showJobModal: false,
       showCreateBoard: false,
       showDetailsModal: false,
-      currentColumn: { columnName: null, columnOrder: null },
+      currentColumn: { columnName: '', columnOrder: null },
       selectedJob: null,
       dropdownItems: [],
     };
@@ -167,7 +167,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
   handleOpen(e: any) {
     console.log('e.target.id', this.props.columns[e.target.id]);
     //determine list order for column
-    const order = this.props.columns[e.target.id];
+    const order = this.props.columns[e.target.id].length;
     this.setState({
       showJobModal: true,
       currentColumn: { columnName: e.target.id, columnOrder: order },
@@ -180,7 +180,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
       showJobModal: false,
       showCreateBoard: false,
       showDetailsModal: false,
-      currentColumn: { columnName: null, columnOrder: null },
+      currentColumn: { columnName: '', columnOrder: null },
     });
   }
 
@@ -287,6 +287,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
             details={this.renderDetailsModal}
             updateStatus={this.props.updateStatus}
             updateJobs={this.props.updateJobs}
+            columns={this.props.columns}
           />
         </div>
       </>

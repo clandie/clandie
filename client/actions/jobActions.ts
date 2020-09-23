@@ -1,7 +1,7 @@
 import * as types from '../constants/types';
 import { AppThunk } from '../store';
 import { GET_JOB, CLEAR_JOB } from '../constants/actionTypes';
-
+import _ from 'lodash';
 /**
  * Redux thunk w/ TS - refer to AppThunk in store.ts
  * ThunkAction<void, TAppState, null, Action<string>> - general thunk action?
@@ -45,7 +45,7 @@ export const getJob = (boardId: number): AppThunk => async (dispatch) => {
     });
 };
 
-export const createJob = (jobObj: types.IAddJobInput): AppThunk => async (
+export const createJob = (jobObj: types.IJobInput): AppThunk => async (
   dispatch
 ) => {
   const { status, company, title, board_id, list_order } = jobObj;
@@ -63,7 +63,7 @@ export const createJob = (jobObj: types.IAddJobInput): AppThunk => async (
           url
           notes
           list_order
-        }
+        }  
       }
       ... on BadUserInput {
         message
@@ -81,20 +81,25 @@ export const createJob = (jobObj: types.IAddJobInput): AppThunk => async (
   })
     .then((res) => res.json())
     .then((newJob) => {
+      const { allJobs } = newJob.data.createJob;
       console.log('new job created', newJob);
-      // let actionStr, statusStr;
-      // if (status !== null) {
-      //   statusStr = status.toUpperCase();
-      //   actionStr = `UPDATE_${statusStr}`;
-      // }
       const actionStr = `UPDATE_${status.toUpperCase()}`;
+      let addedJob;
+      for (let i = 0; i < allJobs.length; i++) {
+        if (allJobs[i].list_order === list_order) {
+          addedJob = _.cloneDeep(allJobs[i]);
+        }
+      }
       dispatch({
         type: actionStr,
-        payload: [],
+        payload: {
+          job: addedJob,
+          list_order: list_order,
+        },
       });
       dispatch({
         type: GET_JOB,
-        payload: newJob.data.createJob.allJobs,
+        payload: allJobs,
       });
     })
 

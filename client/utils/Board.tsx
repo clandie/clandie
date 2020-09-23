@@ -19,6 +19,8 @@ interface IBoardProps {
         list_order: number;
       }[]
     | [];
+  //* Fix typing for columns
+  columns: any;
   open: (e: any) => void;
   getJob: (boardId: number) => void;
   details: (jobId: number) => void;
@@ -82,7 +84,7 @@ class Board extends Component<IBoardProps, IBoardState> {
 
   // render each column
   render() {
-    const { open, allJobs, details } = this.props;
+    const { open, allJobs, details, columns } = this.props;
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
         <div className="board">
@@ -91,6 +93,7 @@ class Board extends Component<IBoardProps, IBoardState> {
             open={open}
             allJobs={allJobs}
             details={details}
+            column={columns.opportunities}
           />
           <span className="divider"></span>
           <Column
@@ -98,6 +101,7 @@ class Board extends Component<IBoardProps, IBoardState> {
             open={open}
             allJobs={allJobs}
             details={details}
+            column={columns.applied}
           />
           <span className="divider"></span>
           <Column
@@ -105,6 +109,7 @@ class Board extends Component<IBoardProps, IBoardState> {
             open={open}
             allJobs={allJobs}
             details={details}
+            column={columns.interviews}
           />
           <span className="divider"></span>
           <Column
@@ -112,6 +117,7 @@ class Board extends Component<IBoardProps, IBoardState> {
             open={open}
             allJobs={allJobs}
             details={details}
+            column={columns.offers}
           />
           <span className="divider"></span>
           <Column
@@ -119,6 +125,7 @@ class Board extends Component<IBoardProps, IBoardState> {
             open={open}
             allJobs={allJobs}
             details={details}
+            column={columns.rejected}
           />
         </div>
       </DragDropContext>

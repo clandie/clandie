@@ -9,6 +9,8 @@
  * ************************************
  */
 
+import { IJobs } from './types';
+
 // User Action Types
 export const ADD_USER = 'ADD_USER';
 export const VERIFY_USER = 'VERIFY_USER';
@@ -131,27 +133,27 @@ interface ClearJob {
 
 interface UpdateOpportunities {
   type: typeof UPDATE_OPPORTUNITIES;
-  payload: any[];
+  payload: { job: IJobs; list_order: number };
 }
 
 interface UpdateApplied {
   type: typeof UPDATE_APPLIED;
-  payload: any[];
+  payload: { job: IJobs; list_order: number };
 }
 
 interface UpdateInterviews {
   type: typeof UPDATE_INTERVIEWS;
-  payload: any[];
+  payload: { job: IJobs; list_order: number };
 }
 
 interface UpdateOffers {
   type: typeof UPDATE_OFFERS;
-  payload: any[];
+  payload: { job: IJobs; list_order: number };
 }
 
 interface UpdateRejected {
   type: typeof UPDATE_REJECTED;
-  payload: any[];
+  payload: { job: IJobs; list_order: number };
 }
 
 export type UserActionTypes =

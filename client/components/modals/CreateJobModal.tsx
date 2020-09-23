@@ -4,7 +4,7 @@ import { IJobInput } from '../../constants/types';
 
 interface IJobModalProps {
   show: boolean;
-  column: { columnName: string | null; columnOrder: number | null };
+  column: { columnName: string; columnOrder: number | null };
   boardId: number;
   createJob: (jobObj: IJobInput) => void;
   close: () => void;
