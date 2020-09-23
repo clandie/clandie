@@ -23,6 +23,8 @@ const initialState: ColumnState = {
   rejected: [],
 };
 
+//* Logic in here is quite repetitive, may need to refactor to make it dynamic
+
 const columnReducer = (state = initialState, action: ColumnActionTypes) => {
   switch (action.type) {
     case UPDATE_OPPORTUNITIES:

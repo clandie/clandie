@@ -3,21 +3,12 @@ import { Tab, Tabs, Modal } from 'react-bootstrap';
 import Details from '../tabs/Details';
 import Interviews from '../tabs/Interviews';
 import Contacts from '../tabs/Contacts';
-import { IDetails } from '../../constants/types';
+import { IDetails, ISelectedJob } from '../../constants/types';
 
 interface IDetailsModalProps {
   show: boolean;
   close: () => void;
-  selectedJob: {
-    _id: number;
-    status: string;
-    company: string;
-    title: string;
-    location: string;
-    notes: string;
-    salary: string;
-    url: string;
-  } | null;
+  selectedJob: ISelectedJob | null;
   updateDetails: (detailsObj: IDetails, boardId: number) => void;
   boardId: number;
   deleteJob: (jobId: number, boardId: number) => void;

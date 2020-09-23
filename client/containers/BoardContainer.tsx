@@ -83,17 +83,7 @@ interface BoardState {
   showCreateBoard: boolean;
   showDetailsModal: boolean;
   currentColumn: { columnName: string; columnOrder: number | null };
-  selectedJob: {
-    _id: number;
-    status: string;
-    company: string;
-    title: string;
-    location: string;
-    notes: string;
-    salary: string;
-    url: string;
-    list_order: number;
-  } | null;
+  selectedJob: types.ISelectedJob | null;
 
   dropdownItems: JSX.Element[] | [];
 }
@@ -165,7 +155,6 @@ class BoardContainer extends Component<BoardProps, BoardState> {
   }
 
   handleOpen(e: any) {
-    console.log('e.target.id', this.props.columns[e.target.id]);
     //determine list order for column
     const order = this.props.columns[e.target.id].length;
     this.setState({

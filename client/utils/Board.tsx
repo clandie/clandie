@@ -2,25 +2,14 @@ import React, { Component } from 'react';
 import Column from './Column';
 import { DragDropContext } from 'react-beautiful-dnd';
 import _ from 'lodash';
+import * as types from '../constants/types';
+import { ColumnState } from '../constants/stateTypes';
 
 interface IBoardProps {
   boardId: number;
   boardName: string;
-  allJobs:
-    | {
-        _id: number;
-        status: string;
-        company: string;
-        title: string;
-        location: string | null;
-        notes: string | null;
-        salary: string | null;
-        url: string | null;
-        list_order: number;
-      }[]
-    | [];
-  //* Fix typing for columns
-  columns: any;
+  allJobs: types.IJobs[] | [];
+  columns: ColumnState;
   open: (e: any) => void;
   getJob: (boardId: number) => void;
   details: (jobId: number) => void;

@@ -83,13 +83,16 @@ export const createJob = (jobObj: types.IJobInput): AppThunk => async (
     .then((newJob) => {
       const { allJobs } = newJob.data.createJob;
       console.log('new job created', newJob);
+      // create string for action type -> column reducer
       const actionStr = `UPDATE_${status.toUpperCase()}`;
+      // find the job that was just added and use as payload
       let addedJob;
       for (let i = 0; i < allJobs.length; i++) {
         if (allJobs[i].list_order === list_order) {
           addedJob = _.cloneDeep(allJobs[i]);
         }
       }
+      // update column
       dispatch({
         type: actionStr,
         payload: {
@@ -97,6 +100,7 @@ export const createJob = (jobObj: types.IJobInput): AppThunk => async (
           list_order: list_order,
         },
       });
+      // update jobs
       dispatch({
         type: GET_JOB,
         payload: allJobs,

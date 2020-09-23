@@ -52,7 +52,7 @@ export interface IInterviews {
   jobs_id: Number;
 }
 
-export interface IJobsArray {
+export interface IJobs {
   _id: number;
   status: string;
   company: string;
@@ -63,16 +63,15 @@ export interface IJobsArray {
   url: string | null;
   list_order: number;
 }
-[];
 
-export interface IJobs {
+export interface ISelectedJob {
   _id: number;
   status: string;
   company: string;
   title: string;
-  location: string | null;
-  notes: string | null;
-  salary: string | null;
-  url: string | null;
+  location: string;
+  notes: string;
+  salary: string;
+  url: string;
   list_order: number;
 }
