@@ -6,7 +6,6 @@ import * as types from '../constants/types';
 
 interface IColumnProps {
   name: string;
-  allJobs: types.IJobs[] | [];
   column: types.IJobs[];
   open: (e: any) => void;
   details: (jobId: number) => void;

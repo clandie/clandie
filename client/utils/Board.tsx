@@ -73,14 +73,13 @@ class Board extends Component<IBoardProps, IBoardState> {
 
   // render each column
   render() {
-    const { open, allJobs, details, columns } = this.props;
+    const { open, details, columns } = this.props;
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
         <div className="board">
           <Column
             name={'opportunities'}
             open={open}
-            allJobs={allJobs}
             details={details}
             column={columns.opportunities}
           />
@@ -88,7 +87,6 @@ class Board extends Component<IBoardProps, IBoardState> {
           <Column
             name={'applied'}
             open={open}
-            allJobs={allJobs}
             details={details}
             column={columns.applied}
           />
@@ -96,7 +94,6 @@ class Board extends Component<IBoardProps, IBoardState> {
           <Column
             name={'interviews'}
             open={open}
-            allJobs={allJobs}
             details={details}
             column={columns.interviews}
           />
@@ -104,7 +101,6 @@ class Board extends Component<IBoardProps, IBoardState> {
           <Column
             name={'offers'}
             open={open}
-            allJobs={allJobs}
             details={details}
             column={columns.offers}
           />
@@ -112,7 +108,6 @@ class Board extends Component<IBoardProps, IBoardState> {
           <Column
             name={'rejected'}
             open={open}
-            allJobs={allJobs}
             details={details}
             column={columns.rejected}
           />
