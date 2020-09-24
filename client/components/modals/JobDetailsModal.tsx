@@ -30,24 +30,20 @@ interface IDetailsModalProps {
   updateDetails: (detailsObj: IDetails, boardId: number) => void;
   boardId: number;
   deleteJob: (jobId: number, boardId: number) => void;
-  getInterview: (jobId: number) => any;
 }
 
 class JobDetailsModal extends Component<IDetailsModalProps> {
-  componentDidMount() {}
-
   render() {
     const { selectedJob } = this.props;
     // must check if selectedJob is not null so we don't get a type error
     let company, title;
-    let jobId = null;
+    // let jobId = null;
     let allInterviews = null;
     if (selectedJob !== null) {
       company = selectedJob.company;
       title = selectedJob.title;
-      // allInterviews = this.props.getInterview(selectedJob._id);
       allInterviews = selectedJob.interviews;
-      jobId = selectedJob._id;
+      // jobId = selectedJob._id;
     }
 
     return (
@@ -79,11 +75,7 @@ class JobDetailsModal extends Component<IDetailsModalProps> {
               />
             </Tab>
             <Tab eventKey="interviews" title="Interviews">
-              <Interviews
-                allInterviews={allInterviews}
-                jobId={jobId}
-                // getInterview={this.props.getInterview}
-              />
+              <Interviews allInterviews={allInterviews} />
             </Tab>
             <Tab eventKey="contacts" title="Contacts">
               <Contacts />

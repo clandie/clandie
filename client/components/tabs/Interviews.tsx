@@ -3,12 +3,11 @@ import { Form, Col, Button, Card } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion';
 import InterviewCard from '../../utils/InterviewCard';
 // import DatePicker from 'react-bootstrap-date-picker';
-// import { IInterviews } from '../../constants/types';
 // import { ControlLabel } from 'react-bootstrap';
 // console.log('react bootstrap date picker:', DatePicker);
 
 interface IInterviewsProps {
-  jobId: number | null;
+  // jobId: number | null;
   allInterviews:
     | {
         _id: number;
@@ -21,27 +20,32 @@ interface IInterviewsProps {
 }
 
 interface IInterviewsState {
-  interviews:
+  listOfInterviews:
     | {
+        _id: number;
         title: string;
         date: Date;
         time: Date;
         notes: string;
       }[]
-    | [];
+    | null;
 }
 
 class Interviews extends Component<IInterviewsProps, IInterviewsState> {
   constructor(props: IInterviewsProps) {
     super(props);
-    // this.state = {
-    //   interviews: [],
-    // };
+    this.state = {
+      listOfInterviews: [],
+    };
   }
 
-  // componentDidMount() {
-  //   this.props.getInterview()
-  // }
+  componentDidMount() {
+    const { allInterviews } = this.props;
+
+    this.setState({
+      listOfInterviews: allInterviews,
+    });
+  }
 
   render() {
     // iterate over array of interviews to be rendered instead of rendering one InterviewCard
@@ -55,7 +59,7 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
             date={allInterviews[i].date}
             time={allInterviews[i].time}
             notes={allInterviews[i].notes}
-            jobId={allInterviews[i]._id}
+            // jobId={allInterviews[i]._id}
           ></InterviewCard>
         );
       }
@@ -63,13 +67,6 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
 
     return (
       <div className="interviewsTab">
-        {/* <InterviewCard
-          title={'test'}
-          date={new Date()}
-          time={new Date()}
-          notes={'hi'}
-          jobId={1}
-        /> */}
         {interviews}
         <Accordion defaultActiveKey="0">
           <Card>
@@ -103,7 +100,6 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
                       <Form.Control></Form.Control>
                     </Form.Group>
                   </Form.Row>
-                  <Button>Delete</Button>
                   <Button>Save</Button>
                 </Form>
               </Card.Body>

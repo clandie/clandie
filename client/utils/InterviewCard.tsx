@@ -7,7 +7,7 @@ interface IInterviewCardProps {
   date: Date;
   time: Date;
   notes: string;
-  jobId: number;
+  // jobId: number;
 }
 
 const InterviewCard = (props: IInterviewCardProps) => {
@@ -16,6 +16,7 @@ const InterviewCard = (props: IInterviewCardProps) => {
       <Card>
         <Accordion.Toggle as={Card.Header} eventKey="1">
           {props.title}
+          {/* <Button>Trash</Button> */}
         </Accordion.Toggle>
         <Accordion.Collapse eventKey="1">
           <Card.Body>
