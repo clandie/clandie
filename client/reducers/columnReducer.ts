@@ -6,6 +6,7 @@
 import { ColumnState } from '../constants/stateTypes';
 import {
   ColumnActionTypes,
+  UPDATE_COLUMNS,
   UPDATE_OPPORTUNITIES,
   UPDATE_APPLIED,
   UPDATE_INTERVIEWS,
@@ -16,7 +17,8 @@ import {
 import _ from 'lodash';
 import { IJobs } from '../constants/types';
 
-const initialState: ColumnState = {
+//* when typed to ColumnState, I get an error when accessing state (ie: state[column]) - need to look into this
+const initialState: any = {
   opportunities: [],
   applied: [],
   interviews: [],
@@ -28,50 +30,60 @@ const initialState: ColumnState = {
 
 const columnReducer = (state = initialState, action: ColumnActionTypes) => {
   switch (action.type) {
-    case UPDATE_OPPORTUNITIES:
-      const oppCopy: IJobs[] = _.cloneDeep(state.opportunities);
+    case UPDATE_COLUMNS:
+      const column = action.payload.status;
+      const copy: IJobs[] = _.cloneDeep(state[column]);
 
-      oppCopy[action.payload.list_order] = action.payload.job;
+      copy[action.payload.list_order] = action.payload.job;
       return {
         ...state,
-        opportunities: oppCopy,
+        [column]: copy,
       };
 
-    case UPDATE_APPLIED:
-      const appCopy: IJobs[] = _.cloneDeep(state.applied);
+    // case UPDATE_OPPORTUNITIES:
+    //   const oppCopy: IJobs[] = _.cloneDeep(state.opportunities);
 
-      appCopy[action.payload.list_order] = action.payload.job;
-      return {
-        ...state,
-        applied: appCopy,
-      };
+    //   oppCopy[action.payload.list_order] = action.payload.job;
+    //   return {
+    //     ...state,
+    //     opportunities: oppCopy,
+    //   };
 
-    case UPDATE_INTERVIEWS:
-      const intCopy: IJobs[] = _.cloneDeep(state.interviews);
+    // case UPDATE_APPLIED:
+    //   const appCopy: IJobs[] = _.cloneDeep(state.applied);
 
-      intCopy[action.payload.list_order] = action.payload.job;
-      return {
-        ...state,
-        interviews: intCopy,
-      };
+    //   appCopy[action.payload.list_order] = action.payload.job;
+    //   return {
+    //     ...state,
+    //     applied: appCopy,
+    //   };
 
-    case UPDATE_OFFERS:
-      const offCopy: IJobs[] = _.cloneDeep(state.offers);
+    // case UPDATE_INTERVIEWS:
+    //   const intCopy: IJobs[] = _.cloneDeep(state.interviews);
 
-      offCopy[action.payload.list_order] = action.payload.job;
-      return {
-        ...state,
-        offers: offCopy,
-      };
+    //   intCopy[action.payload.list_order] = action.payload.job;
+    //   return {
+    //     ...state,
+    //     interviews: intCopy,
+    //   };
 
-    case UPDATE_REJECTED:
-      const rejCopy: IJobs[] = _.cloneDeep(state.rejected);
+    // case UPDATE_OFFERS:
+    //   const offCopy: IJobs[] = _.cloneDeep(state.offers);
 
-      rejCopy[action.payload.list_order] = action.payload.job;
-      return {
-        ...state,
-        rejected: rejCopy,
-      };
+    //   offCopy[action.payload.list_order] = action.payload.job;
+    //   return {
+    //     ...state,
+    //     offers: offCopy,
+    //   };
+
+    // case UPDATE_REJECTED:
+    //   const rejCopy: IJobs[] = _.cloneDeep(state.rejected);
+
+    //   rejCopy[action.payload.list_order] = action.payload.job;
+    //   return {
+    //     ...state,
+    //     rejected: rejCopy,
+    //   };
 
     case CLEAR_COLUMNS:
       return {

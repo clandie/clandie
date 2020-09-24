@@ -97,6 +97,7 @@ export const createJob = (jobObj: types.IJobInput): AppThunk => async (
         type: actionStr,
         payload: {
           job: addedJob,
+          status: status,
           list_order: list_order,
         },
       });
