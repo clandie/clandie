@@ -37,6 +37,7 @@ export const UPDATE_OFFERS = 'UPDATE_OFFERS';
 export const UPDATE_REJECTED = 'UPDATE_REJECTED';
 export const CLEAR_COLUMNS = 'CLEAR_COLUMNS';
 export const UPDATE_COLUMNS = 'UPDATE_COLUMNS';
+export const SET_COLUMNS = 'SET_COLUMNS';
 
 //USER ACTION TYPES
 
@@ -166,6 +167,11 @@ interface ClearColumns {
   type: typeof CLEAR_COLUMNS;
 }
 
+interface SetColumns {
+  type: typeof SET_COLUMNS;
+  payload: IJobs[];
+}
+
 export type UserActionTypes =
   | AddUser
   | VerifyUser
@@ -188,4 +194,5 @@ export type ColumnActionTypes =
   | UpdateOffers
   | UpdateRejected
   | ClearColumns
-  | UpdateColumns;
+  | UpdateColumns
+  | SetColumns;

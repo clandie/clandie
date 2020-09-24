@@ -3,15 +3,11 @@
  * ^ go to that link to check out how to type for redux actions/reducers, setting action type to be any for now
  */
 
-import { ColumnState } from '../constants/stateTypes';
+// import { ColumnState } from '../constants/stateTypes';
 import {
   ColumnActionTypes,
   UPDATE_COLUMNS,
-  UPDATE_OPPORTUNITIES,
-  UPDATE_APPLIED,
-  UPDATE_INTERVIEWS,
-  UPDATE_OFFERS,
-  UPDATE_REJECTED,
+  SET_COLUMNS,
   CLEAR_COLUMNS,
 } from '../constants/actionTypes';
 import _ from 'lodash';
@@ -33,11 +29,53 @@ const columnReducer = (state = initialState, action: ColumnActionTypes) => {
     case UPDATE_COLUMNS:
       const column = action.payload.status;
       const copy: IJobs[] = _.cloneDeep(state[column]);
-
       copy[action.payload.list_order] = action.payload.job;
+      console.log('column', column);
+      console.log('copy', copy);
       return {
         ...state,
         [column]: copy,
+      };
+
+    case SET_COLUMNS:
+      const opportunities = [];
+      const applied = [];
+      const interviews = [];
+      const offers = [];
+      const rejected = [];
+
+      // populate each array by status
+      const allJobs: IJobs[] = _.cloneDeep(action.payload);
+      for (let i = 0; i < allJobs.length; i++) {
+        // make deep copy of job obj
+        const obj = _.cloneDeep(allJobs[i]);
+        if (allJobs[i].status === 'opportunities') {
+          opportunities.push(obj);
+        } else if (allJobs[i].status === 'applied') {
+          applied.push(obj);
+        } else if (allJobs[i].status === 'interviews') {
+          interviews.push(obj);
+        } else if (allJobs[i].status === 'offers') {
+          offers.push(obj);
+        } else if (allJobs[i].status === 'rejected') {
+          rejected.push(obj);
+        }
+      }
+
+      // sort by list order
+      opportunities.sort((a, b) => a.list_order - b.list_order);
+      applied.sort((a, b) => a.list_order - b.list_order);
+      interviews.sort((a, b) => a.list_order - b.list_order);
+      offers.sort((a, b) => a.list_order - b.list_order);
+      rejected.sort((a, b) => a.list_order - b.list_order);
+
+      return {
+        ...state,
+        opportunities,
+        applied,
+        interviews,
+        offers,
+        rejected,
       };
 
     // case UPDATE_OPPORTUNITIES:

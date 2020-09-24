@@ -1,6 +1,6 @@
 import * as types from '../constants/types';
 import { AppThunk } from '../store';
-import { GET_JOB, CLEAR_JOB } from '../constants/actionTypes';
+import { GET_JOB, CLEAR_JOB, SET_COLUMNS } from '../constants/actionTypes';
 import _ from 'lodash';
 /**
  * Redux thunk w/ TS - refer to AppThunk in store.ts
@@ -40,6 +40,10 @@ export const getJob = (boardId: number): AppThunk => async (dispatch) => {
       console.log('ALL JOBS: ', allJobs);
       dispatch({
         type: GET_JOB,
+        payload: allJobs.data.jobs,
+      });
+      dispatch({
+        type: SET_COLUMNS,
         payload: allJobs.data.jobs,
       });
     });
@@ -83,25 +87,30 @@ export const createJob = (jobObj: types.IJobInput): AppThunk => async (
     .then((newJob) => {
       const { allJobs } = newJob.data.createJob;
       console.log('new job created', newJob);
-      // create string for action type -> column reducer
-      const actionStr = `UPDATE_${status.toUpperCase()}`;
-      // find the job that was just added and use as payload
-      let addedJob;
-      for (let i = 0; i < allJobs.length; i++) {
-        if (allJobs[i].list_order === list_order) {
-          addedJob = _.cloneDeep(allJobs[i]);
-        }
-      }
-      // update column
+
+      // // create string for action type -> column reducer
+      // const actionStr = `UPDATE_${status.toUpperCase()}`;
+      // // find the job that was just added and use as payload
+      // let addedJob;
+      // for (let i = 0; i < allJobs.length; i++) {
+      //   if (allJobs[i].list_order === list_order) {
+      //     addedJob = _.cloneDeep(allJobs[i]);
+      //   }
+      // }
+      // // update column
+      // dispatch({
+      //   type: actionStr,
+      //   payload: {
+      //     job: addedJob,
+      //     status: status,
+      //     list_order: list_order,
+      //   },
+      // });
+
       dispatch({
-        type: actionStr,
-        payload: {
-          job: addedJob,
-          status: status,
-          list_order: list_order,
-        },
+        type: SET_COLUMNS,
+        payload: allJobs,
       });
-      // update jobs
       dispatch({
         type: GET_JOB,
         payload: allJobs,
@@ -212,6 +221,10 @@ export const deleteJob = (jobId: number, boardId: number): AppThunk => async (
     .then((res) => res.json())
     .then((data) => {
       console.log('deletedJob', data);
+      dispatch({
+        type: SET_COLUMNS,
+        payload: data.data.deleteJob.allJobs,
+      });
       dispatch({
         type: GET_JOB,
         payload: data.data.deleteJob.allJobs,
