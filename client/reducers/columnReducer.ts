@@ -11,6 +11,7 @@ import {
   UPDATE_INTERVIEWS,
   UPDATE_OFFERS,
   UPDATE_REJECTED,
+  CLEAR_COLUMNS,
 } from '../constants/actionTypes';
 import _ from 'lodash';
 import { IJobs } from '../constants/types';
@@ -70,6 +71,16 @@ const columnReducer = (state = initialState, action: ColumnActionTypes) => {
       return {
         ...state,
         rejected: rejCopy,
+      };
+
+    case CLEAR_COLUMNS:
+      return {
+        ...state,
+        opportunities: [],
+        applied: [],
+        interviews: [],
+        offers: [],
+        rejected: [],
       };
 
     default:

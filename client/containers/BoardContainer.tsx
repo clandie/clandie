@@ -11,7 +11,7 @@ import * as userActions from '../actions/userActions';
 import * as jobActions from '../actions/jobActions';
 import * as types from '../constants/types';
 import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
-import { GET_JOB } from '../constants/actionTypes';
+import { CLEAR_COLUMNS, GET_JOB } from '../constants/actionTypes';
 
 const mapStateToProps = (store: TAppState) => ({
   boardId: store.boards.id,
@@ -71,6 +71,11 @@ const mapDispatchToProps = (dispatch: any) => ({
       type: GET_JOB,
       payload: allJobs,
     });
+  },
+
+  clearColumns: () => {
+    console.log('dispatched clear columns');
+    dispatch({ type: CLEAR_COLUMNS });
   },
 });
 
@@ -152,6 +157,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
     this.props.clearUserInfo();
     this.props.clearBoard();
     this.props.clearJob();
+    this.props.clearColumns();
   }
 
   handleOpen(e: any) {

@@ -35,6 +35,7 @@ export const UPDATE_APPLIED = 'UPDATE_APPLIED';
 export const UPDATE_INTERVIEWS = 'UPDATE_INTERVIEWS';
 export const UPDATE_OFFERS = 'UPDATE_OFFERS';
 export const UPDATE_REJECTED = 'UPDATE_REJECTED';
+export const CLEAR_COLUMNS = 'CLEAR_COLUMNS';
 
 //USER ACTION TYPES
 
@@ -156,6 +157,10 @@ interface UpdateRejected {
   payload: { job: IJobs; list_order: number };
 }
 
+interface ClearColumns {
+  type: typeof CLEAR_COLUMNS;
+}
+
 export type UserActionTypes =
   | AddUser
   | VerifyUser
@@ -176,4 +181,5 @@ export type ColumnActionTypes =
   | UpdateApplied
   | UpdateInterviews
   | UpdateOffers
-  | UpdateRejected;
+  | UpdateRejected
+  | ClearColumns;
