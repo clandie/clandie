@@ -26,10 +26,11 @@ export interface IBoardInput {
 }
 
 export interface IJobInput {
-  status: string | null;
+  status: string;
   company?: string;
   title?: string;
   board_id: number;
+  list_order: number | null;
 }
 
 export interface IDetails {
@@ -49,4 +50,28 @@ export interface IInterviews {
   time: Date;
   notes: String;
   jobs_id: Number;
+}
+
+export interface IJobs {
+  _id: number;
+  status: string;
+  company: string;
+  title: string;
+  location: string | null;
+  notes: string | null;
+  salary: string | null;
+  url: string | null;
+  list_order: number;
+}
+
+export interface ISelectedJob {
+  _id: number;
+  status: string;
+  company: string;
+  title: string;
+  location: string;
+  notes: string;
+  salary: string;
+  url: string;
+  list_order: number;
 }

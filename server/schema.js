@@ -36,6 +36,7 @@ const typeDefs = gql`
       company: String!
       title: String!
       boardID: ID!
+      list_order: Int!
     ): JobResult!
     deleteJob(jobID: ID!): Job!
     updateJob(
@@ -106,6 +107,7 @@ const typeDefs = gql`
     url: String
     notes: String
     boards_id: ID!
+    list_order: Int!
     contacts: [Contact!]
     interviews: [Interview!]
     allJobs: [Job!]
