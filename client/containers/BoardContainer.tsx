@@ -11,7 +11,7 @@ import * as userActions from '../actions/userActions';
 import * as jobActions from '../actions/jobActions';
 import * as types from '../constants/types';
 import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
-import { CLEAR_COLUMNS, GET_JOB } from '../constants/actionTypes';
+import { CLEAR_COLUMNS, GET_JOB, SET_COLUMNS } from '../constants/actionTypes';
 
 const mapStateToProps = (store: TAppState) => ({
   boardId: store.boards.id,
@@ -69,6 +69,14 @@ const mapDispatchToProps = (dispatch: any) => ({
     console.log('dispatched update jobs');
     dispatch({
       type: GET_JOB,
+      payload: allJobs,
+    });
+  },
+
+  setColumns: (allJobs: any[]) => {
+    console.log('dispatched set columns');
+    dispatch({
+      type: SET_COLUMNS,
       payload: allJobs,
     });
   },
@@ -283,6 +291,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
             updateStatus={this.props.updateStatus}
             updateJobs={this.props.updateJobs}
             columns={this.props.columns}
+            setColumns={this.props.setColumns}
           />
         </div>
       </>

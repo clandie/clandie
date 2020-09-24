@@ -15,6 +15,7 @@ interface IBoardProps {
   details: (jobId: number) => void;
   updateStatus: (jobId: number, status: string) => void;
   updateJobs: (allJobs: any[]) => void;
+  setColumns: (allJobs: any[]) => void;
 }
 
 interface IBoardState {
@@ -56,19 +57,28 @@ class Board extends Component<IBoardProps, IBoardState> {
     ) {
       return;
     }
+    console.log('result', result);
     // update state before updating db
-    const { allJobs, updateJobs } = this.props;
+    const { allJobs, updateJobs, setColumns } = this.props;
     // using lodash to deep clone allJobs array
     const copy = _.cloneDeep(allJobs);
     for (let i = 0; i < copy.length; i++) {
       if (copy[i]._id === draggableId) {
         copy[i].status = destination.droppableId;
+        copy[i].list_order = destination.index;
       }
     }
+    // updates column state
+    setColumns(copy);
+    // updates job state
     updateJobs(copy);
 
-    // update in database
-    this.props.updateStatus(draggableId, destination.droppableId);
+    // update status in db if placed in different column
+    if (destination.droppableId !== source.droppableId) {
+      this.props.updateStatus(draggableId, destination.droppableId);
+    }
+
+    //update list order - need to figure out how to update list orders for other jobs that are affected
   };
 
   // render each column
@@ -82,6 +92,10 @@ class Board extends Component<IBoardProps, IBoardState> {
             open={open}
             details={details}
             column={columns.opportunities}
+            // allJobs={allJobs}
+            // updateStatus={updateStatus}
+            // updateJobs={updateJobs}
+            // setColumns={setColumns}
           />
           <span className="divider"></span>
           <Column
@@ -89,6 +103,10 @@ class Board extends Component<IBoardProps, IBoardState> {
             open={open}
             details={details}
             column={columns.applied}
+            // allJobs={allJobs}
+            // updateStatus={updateStatus}
+            // updateJobs={updateJobs}
+            // setColumns={setColumns}
           />
           <span className="divider"></span>
           <Column
@@ -96,6 +114,10 @@ class Board extends Component<IBoardProps, IBoardState> {
             open={open}
             details={details}
             column={columns.interviews}
+            // allJobs={allJobs}
+            // updateStatus={updateStatus}
+            // updateJobs={updateJobs}
+            // setColumns={setColumns}
           />
           <span className="divider"></span>
           <Column
@@ -103,6 +125,10 @@ class Board extends Component<IBoardProps, IBoardState> {
             open={open}
             details={details}
             column={columns.offers}
+            // allJobs={allJobs}
+            // updateStatus={updateStatus}
+            // updateJobs={updateJobs}
+            // setColumns={setColumns}
           />
           <span className="divider"></span>
           <Column
@@ -110,6 +136,10 @@ class Board extends Component<IBoardProps, IBoardState> {
             open={open}
             details={details}
             column={columns.rejected}
+            // allJobs={allJobs}
+            // updateStatus={updateStatus}
+            // updateJobs={updateJobs}
+            // setColumns={setColumns}
           />
         </div>
       </DragDropContext>

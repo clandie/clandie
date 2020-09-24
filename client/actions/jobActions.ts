@@ -87,26 +87,6 @@ export const createJob = (jobObj: types.IJobInput): AppThunk => async (
     .then((newJob) => {
       const { allJobs } = newJob.data.createJob;
       console.log('new job created', newJob);
-
-      // // create string for action type -> column reducer
-      // const actionStr = `UPDATE_${status.toUpperCase()}`;
-      // // find the job that was just added and use as payload
-      // let addedJob;
-      // for (let i = 0; i < allJobs.length; i++) {
-      //   if (allJobs[i].list_order === list_order) {
-      //     addedJob = _.cloneDeep(allJobs[i]);
-      //   }
-      // }
-      // // update column
-      // dispatch({
-      //   type: actionStr,
-      //   payload: {
-      //     job: addedJob,
-      //     status: status,
-      //     list_order: list_order,
-      //   },
-      // });
-
       dispatch({
         type: SET_COLUMNS,
         payload: allJobs,
@@ -154,6 +134,7 @@ export const updateDetails = (detailsObj: types.IDetails): AppThunk => async (
           salary
           url
           notes
+          list_order
         }
       }
       ... on BadUserInput {
@@ -206,6 +187,7 @@ export const deleteJob = (jobId: number, boardId: number): AppThunk => async (
         salary
         url
         notes
+        list_order
       }
     }
   }`;
@@ -235,10 +217,10 @@ export const deleteJob = (jobId: number, boardId: number): AppThunk => async (
     });
 };
 
+// drag and drop action - update status
 export const updateStatus = (jobId: number, status: string): AppThunk => async (
   dispatch
 ) => {
-  // drag and drop action
   const query = `mutation UpdateStatus($jobId: ID!, $status: String!) {
     updateStatus(jobID: $jobId, status: $status) {
       allJobs {
@@ -250,6 +232,7 @@ export const updateStatus = (jobId: number, status: string): AppThunk => async (
         salary
         url
         notes
+        list_order
       }
     }
   }`;
@@ -272,5 +255,48 @@ export const updateStatus = (jobId: number, status: string): AppThunk => async (
     })
     .catch((err) => {
       console.log('err in update status action', err);
+    });
+};
+
+// drag and drop action - updating list order
+//! need to reorder all affected jobs
+export const updateOrder = (
+  jobId: number,
+  list_order: number
+): AppThunk => async (dispatch) => {
+  const query = `mutation UpdateOrder($jobId: ID!, $list_order: Int!) {
+    updateOrder(jobID: $jobId, list_order: $list_order) {
+      allJobs {
+        _id
+        status
+        company
+        title
+        location
+        salary
+        url
+        notes
+        list_order
+      }
+    }
+  }`;
+
+  fetch('/graphql', {
+    method: 'POST',
+    body: JSON.stringify({
+      query,
+      variables: { jobId, list_order },
+    }),
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log('updatedOrder', data);
+      dispatch({
+        type: GET_JOB,
+        payload: data.data.updateOrder.allJobs,
+      });
+    })
+    .catch((err) => {
+      console.log('err in update order action', err);
     });
 };

@@ -78,51 +78,6 @@ const columnReducer = (state = initialState, action: ColumnActionTypes) => {
         rejected,
       };
 
-    // case UPDATE_OPPORTUNITIES:
-    //   const oppCopy: IJobs[] = _.cloneDeep(state.opportunities);
-
-    //   oppCopy[action.payload.list_order] = action.payload.job;
-    //   return {
-    //     ...state,
-    //     opportunities: oppCopy,
-    //   };
-
-    // case UPDATE_APPLIED:
-    //   const appCopy: IJobs[] = _.cloneDeep(state.applied);
-
-    //   appCopy[action.payload.list_order] = action.payload.job;
-    //   return {
-    //     ...state,
-    //     applied: appCopy,
-    //   };
-
-    // case UPDATE_INTERVIEWS:
-    //   const intCopy: IJobs[] = _.cloneDeep(state.interviews);
-
-    //   intCopy[action.payload.list_order] = action.payload.job;
-    //   return {
-    //     ...state,
-    //     interviews: intCopy,
-    //   };
-
-    // case UPDATE_OFFERS:
-    //   const offCopy: IJobs[] = _.cloneDeep(state.offers);
-
-    //   offCopy[action.payload.list_order] = action.payload.job;
-    //   return {
-    //     ...state,
-    //     offers: offCopy,
-    //   };
-
-    // case UPDATE_REJECTED:
-    //   const rejCopy: IJobs[] = _.cloneDeep(state.rejected);
-
-    //   rejCopy[action.payload.list_order] = action.payload.job;
-    //   return {
-    //     ...state,
-    //     rejected: rejCopy,
-    //   };
-
     case CLEAR_COLUMNS:
       return {
         ...state,
