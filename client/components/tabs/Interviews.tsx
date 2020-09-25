@@ -7,7 +7,6 @@ import InterviewCard from '../../utils/InterviewCard';
 // console.log('react bootstrap date picker:', DatePicker);
 
 interface IInterviewsProps {
-  // jobId: number | null;
   allInterviews:
     | {
         _id: number;
@@ -17,6 +16,7 @@ interface IInterviewsProps {
         notes: string;
       }[]
     | null;
+  createInterview: (title: string, jobId: number) => void;
 }
 
 interface IInterviewsState {
@@ -37,6 +37,7 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
     this.state = {
       listOfInterviews: [],
     };
+    this.handleSave = this.handleSave.bind(this);
   }
 
   componentDidMount() {
@@ -45,6 +46,11 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
     this.setState({
       listOfInterviews: allInterviews,
     });
+  }
+
+  handleSave(e: any) {
+    // const {createInterview} = this.props;
+    console.log('event target: ', e.target);
   }
 
   render() {
@@ -100,7 +106,13 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
                       <Form.Control></Form.Control>
                     </Form.Group>
                   </Form.Row>
-                  <Button>Save</Button>
+                  <Button
+                    className="save-btn"
+                    type="submit"
+                    onClick={this.handleSave}
+                  >
+                    Save
+                  </Button>
                 </Form>
               </Card.Body>
             </Accordion.Collapse>

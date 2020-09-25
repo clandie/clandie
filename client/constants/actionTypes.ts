@@ -124,18 +124,6 @@ interface ClearJob {
   type: typeof CLEAR_JOB;
 }
 
-interface GetInterview {
-  type: typeof GET_INTERVIEW;
-  payload: {
-    interviews: {
-      title: string;
-      date: Date;
-      time: Date;
-      notes: string;
-    }[];
-  };
-}
-
 interface CreateInterview {
   type: typeof CREATE_INTERVIEW;
   payload: {
@@ -159,4 +147,4 @@ export type BoardActionTypes =
 
 export type JobActionTypes = GetJob | CreateJob | ClearJob;
 
-export type InterviewActionTypes = GetInterview | CreateInterview;
+export type InterviewActionTypes = CreateInterview;

@@ -30,6 +30,7 @@ interface IDetailsModalProps {
   updateDetails: (detailsObj: IDetails, boardId: number) => void;
   boardId: number;
   deleteJob: (jobId: number, boardId: number) => void;
+  createInterview: (title: string, jobId: number) => void;
 }
 
 class JobDetailsModal extends Component<IDetailsModalProps> {
@@ -75,7 +76,10 @@ class JobDetailsModal extends Component<IDetailsModalProps> {
               />
             </Tab>
             <Tab eventKey="interviews" title="Interviews">
-              <Interviews allInterviews={allInterviews} />
+              <Interviews
+                allInterviews={allInterviews}
+                createInterview={this.props.createInterview}
+              />
             </Tab>
             <Tab eventKey="contacts" title="Contacts">
               <Contacts />
