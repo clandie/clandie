@@ -29,6 +29,7 @@ module.exports = {
       }
     },
     interviews: async (parent, args, { postgresDB }) => {
+      console.log('parent from interviews ', parent);
       try {
         const jobId = parent._id;
         const text = 'SELECT * FROM interviews WHERE jobs_id=$1';

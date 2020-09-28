@@ -50,7 +50,9 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
 
   handleSave(e: any) {
     // const {createInterview} = this.props;
-    console.log('event target: ', e.target);
+    e.preventDefault();
+    // console.log('event target: ', e.target.title);
+    this.props.createInterview('testing', 67);
   }
 
   render() {

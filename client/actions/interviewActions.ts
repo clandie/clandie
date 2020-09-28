@@ -39,7 +39,7 @@ export const createInterview = (
   title: string,
   jobId: number
 ): AppThunk => async (dispatch) => {
-  const query = `query CreateInterview($title: string!, jobsID: ID!){
+  const query = `query CreateInterview($title: string!, $jobsID: ID!){
     mutation {
       createInterview (title: $title, jobsID: $jobsID){
         __typename
