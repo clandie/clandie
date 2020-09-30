@@ -39,22 +39,21 @@ export const createInterview = (
   title: string,
   jobId: number
 ): AppThunk => async (dispatch) => {
-  const query = `query CreateInterview($title: string!, $jobsID: ID!){
-    mutation {
-      createInterview (title: $title, jobsID: $jobsID){
-        __typename
-        .... on Interview {
-          title
-          date
-          time
-          notes
-        }
-        ... on BadUserInput {
-          message
-        }
+  console.log('args to createInterview: ', title, jobId);
+  const query = `mutation CreateInterview($title: String!, $jobId: ID!) {
+    createInterview (title: $title, jobsID: $jobId) {
+      __typename
+      ... on Interview {
+        title
+        date
+        time
+        notes
+      }
+      ... on BadUserInput {
+        message
       }
     }
-  })`;
+  }`;
 
   fetch('/graphql', {
     method: 'POST',

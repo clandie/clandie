@@ -24,6 +24,8 @@ module.exports = {
 
   Mutation: {
     createInterview: async (parent, { title, jobsID }, { postgresDB }) => {
+      // console.log('CREATE INTERVIEW RESOLVER: ', title);
+      console.log('JOBID: ', jobsID);
       try {
         if (title === '') throw new UserInputError();
         const text = `
