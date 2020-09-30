@@ -135,33 +135,33 @@ interface ClearJob {
 // COLUMN ACTION TYPES
 interface UpdateColumns {
   type: typeof UPDATE_COLUMNS;
-  payload: { job: IJobs; status: string; list_order: number };
+  payload: IJobs[];
 }
 
-interface UpdateOpportunities {
-  type: typeof UPDATE_OPPORTUNITIES;
-  payload: { job: IJobs; list_order: number };
-}
+// interface UpdateOpportunities {
+//   type: typeof UPDATE_OPPORTUNITIES;
+//   payload: { job: IJobs; list_order: number };
+// }
 
-interface UpdateApplied {
-  type: typeof UPDATE_APPLIED;
-  payload: { job: IJobs; list_order: number };
-}
+// interface UpdateApplied {
+//   type: typeof UPDATE_APPLIED;
+//   payload: { job: IJobs; list_order: number };
+// }
 
-interface UpdateInterviews {
-  type: typeof UPDATE_INTERVIEWS;
-  payload: { job: IJobs; list_order: number };
-}
+// interface UpdateInterviews {
+//   type: typeof UPDATE_INTERVIEWS;
+//   payload: { job: IJobs; list_order: number };
+// }
 
-interface UpdateOffers {
-  type: typeof UPDATE_OFFERS;
-  payload: { job: IJobs; list_order: number };
-}
+// interface UpdateOffers {
+//   type: typeof UPDATE_OFFERS;
+//   payload: { job: IJobs; list_order: number };
+// }
 
-interface UpdateRejected {
-  type: typeof UPDATE_REJECTED;
-  payload: { job: IJobs; list_order: number };
-}
+// interface UpdateRejected {
+//   type: typeof UPDATE_REJECTED;
+//   payload: { job: IJobs; list_order: number };
+// }
 
 interface ClearColumns {
   type: typeof CLEAR_COLUMNS;
@@ -188,11 +188,9 @@ export type BoardActionTypes =
 export type JobActionTypes = GetJob | CreateJob | ClearJob;
 
 export type ColumnActionTypes =
-  | UpdateOpportunities
-  | UpdateApplied
-  | UpdateInterviews
-  | UpdateOffers
-  | UpdateRejected
-  | ClearColumns
-  | UpdateColumns
-  | SetColumns;
+  // | UpdateOpportunities
+  // | UpdateApplied
+  // | UpdateInterviews
+  // | UpdateOffers
+  // | UpdateRejected
+  ClearColumns | UpdateColumns | SetColumns;
