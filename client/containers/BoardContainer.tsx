@@ -12,7 +12,7 @@ import * as jobActions from '../actions/jobActions';
 import * as interviewActions from '../actions/interviewActions';
 import * as types from '../constants/types';
 import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
-import { GET_JOB } from '../constants/actionTypes';
+import { CLEAR_COLUMNS, GET_JOB, SET_COLUMNS } from '../constants/actionTypes';
 
 const mapStateToProps = (store: TAppState) => ({
   boardId: store.boards.id,
@@ -21,6 +21,7 @@ const mapStateToProps = (store: TAppState) => ({
   user: store.users.name,
   userId: store.users.id,
   allJobs: store.jobs.jobs,
+  columns: store.columns,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
@@ -76,6 +77,17 @@ const mapDispatchToProps = (dispatch: any) => ({
     console.log('dispatched create interview');
     dispatch(interviewActions.createInterview(title, jobId));
   },
+  setColumns: (allJobs: any[]) => {
+    console.log('dispatched set columns');
+    dispatch({
+      type: SET_COLUMNS,
+      payload: allJobs,
+    });
+  },
+  clearColumns: () => {
+    console.log('dispatched clear columns');
+    dispatch({ type: CLEAR_COLUMNS });
+  },
 });
 
 type BoardProps = ReturnType<typeof mapStateToProps> &
@@ -86,26 +98,8 @@ interface BoardState {
   showJobModal: boolean;
   showCreateBoard: boolean;
   showDetailsModal: boolean;
-  currentColumn: string | null;
-  selectedJob: {
-    _id: number;
-    status: string;
-    company: string;
-    title: string;
-    location: string;
-    notes: string;
-    salary: string;
-    url: string;
-    interviews:
-      | {
-          _id: number;
-          title: string;
-          date: Date;
-          time: Date;
-          notes: string;
-        }[]
-      | null;
-  } | null;
+  currentColumn: { columnName: string; columnOrder: number | null };
+  selectedJob: types.ISelectedJob | null;
 
   dropdownItems: JSX.Element[] | [];
 }
@@ -119,7 +113,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
       showJobModal: false,
       showCreateBoard: false,
       showDetailsModal: false,
-      currentColumn: null,
+      currentColumn: { columnName: '', columnOrder: null },
       selectedJob: null,
       dropdownItems: [],
     };
@@ -174,10 +168,16 @@ class BoardContainer extends Component<BoardProps, BoardState> {
     this.props.clearUserInfo();
     this.props.clearBoard();
     this.props.clearJob();
+    this.props.clearColumns();
   }
 
   handleOpen(e: any) {
-    this.setState({ showJobModal: true, currentColumn: e.target.id });
+    //determine list order for column
+    const order = this.props.columns[e.target.id].length;
+    this.setState({
+      showJobModal: true,
+      currentColumn: { columnName: e.target.id, columnOrder: order },
+    });
   }
 
   handleClose() {
@@ -186,7 +186,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
       showJobModal: false,
       showCreateBoard: false,
       showDetailsModal: false,
-      currentColumn: null,
+      currentColumn: { columnName: '', columnOrder: null },
     });
   }
 
@@ -294,6 +294,8 @@ class BoardContainer extends Component<BoardProps, BoardState> {
             details={this.renderDetailsModal}
             updateStatus={this.props.updateStatus}
             updateJobs={this.props.updateJobs}
+            columns={this.props.columns}
+            setColumns={this.props.setColumns}
           />
         </div>
       </>

@@ -2,27 +2,20 @@ import React, { Component } from 'react';
 import Column from './Column';
 import { DragDropContext } from 'react-beautiful-dnd';
 import _ from 'lodash';
+import * as types from '../constants/types';
+import { ColumnState } from '../constants/stateTypes';
 
 interface IBoardProps {
   boardId: number;
   boardName: string;
-  allJobs:
-    | {
-        _id: number;
-        status: string;
-        company: string;
-        title: string;
-        location: string | null;
-        notes: string | null;
-        salary: string | null;
-        url: string | null;
-      }[]
-    | [];
+  allJobs: types.IJobs[] | [];
+  columns: ColumnState;
   open: (e: any) => void;
   getJob: (boardId: number) => void;
   details: (jobId: number) => void;
   updateStatus: (jobId: number, status: string) => void;
   updateJobs: (allJobs: any[]) => void;
+  setColumns: (allJobs: any[]) => void;
 }
 
 interface IBoardState {
@@ -64,60 +57,89 @@ class Board extends Component<IBoardProps, IBoardState> {
     ) {
       return;
     }
+    console.log('result', result);
     // update state before updating db
-    const { allJobs, updateJobs } = this.props;
+    const { allJobs, updateJobs, setColumns } = this.props;
     // using lodash to deep clone allJobs array
     const copy = _.cloneDeep(allJobs);
     for (let i = 0; i < copy.length; i++) {
       if (copy[i]._id === draggableId) {
         copy[i].status = destination.droppableId;
+        copy[i].list_order = destination.index;
       }
     }
+    // updates column state
+    setColumns(copy);
+    // updates job state
     updateJobs(copy);
 
-    // update in database
-    this.props.updateStatus(draggableId, destination.droppableId);
+    // update status in db if placed in different column
+    if (destination.droppableId !== source.droppableId) {
+      this.props.updateStatus(draggableId, destination.droppableId);
+    }
+
+    //update list order - need to figure out how to update list orders for other jobs that are affected
   };
 
   // render each column
   render() {
-    const { open, allJobs, details } = this.props;
+    const { open, details, columns } = this.props;
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
         <div className="board">
           <Column
             name={'opportunities'}
             open={open}
-            allJobs={allJobs}
             details={details}
+            column={columns.opportunities}
+            // allJobs={allJobs}
+            // updateStatus={updateStatus}
+            // updateJobs={updateJobs}
+            // setColumns={setColumns}
           />
           <span className="divider"></span>
           <Column
             name={'applied'}
             open={open}
-            allJobs={allJobs}
             details={details}
+            column={columns.applied}
+            // allJobs={allJobs}
+            // updateStatus={updateStatus}
+            // updateJobs={updateJobs}
+            // setColumns={setColumns}
           />
           <span className="divider"></span>
           <Column
             name={'interviews'}
             open={open}
-            allJobs={allJobs}
             details={details}
+            column={columns.interviews}
+            // allJobs={allJobs}
+            // updateStatus={updateStatus}
+            // updateJobs={updateJobs}
+            // setColumns={setColumns}
           />
           <span className="divider"></span>
           <Column
             name={'offers'}
             open={open}
-            allJobs={allJobs}
             details={details}
+            column={columns.offers}
+            // allJobs={allJobs}
+            // updateStatus={updateStatus}
+            // updateJobs={updateJobs}
+            // setColumns={setColumns}
           />
           <span className="divider"></span>
           <Column
             name={'rejected'}
             open={open}
-            allJobs={allJobs}
             details={details}
+            column={columns.rejected}
+            // allJobs={allJobs}
+            // updateStatus={updateStatus}
+            // updateJobs={updateJobs}
+            // setColumns={setColumns}
           />
         </div>
       </DragDropContext>

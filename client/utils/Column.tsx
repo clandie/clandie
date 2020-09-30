@@ -2,44 +2,36 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 import JobCard from './JobCard';
 import { Droppable } from 'react-beautiful-dnd';
+import * as types from '../constants/types';
+import _ from 'lodash';
+// import { useCallback } from 'react';
 
 interface IColumnProps {
   name: string;
-  allJobs:
-    | {
-        _id: number;
-        status: string;
-        company: string;
-        title: string;
-        location: string | null;
-        notes: string | null;
-        salary: string | null;
-        url: string | null;
-      }[]
-    | [];
+  column: types.IJobs[];
   open: (e: any) => void;
   details: (jobId: number) => void;
+  // // props for dnd
+  // allJobs: types.IJobs[] | [];
+  // updateStatus: (jobId: number, status: string) => void;
+  // updateJobs: (allJobs: any[]) => void;
+  // setColumns: (allJobs: any[]) => void;
 }
 const Column = (props: IColumnProps) => {
-  const { allJobs, name, details } = props;
+  const { details, column } = props;
+
   //* fix typing for jobs
   const jobs: any[] = [];
-  // place cards into the correct column
-
-  if (allJobs !== undefined) {
-    for (let i = 0; i < allJobs.length; i++) {
-      if (allJobs[i].status === name) {
-        jobs.push(
-          <JobCard
-            company={allJobs[i].company}
-            title={allJobs[i].title}
-            jobId={allJobs[i]._id}
-            details={details}
-            index={i}
-          />
-        );
-      }
-    }
+  for (let i = 0; i < column.length; i++) {
+    jobs.push(
+      <JobCard
+        company={column[i].company}
+        title={column[i].title}
+        jobId={column[i]._id}
+        details={details}
+        index={Number(column[i].list_order)}
+      />
+    );
   }
 
   return (
@@ -60,6 +52,7 @@ const Column = (props: IColumnProps) => {
           >
             +
           </Button>
+
           <div className="jobList">{jobs}</div>
           {provided.placeholder}
         </div>

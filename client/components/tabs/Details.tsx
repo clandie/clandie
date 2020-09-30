@@ -1,26 +1,15 @@
 import React, { Component } from 'react';
 import { Form, Col, Button } from 'react-bootstrap';
-import { IDetails } from '../../constants/types';
+import { IDetails, ISelectedJob } from '../../constants/types';
 
 interface IDetailProps {
   updateDetails: (detailsObj: IDetails, boardId: number) => void;
-  selectedJob: {
-    _id: number;
-    status: string;
-    company: string;
-    title: string;
-    location: string;
-    notes: string;
-    salary: string;
-    url: string;
-  } | null;
+  selectedJob: ISelectedJob | null;
   boardId: number;
   deleteJob: (jobId: number, boardId: number) => void;
   close: () => void;
 }
 interface IDetailState {
-  // company?: string;
-  // title?: string;
   location?: string;
   salary?: string;
   url?: string;
@@ -31,8 +20,6 @@ class Details extends Component<IDetailProps, IDetailState> {
     super(props);
 
     this.state = {
-      // company: '',
-      // title: '',
       location: '',
       salary: '',
       url: '',

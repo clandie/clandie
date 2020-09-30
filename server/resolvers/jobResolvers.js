@@ -67,7 +67,7 @@ module.exports = {
   Mutation: {
     createJob: async (
       parent,
-      { status, company, title, boardID },
+      { status, company, title, boardID, list_order },
       { postgresDB }
     ) => {
       try {
@@ -75,8 +75,8 @@ module.exports = {
           throw new UserInputError();
         const text = `
         INSERT INTO 
-        jobs (status, company, title, location, salary, url, notes, boards_id) 
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+        jobs (status, company, title, location, salary, url, notes, boards_id, list_order) 
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
         RETURNING *
       `;
         const params = [
@@ -88,6 +88,7 @@ module.exports = {
           null,
           null,
           boardID,
+          list_order,
         ];
         const newJob = await postgresDB.query(text, params);
         return newJob.rows[0];
