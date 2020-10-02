@@ -9,6 +9,7 @@ import { TAppState } from '../store';
 import * as actions from '../actions/boardActions';
 import * as userActions from '../actions/userActions';
 import * as jobActions from '../actions/jobActions';
+import * as columnActions from '../actions/columnActions';
 import * as types from '../constants/types';
 import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
 import { CLEAR_COLUMNS, GET_JOB, SET_COLUMNS } from '../constants/actionTypes';
@@ -84,6 +85,25 @@ const mapDispatchToProps = (dispatch: any) => ({
   clearColumns: () => {
     console.log('dispatched clear columns');
     dispatch({ type: CLEAR_COLUMNS });
+  },
+
+  updateColumns: (
+    source: any[],
+    destination: any[],
+    sourceIdx: number,
+    destinationIdx: number,
+    destinationName: string
+  ) => {
+    console.log('dispatched update columns');
+    dispatch(
+      columnActions.updateColumns(
+        source,
+        destination,
+        sourceIdx,
+        destinationIdx,
+        destinationName
+      )
+    );
   },
 });
 
@@ -292,6 +312,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
             updateJobs={this.props.updateJobs}
             columns={this.props.columns}
             setColumns={this.props.setColumns}
+            updateColumns={this.props.updateColumns}
           />
         </div>
       </>
