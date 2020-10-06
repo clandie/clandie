@@ -176,5 +176,13 @@ module.exports = {
         return err;
       }
     },
+
+    updateColumns: async (
+      parent,
+      { column1, column2, status1, status2 },
+      { postgresDB }
+    ) => {
+      // update both columns
+    },
   },
 };

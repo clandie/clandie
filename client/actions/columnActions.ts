@@ -8,6 +8,7 @@ export const updateColumns = (
   destination: any[],
   sourceIdx: number,
   destinationIdx: number,
+  sourceName: string,
   destinationName: string
 ): AppThunk => async (dispatch) => {
   // update columns for dnd
@@ -45,7 +46,42 @@ export const updateColumns = (
   removeCard(sourceCopy, sourceIdx);
   insertCard(destinationCopy, destinationIdx, jobCard);
 
+  // should now have updated columns array
   console.log('sourceCopy', sourceCopy);
   //! index is buggy?
   console.log('dest copy', destinationCopy);
+
+  // send both columns to the back end and update list orders
+
+  const query = `mutation UpdateColumns($sourceCopy: [Job], $destinationCopy: [Job], $sourceName: String!, $destinationName: String!) {
+    updateColumns(column1: $sourceCopy, column2: $destinationCopy, status1: $sourceName, status2: destinationName) {
+      allJobs {
+        _id
+        status
+        company
+        title
+        location
+        salary
+        url
+        notes
+        list_order
+      }
+    }
+  }`;
+
+  fetch('/graphql', {
+    method: 'POST',
+    body: JSON.stringify({
+      query,
+      variables: { sourceCopy, destinationCopy, sourceName, destinationName },
+    }),
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log('updated columns', data);
+    })
+    .catch((err) => {
+      console.log('err in update columns action', err);
+    });
 };

@@ -50,6 +50,12 @@ const typeDefs = gql`
       jobID: ID!
     ): JobResult!
     updateStatus(jobID: ID!, status: String!): Job!
+    updateColumns(
+      column1: [Job]
+      column2: [Job]
+      status1: String!
+      status2: String!
+    ): [Job!]
 
     createInterview(title: String!, jobsID: ID!): InterviewResult!
     deleteInterview(interviewID: ID!): Interview!
