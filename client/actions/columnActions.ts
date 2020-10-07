@@ -18,25 +18,23 @@ export const updateColumns = (
   const removeCard = (arr: types.IJobs[], index: number) => {
     for (let i = index; i < arr.length - 1; i++) {
       arr[i] = arr[i + 1];
+      arr[i].list_order = i;
     }
     arr.pop();
-    console.log('removeCardFunc', arr);
     return arr;
   };
 
   // function that inserts card into new column and rearranges affected elements
   const insertCard = (arr: types.IJobs[], index: number, obj: types.IJobs) => {
-    console.log('index', index);
     obj.list_order = index;
-    obj.status = destinationName;
-    let temp = arr[index];
-    arr[index] = obj;
-    for (let i = index + 1; i < arr.length; i++) {
-      let currElem = arr[i];
-      arr[i] = temp;
-      temp = currElem;
+    for (let i = arr.length; i >= index; i--) {
+      if (i === index) {
+        arr[i] = obj;
+      } else {
+        arr[i] = arr[i - 1];
+        arr[i].list_order = i;
+      }
     }
-    if (temp !== undefined) arr.push(temp);
     return arr;
   };
 
@@ -78,7 +76,8 @@ export const updateColumns = (
   })
     .then((res) => res.json())
     .then((data) => {
-      console.log('updated columns', data);
+      const { allJobs } = data.data.updateColumns[0];
+      console.log('updated columns', allJobs);
     })
     .catch((err) => {
       console.log('err in update columns action', err);
