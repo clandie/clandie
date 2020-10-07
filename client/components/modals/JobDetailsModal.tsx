@@ -19,14 +19,14 @@ class JobDetailsModal extends Component<IDetailsModalProps> {
   render() {
     const { selectedJob } = this.props;
     // must check if selectedJob is not null so we don't get a type error
-    let company, title;
-    // let jobId = null;
+    let company, title, jobId;
+
     let allInterviews = null;
     if (selectedJob !== null) {
       company = selectedJob.company;
       title = selectedJob.title;
       allInterviews = selectedJob.interviews;
-      // jobId = selectedJob._id;
+      jobId = selectedJob._id;
     }
 
     return (
@@ -61,6 +61,7 @@ class JobDetailsModal extends Component<IDetailsModalProps> {
               <Interviews
                 allInterviews={allInterviews}
                 createInterview={this.props.createInterview}
+                jobId={jobId}
               />
             </Tab>
             <Tab eventKey="contacts" title="Contacts">

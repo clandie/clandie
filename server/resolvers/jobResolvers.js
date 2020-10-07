@@ -29,14 +29,14 @@ module.exports = {
       }
     },
     interviews: async (parent, args, { postgresDB }) => {
-      console.log('parent from interviews ', parent);
+      // console.log('parent from interviews ', parent);
       try {
         const jobId = parent._id;
         // console.log('jobId: ', jobid);
         const text = 'SELECT * FROM interviews WHERE jobs_id=$1';
         const params = [jobId];
         const interviews = await postgresDB.query(text, params);
-        console.log('interviews data: ', interviews.rows);
+        // console.log('interviews data: ', interviews.rows);
         return interviews.rows;
       } catch (err) {
         console.log('An error occurred in Job.interviews resolver: ', err);

@@ -141,6 +141,7 @@ interface CreateInterview {
     title: string;
     job_id: number;
   };
+}
 // COLUMN ACTION TYPES
 interface UpdateColumns {
   type: typeof UPDATE_COLUMNS;

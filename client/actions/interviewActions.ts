@@ -1,5 +1,5 @@
 import { AppThunk } from '../store';
-import { CREATE_INTERVIEW } from '../constants/actionTypes';
+import { CREATE_INTERVIEW, GET_INTERVIEW } from '../constants/actionTypes';
 // import { GET_INTERVIEW /*ADD_INTERVIEW*/ } from '../constants/actionTypes';
 
 // export const getInterview = (jobId: number): AppThunk => async (dispatch) => {
@@ -44,10 +44,12 @@ export const createInterview = (
     createInterview (title: $title, jobsID: $jobId) {
       __typename
       ... on Interview {
-        title
-        date
-        time
-        notes
+        allInterviews{
+          title
+          date
+          time
+          notes
+        }
       }
       ... on BadUserInput {
         message
@@ -69,6 +71,10 @@ export const createInterview = (
       dispatch({
         type: CREATE_INTERVIEW,
         payload: newInterview.data.interviews,
+      });
+      dispatch({
+        type: GET_INTERVIEW,
+        payload: newInterview.data.allInterviews,
       });
     });
 };

@@ -7,6 +7,7 @@ import InterviewCard from '../../utils/InterviewCard';
 // console.log('react bootstrap date picker:', DatePicker);
 
 interface IInterviewsProps {
+  jobId?: number;
   allInterviews:
     | {
         _id: number;
@@ -23,12 +24,18 @@ interface IInterviewsState {
   listOfInterviews:
     | {
         _id: number;
-        title: string;
-        date: Date;
-        time: Date;
-        notes: string;
+        title?: string;
+        date?: Date;
+        time?: Date;
+        notes?: string;
       }[]
     | null;
+  newInterviewInput: {
+    title: string;
+    date?: Date | null;
+    time?: Date | null;
+    notes?: string;
+  };
 }
 
 class Interviews extends Component<IInterviewsProps, IInterviewsState> {
@@ -36,8 +43,15 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
     super(props);
     this.state = {
       listOfInterviews: [],
+      newInterviewInput: {
+        title: 'has not been updated',
+        date: null,
+        time: null,
+        notes: '',
+      },
     };
     this.handleSave = this.handleSave.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
@@ -48,12 +62,21 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
     });
   }
 
+  handleChange(e: any) {
+    const { name, value } = e.target;
+
+    const newInterviewInput = Object.assign(this.state.newInterviewInput);
+    newInterviewInput[name] = value;
+    this.setState({
+      newInterviewInput,
+    });
+  }
+
   handleSave(e: any) {
-    // const {createInterview} = this.props;
+    const { createInterview, jobId } = this.props;
+
     e.preventDefault();
-    // console.log('event target: ', e.target.title);
-    console.log('IN HANDLE SAVE FOR INTERVIEWS');
-    this.props.createInterview('testing', 73);
+    if (jobId) createInterview(this.state.newInterviewInput.title, jobId);
   }
 
   render() {
@@ -88,7 +111,12 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
                   <Form.Row>
                     <Form.Group as={Col} controlId="formTitle">
                       <Form.Label>Title</Form.Label>
-                      <Form.Control></Form.Control>
+                      <Form.Control
+                        type="text"
+                        name="title"
+                        placeholder={this.state.newInterviewInput.title}
+                        onChange={this.handleChange}
+                      ></Form.Control>
                     </Form.Group>
                   </Form.Row>
                   <Form.Row>
@@ -106,7 +134,12 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
                   <Form.Row>
                     <Form.Group as={Col} controlId="formNotes">
                       <Form.Label>Notes</Form.Label>
-                      <Form.Control></Form.Control>
+                      <Form.Control
+                        type="text"
+                        name="notes"
+                        placeholder={this.state.newInterviewInput.notes}
+                        onChange={this.handleChange}
+                      ></Form.Control>
                     </Form.Group>
                   </Form.Row>
                   <Button
