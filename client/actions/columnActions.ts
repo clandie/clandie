@@ -2,6 +2,7 @@ import * as types from '../constants/types';
 import { AppThunk } from '../store';
 // import { UPDATE_COLUMNS } from '../constants/actionTypes';
 import _ from 'lodash';
+import { SET_COLUMNS } from '../constants/actionTypes';
 
 export const updateColumns = (
   source: any[],
@@ -27,6 +28,7 @@ export const updateColumns = (
   // function that inserts card into new column and rearranges affected elements
   const insertCard = (arr: types.IJobs[], index: number, obj: types.IJobs) => {
     obj.list_order = index;
+    obj.status = destinationName;
     for (let i = arr.length; i >= index; i--) {
       if (i === index) {
         arr[i] = obj;
@@ -78,6 +80,10 @@ export const updateColumns = (
     .then((data) => {
       const { allJobs } = data.data.updateColumns[0];
       console.log('updated columns', allJobs);
+      dispatch({
+        type: SET_COLUMNS,
+        payload: allJobs,
+      });
     })
     .catch((err) => {
       console.log('err in update columns action', err);
