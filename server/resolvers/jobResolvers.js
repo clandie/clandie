@@ -167,7 +167,6 @@ module.exports = {
         RETURNING *
       `;
         const params = [status, jobID];
-        console.log('will update');
         const updatedStatus = await postgresDB.query(text, params);
         console.log('update complete', updatedStatus.rows);
         return updatedStatus.rows[0];
@@ -177,12 +176,29 @@ module.exports = {
       }
     },
 
-    updateColumns: async (
-      parent,
-      { column1, column2, status1, status2 },
-      { postgresDB }
-    ) => {
-      // update both columns
+    updateColumns: async (parent, { column1, column2 }, { postgresDB }) => {
+      // update list order for both columns
+      try {
+        let result;
+        // combine columns and iterate
+        const array = column1.concat(column2);
+        for (let i = 0; i < array.length; i++) {
+          const text = `
+            UPDATE jobs
+            SET list_order=$1
+            WHERE _id=$2
+            RETURNING *
+          `;
+          const params = [array[i].list_order, array[i]._id];
+          const updatedColumns = await postgresDB.query(text, params);
+          console.log('update complete', updatedColumns.rows);
+          result = updatedColumns.rows;
+        }
+        return result;
+      } catch (err) {
+        console.log('An error occured in updateColumns resolver: ', err);
+        return err;
+      }
     },
   },
 };

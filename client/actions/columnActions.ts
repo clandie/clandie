@@ -8,7 +8,6 @@ export const updateColumns = (
   destination: any[],
   sourceIdx: number,
   destinationIdx: number,
-  sourceName: string,
   destinationName: string
 ): AppThunk => async (dispatch) => {
   // update columns for dnd
@@ -42,7 +41,7 @@ export const updateColumns = (
   };
 
   const jobCard = sourceCopy[sourceIdx];
-
+  console.log('job card', jobCard);
   removeCard(sourceCopy, sourceIdx);
   insertCard(destinationCopy, destinationIdx, jobCard);
 
@@ -53,8 +52,8 @@ export const updateColumns = (
 
   // send both columns to the back end and update list orders
 
-  const query = `mutation UpdateColumns($sourceCopy: [Job], $destinationCopy: [Job], $sourceName: String!, $destinationName: String!) {
-    updateColumns(column1: $sourceCopy, column2: $destinationCopy, status1: $sourceName, status2: destinationName) {
+  const query = `mutation UpdateColumns($sourceCopy: [JobInput], $destinationCopy: [JobInput]) {
+    updateColumns(column1: $sourceCopy, column2: $destinationCopy) {
       allJobs {
         _id
         status
@@ -73,7 +72,7 @@ export const updateColumns = (
     method: 'POST',
     body: JSON.stringify({
       query,
-      variables: { sourceCopy, destinationCopy, sourceName, destinationName },
+      variables: { sourceCopy, destinationCopy },
     }),
     headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
   })

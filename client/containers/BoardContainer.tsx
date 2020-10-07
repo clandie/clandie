@@ -92,7 +92,6 @@ const mapDispatchToProps = (dispatch: any) => ({
     destination: any[],
     sourceIdx: number,
     destinationIdx: number,
-    sourceName: string,
     destinationName: string
   ) => {
     console.log('dispatched update columns');
@@ -102,7 +101,6 @@ const mapDispatchToProps = (dispatch: any) => ({
         destination,
         sourceIdx,
         destinationIdx,
-        sourceName,
         destinationName
       )
     );

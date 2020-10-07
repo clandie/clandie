@@ -22,7 +22,7 @@ interface IBoardProps {
     destination: any[],
     sourceIdx: number,
     destinationIdx: number,
-    sourceName: string,
+    // sourceName: string,
     destinationName: string
   ) => void;
 }
@@ -99,7 +99,6 @@ class Board extends Component<IBoardProps, IBoardState> {
         columns[destination.droppableId],
         source.index,
         destination.index,
-        source.droppableId,
         destination.droppableId
       );
     }
