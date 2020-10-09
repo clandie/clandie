@@ -73,9 +73,8 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
   }
 
   handleSave(e: any) {
-    const { createInterview, jobId } = this.props;
-
     e.preventDefault();
+    const { createInterview, jobId } = this.props;
     if (jobId) createInterview(this.state.newInterviewInput.title, jobId);
   }
 
