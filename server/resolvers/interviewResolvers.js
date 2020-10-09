@@ -22,6 +22,24 @@ module.exports = {
     },
   },
 
+  Interview: {
+    allInterviews: async ({ jobs_id }, args, { postgresDB }) => {
+      try {
+        const text = `SELECT * FROM interviews WHERE jobs_id=$1`;
+        const params = [jobs_id];
+        const interviews = await postgresDB.query(text, params);
+        console.log('ALLINTERVIEWS: ', interviews);
+        return interviews.rows;
+      } catch (err) {
+        console.log(
+          'An error occurred in Interview.allInterviews resolver: ',
+          err
+        );
+        return err;
+      }
+    },
+  },
+
   Mutation: {
     createInterview: async (parent, { title, jobsID }, { postgresDB }) => {
       try {

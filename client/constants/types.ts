@@ -74,4 +74,13 @@ export interface ISelectedJob {
   salary: string;
   url: string;
   list_order: number;
+  interviews:
+    | {
+        _id: number;
+        title: string;
+        date: Date;
+        time: Date;
+        notes: string;
+      }[]
+    | null;
 }
