@@ -180,6 +180,7 @@ module.exports = {
     },
     updateListOrder: async (parent, { jobs }, { postgresDB }) => {
       try {
+        console.log('in resolver', jobs)
         let result;
         for (let i = 0; i < jobs.length; i++) {
           const text = `

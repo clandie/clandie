@@ -92,9 +92,9 @@ const mapDispatchToProps = (dispatch: any) => ({
   },
 
   // for dnd, updating column ui before updating db
-  updateColumns: (jobs:any[]) => {
+  updateListOrder: (jobs:any[]) => {
     console.log('dispatched update columns');
-    dispatch(columnActions.updateColumns(jobs));
+    dispatch(columnActions.updateListOrder(jobs));
   },
 });
 
@@ -304,7 +304,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
             updateJobs={this.props.updateJobs}
             columns={this.props.columns}
             setColumns={this.props.setColumns}
-            updateColumns={this.props.updateColumns}
+            updateListOrder={this.props.updateListOrder}
           />
         </div>
       </>
