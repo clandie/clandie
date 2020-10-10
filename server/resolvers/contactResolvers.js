@@ -2,11 +2,12 @@ const { UserInputError } = require('apollo-server');
 
 module.exports = {
   Query: {
-    contacts: async (parent, { jobID }, { postgresDB }) => {
+    contacts: async (parent, { jobID }, { dataSources }) => {
       try {
+        const {postgresDB} = dataSources;
         const text = `SELECT * FROM contacts WHERE jobs_id=$1`;
         const params = [jobID];
-        const contacts = await postgresDB.query(text, params);
+        const contacts = await postgresDB(text, params);
         return contacts.rows;
       } catch (err) {
         console.log('An error occurred in contacts resolver: ', err);
@@ -23,8 +24,9 @@ module.exports = {
   },
 
   Mutation: {
-    createContact: async (parent, { name, jobID }, { postgresDB }) => {
+    createContact: async (parent, { name, jobID }, { dataSources }) => {
       try {
+        const {postgresDB} = dataSources;
         if (name === '') throw new UserInputError();
         const text = `
         INSERT INTO
@@ -33,7 +35,7 @@ module.exports = {
         RETURNING *
       `;
         const params = [name, null, null, null, null, jobID];
-        const newContact = await postgresDB.query(text, params);
+        const newContact = await postgresDB(text, params);
         return newContact.rows[0];
       } catch (err) {
         console.log('An error occurred in updateInterview resolver: ', err);
@@ -45,8 +47,9 @@ module.exports = {
       }
     },
 
-    deleteContact: async (parent, { contactID }, { postgresDB }) => {
+    deleteContact: async (parent, { contactID }, { dataSources }) => {
       try {
+        const {postgresDB} = dataSources;
         const text = `
           DELETE FROM
           contacts
@@ -54,7 +57,7 @@ module.exports = {
           RETURNING *
         `;
         const params = [contactID];
-        const deletedContact = await postgresDB.query(text, params);
+        const deletedContact = await postgresDB(text, params);
         return deletedContact.rows[0];
       } catch (err) {
         console.log('An error occurred in deleteContact reoslver: ', err);
@@ -65,9 +68,10 @@ module.exports = {
     updateContact: async (
       parent,
       { name, title, phone, email, notes, contactID },
-      { postgresDB }
+      { dataSources }
     ) => {
       try {
+        const {postgresDB} = dataSources;
         if (name === '') throw new UserInputError();
 
         const text = `
@@ -79,7 +83,7 @@ module.exports = {
 
         const params = [name, title, phone, email, notes, contactID];
 
-        const updatedContact = await postgresDB.query(text, params);
+        const updatedContact = await postgresDB(text, params);
         return updatedContact.rows[0];
       } catch (err) {
         console.log('An error occurred in updateInterview resolver: ', err);

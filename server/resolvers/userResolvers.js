@@ -2,12 +2,14 @@ const { AuthenticationError } = require('apollo-server');
 
 module.exports = {
   Query: {
-    user: async (parent, { email, password }, { postgresDB }) => {
+    user: async (parent, { email, password }, { dataSources }) => {
       try {
+        const {postgresDB} = dataSources;
         const text = `SELECT * FROM users WHERE email=$1 AND password=$2`;
         const params = [email, password];
-        const user = await postgresDB.query(text, params);
+        const user = await postgresDB(text, params);
         if (!user.rows[0]) throw new AuthenticationError();
+        console.log(user.rows)
         return user.rows[0];
       } catch (err) {
         console.log('An error occurred in user resolver: ', err);
@@ -29,12 +31,13 @@ module.exports = {
   },
 
   User: {
-    boards: async (parent, args, { postgresDB }) => {
+    boards: async (parent, args, { dataSources }) => {
       try {
+        const {postgresDB} = dataSources;
         const usersId = parent._id;
         const text = 'SELECT * FROM boards WHERE users_id=$1';
         const params = [usersId];
-        const boards = await postgresDB.query(text, params);
+        const boards = await postgresDB(text, params);
         return boards.rows;
       } catch (err) {
         console.log('An error occurred in User.boards resolver: ', err);
@@ -44,8 +47,9 @@ module.exports = {
   },
 
   Mutation: {
-    createUser: async (parent, { name, email, password }, { postgresDB }) => {
+    createUser: async (parent, { name, email, password }, { dataSources }) => {
       try {
+        const {postgresDB} = dataSources;
         const text = `
         INSERT INTO 
         users (name, email, password) 
@@ -53,7 +57,7 @@ module.exports = {
         RETURNING *
       `;
         const params = [name, email, password];
-        const newUser = await postgresDB.query(text, params);
+        const newUser = await postgresDB(text, params);
         return newUser.rows[0];
       } catch (err) {
         console.log('An error occurred in createUser resolver: ', err);
@@ -61,8 +65,9 @@ module.exports = {
       }
     },
 
-    deleteUser: async (parent, { email }, { postgresDB }) => {
+    deleteUser: async (parent, { email }, { dataSources }) => {
       try {
+        const {postgresDB} = dataSources;
         const text = `
         DELETE FROM 
         users 
@@ -70,7 +75,7 @@ module.exports = {
         RETURNING *
       `;
         const params = [email];
-        const deletedUser = await postgresDB.query(text, params);
+        const deletedUser = await postgresDB(text, params);
         return deletedUser.rows[0];
       } catch (err) {
         console.log('An error occurred in deleteUser resolver: ', err);

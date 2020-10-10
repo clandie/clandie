@@ -2,11 +2,12 @@ const { UserInputError } = require('apollo-server');
 
 module.exports = {
   Query: {
-    boards: async (parent, { userID }, { postgresDB }) => {
+    boards: async (parent, { userID }, { dataSources }) => {
       try {
+        const {postgresDB} = dataSources;
         const text = `SELECT * FROM boards WHERE users_id=$1`;
         const params = [userID];
-        const boards = await postgresDB.query(text, params);
+        const boards = await postgresDB(text, params);
         return boards.rows;
       } catch (err) {
         console.log('An error occurred in boards resolver: ', err);
@@ -16,12 +17,13 @@ module.exports = {
   },
 
   Board: {
-    jobs: async (parent, args, { postgresDB }) => {
+    jobs: async (parent, args, { dataSources }) => {
       try {
+        const {postgresDB} = dataSources;
         const boardId = parent._id;
         const text = 'SELECT * FROM jobs WHERE boards_id=$1';
         const params = [boardId];
-        const jobs = await postgresDB.query(text, params);
+        const jobs = await postgresDB(text, params);
         return jobs.rows;
       } catch (err) {
         console.log('An error occurred in jobs resolver: ', err);
@@ -29,11 +31,12 @@ module.exports = {
       }
     },
 
-    userBoards: async (parent, args, { postgresDB }) => {
+    userBoards: async (parent, args, { dataSources }) => {
       try {
+        const {postgresDB} = dataSources;
         const text = `SELECT * FROM boards WHERE users_id=$1`;
         const params = [parent.users_id];
-        const boards = await postgresDB.query(text, params);
+        const boards = await postgresDB(text, params);
         return boards.rows;
       } catch (err) {
         console.log('An error occurred in userBoards resolver: ', err);
@@ -50,14 +53,15 @@ module.exports = {
   },
 
   Mutation: {
-    createBoard: async (parent, { name, userID }, { postgresDB }) => {
+    createBoard: async (parent, { name, userID }, { dataSources }) => {
       try {
+        const {postgresDB} = dataSources;
         if (name === '' || !name) throw new UserInputError();
         // getting all boards from user to ensure no duplicate board names
         // ? is this the best way to handle this error?
         const getText = `SELECT * FROM boards WHERE users_id=$1`;
         const getParams = [userID];
-        const allUserBoardsRaw = await postgresDB.query(getText, getParams);
+        const allUserBoardsRaw = await postgresDB(getText, getParams);
         const allUserBoardsArray = allUserBoardsRaw.rows;
         allUserBoardsArray.forEach((board) => {
           if (board.name === name) throw new UserInputError();
@@ -70,7 +74,7 @@ module.exports = {
         RETURNING *
       `;
         const params = [name, userID];
-        const newBoard = await postgresDB.query(text, params);
+        const newBoard = await postgresDB(text, params);
         return newBoard.rows[0];
       } catch (err) {
         console.log('An error occurred in createBoard resolver: ', err);
@@ -83,8 +87,9 @@ module.exports = {
       }
     },
 
-    deleteBoard: async (parent, { boardID }, { postgresDB }) => {
+    deleteBoard: async (parent, { boardID }, { dataSources }) => {
       try {
+        const {postgresDB} = dataSources;
         const text = `
           DELETE FROM 
           boards 
@@ -92,7 +97,7 @@ module.exports = {
           RETURNING *
         `;
         const params = [boardID];
-        const deletedBoard = await postgresDB.query(text, params);
+        const deletedBoard = await postgresDB(text, params);
         return deletedBoard.rows[0];
       } catch (err) {
         console.log('An error occurred in deleteBoard resolver: ', err);
@@ -100,8 +105,9 @@ module.exports = {
       }
     },
 
-    updateBoard: async (parent, { name, boardID }, { postgresDB }) => {
+    updateBoard: async (parent, { name, boardID }, { dataSources }) => {
       try {
+        const {postgresDB} = dataSources;
         if (name === '' || !name) throw new UserInputError();
 
         const text = `
@@ -112,7 +118,7 @@ module.exports = {
         `;
         const params = [name, boardID];
 
-        const updatedBoard = await postgresDB.query(text, params);
+        const updatedBoard = await postgresDB(text, params);
         return updatedBoard.rows[0];
       } catch (err) {
         console.log('An error occurred in updateBoard: ', err);

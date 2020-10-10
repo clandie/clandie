@@ -17,7 +17,7 @@ class BoardModal extends Component<IModalProps> {
   render() {
     const { boards, show, user, close, userId, addBoard } = this.props;
     const boardCards = [];
-    if (boards !== undefined) {
+    if (boards) {
       for (let i = 0; i < boards.length; i++) {
         boardCards.push(
           <BoardCard
