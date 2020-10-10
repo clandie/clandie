@@ -171,7 +171,7 @@ module.exports = {
       `;
         const params = [status, jobID];
         const updatedStatus = await postgresDB.query(text, params);
-        console.log('update complete', updatedStatus.rows);
+        console.log('update status complete', updatedStatus.rows);
         return updatedStatus.rows[0];
       } catch (err) {
         console.log('An error occured in updateStatus resolver: ', err);
@@ -190,7 +190,7 @@ module.exports = {
           `;
           const params = [jobs[i].list_order, jobs[i]._id];
           const updatedListOrder = await postgresDB.query(text, params);
-          console.log('update complete', updatedListOrder.rows);
+          console.log('update list order complete', updatedListOrder.rows);
           result = updatedListOrder.rows;
         }
         return result;
