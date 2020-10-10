@@ -9,8 +9,10 @@ import { TAppState } from '../store';
 import * as actions from '../actions/boardActions';
 import * as userActions from '../actions/userActions';
 import * as jobActions from '../actions/jobActions';
+import * as interviewActions from '../actions/interviewActions';
 import * as columnActions from '../actions/columnActions';
 import * as types from '../constants/types';
+
 import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
 import { CLEAR_COLUMNS, GET_JOB, SET_COLUMNS } from '../constants/actionTypes';
 
@@ -73,7 +75,10 @@ const mapDispatchToProps = (dispatch: any) => ({
       payload: allJobs,
     });
   },
-
+  createInterview: (title: string, jobId: number) => {
+    console.log('dispatched create interview');
+    dispatch(interviewActions.createInterview(title, jobId));
+  },
   setColumns: (allJobs: any[]) => {
     console.log('dispatched set columns');
     dispatch({
@@ -81,7 +86,6 @@ const mapDispatchToProps = (dispatch: any) => ({
       payload: allJobs,
     });
   },
-
   clearColumns: () => {
     console.log('dispatched clear columns');
     dispatch({ type: CLEAR_COLUMNS });
@@ -267,6 +271,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
           updateDetails={this.props.updateDetails}
           boardId={this.props.boardId}
           deleteJob={this.props.deleteJob}
+          createInterview={this.props.createInterview}
         />
         <div className="boardContainer">
           <div className="boardHeader">

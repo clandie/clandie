@@ -12,17 +12,23 @@ interface IDetailsModalProps {
   updateDetails: (detailsObj: IDetails, boardId: number) => void;
   boardId: number;
   deleteJob: (jobId: number, boardId: number) => void;
+  createInterview: (title: string, jobId: number) => void;
 }
 
 class JobDetailsModal extends Component<IDetailsModalProps> {
   render() {
     const { selectedJob } = this.props;
     // must check if selectedJob is not null so we don't get a type error
-    let company, title;
+    let company, title, jobId;
+
+    let allInterviews = null;
     if (selectedJob !== null) {
       company = selectedJob.company;
       title = selectedJob.title;
+      allInterviews = selectedJob.interviews;
+      jobId = selectedJob._id;
     }
+
     return (
       <Modal
         className="detailsModal"
@@ -52,7 +58,11 @@ class JobDetailsModal extends Component<IDetailsModalProps> {
               />
             </Tab>
             <Tab eventKey="interviews" title="Interviews">
-              <Interviews />
+              <Interviews
+                allInterviews={allInterviews}
+                createInterview={this.props.createInterview}
+                jobId={jobId}
+              />
             </Tab>
             <Tab eventKey="contacts" title="Contacts">
               <Contacts />

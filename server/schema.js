@@ -144,6 +144,7 @@ const typeDefs = gql`
     time: Date
     notes: String
     jobs_id: ID!
+    allInterviews: [Interview!]
   }
 `;
 
