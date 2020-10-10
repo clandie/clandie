@@ -88,20 +88,22 @@ const mapDispatchToProps = (dispatch: any) => ({
   },
 
   updateColumns: (
-    source: any[],
-    destination: any[],
-    sourceIdx: number,
-    destinationIdx: number,
-    destinationName: string
+    jobs:any[]
+    // source: any[],
+    // destination: any[],
+    // sourceIdx: number,
+    // destinationIdx: number,
+    // destinationName: string
   ) => {
     console.log('dispatched update columns');
     dispatch(
       columnActions.updateColumns(
-        source,
-        destination,
-        sourceIdx,
-        destinationIdx,
-        destinationName
+        jobs
+        // source,
+        // destination,
+        // sourceIdx,
+        // destinationIdx,
+        // destinationName
       )
     );
   },

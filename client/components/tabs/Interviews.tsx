@@ -11,14 +11,14 @@ class Interviews extends Component {
     return (
       <div className="interviewsTab">
         <Form>
-          <Form className="row">
+          {/* <Form className="row">
             <Form className="label">Title</Form>
           </Form>
           <Form className="row">
             <Form className="label">Date</Form>
             <Form className="label">Time</Form>
           </Form>
-          <Form className="row">Notes</Form>
+          <Form className="row">Notes</Form> */}
         </Form>
       </div>
     );

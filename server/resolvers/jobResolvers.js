@@ -175,30 +175,55 @@ module.exports = {
         return err;
       }
     },
-
-    updateColumns: async (parent, { column1, column2 }, { postgresDB }) => {
+    updateListOrder: async (parent, { jobs }, { postgresDB }) => {
       // update list order for both columns
       try {
+   
         let result;
         // combine columns and iterate
-        const array = column1.concat(column2);
-        for (let i = 0; i < array.length; i++) {
+        // const array = column1.concat(column2);
+        for (let i = 0; i < jobs.length; i++) {
           const text = `
             UPDATE jobs
             SET list_order=$1
             WHERE _id=$2
             RETURNING *
           `;
-          const params = [array[i].list_order, array[i]._id];
-          const updatedColumns = await postgresDB.query(text, params);
-          console.log('update complete', updatedColumns.rows);
-          result = updatedColumns.rows;
+          const params = [jobs[i].list_order, jobs[i]._id];
+          const updatedListOrder = await postgresDB.query(text, params);
+          console.log('update complete', updatedListOrder.rows);
+          result = updatedListOrder.rows;
         }
         return result;
       } catch (err) {
-        console.log('An error occured in updateColumns resolver: ', err);
+        console.log('An error occured in updateListOrder resolver: ', err);
         return err;
       }
     },
+
+    // updateColumns: async (parent, { column1, column2 }, { postgresDB }) => {
+    //   // update list order for both columns
+    //   try {
+    //     let result;
+    //     // combine columns and iterate
+    //     const array = column1.concat(column2);
+    //     for (let i = 0; i < array.length; i++) {
+    //       const text = `
+    //         UPDATE jobs
+    //         SET list_order=$1
+    //         WHERE _id=$2
+    //         RETURNING *
+    //       `;
+    //       const params = [array[i].list_order, array[i]._id];
+    //       const updatedColumns = await postgresDB.query(text, params);
+    //       console.log('update complete', updatedColumns.rows);
+    //       result = updatedColumns.rows;
+    //     }
+    //     return result;
+    //   } catch (err) {
+    //     console.log('An error occured in updateColumns resolver: ', err);
+    //     return err;
+    //   }
+    // },
   },
 };
