@@ -248,55 +248,8 @@ export const updateStatus = (jobId: number, status: string): AppThunk => async (
     .then((res) => res.json())
     .then((data) => {
       console.log('updatedStatus', data);
-      dispatch({
-        type: GET_JOB,
-        payload: data.data.updateStatus.allJobs,
-      });
     })
     .catch((err) => {
       console.log('err in update status action', err);
-    });
-};
-
-// drag and drop action - updating list order
-//! need to reorder all affected jobs
-export const updateOrder = (
-  jobId: number,
-  list_order: number
-): AppThunk => async (dispatch) => {
-  const query = `mutation UpdateOrder($jobId: ID!, $list_order: Int!) {
-    updateOrder(jobID: $jobId, list_order: $list_order) {
-      allJobs {
-        _id
-        status
-        company
-        title
-        location
-        salary
-        url
-        notes
-        list_order
-      }
-    }
-  }`;
-
-  fetch('/graphql', {
-    method: 'POST',
-    body: JSON.stringify({
-      query,
-      variables: { jobId, list_order },
-    }),
-    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log('updatedOrder', data);
-      dispatch({
-        type: GET_JOB,
-        payload: data.data.updateOrder.allJobs,
-      });
-    })
-    .catch((err) => {
-      console.log('err in update order action', err);
     });
 };

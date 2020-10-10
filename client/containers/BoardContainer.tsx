@@ -87,25 +87,10 @@ const mapDispatchToProps = (dispatch: any) => ({
     dispatch({ type: CLEAR_COLUMNS });
   },
 
-  updateColumns: (
-    jobs:any[]
-    // source: any[],
-    // destination: any[],
-    // sourceIdx: number,
-    // destinationIdx: number,
-    // destinationName: string
-  ) => {
+  // for dnd, updating column ui before updating db
+  updateColumns: (jobs:any[]) => {
     console.log('dispatched update columns');
-    dispatch(
-      columnActions.updateColumns(
-        jobs
-        // source,
-        // destination,
-        // sourceIdx,
-        // destinationIdx,
-        // destinationName
-      )
-    );
+    dispatch(columnActions.updateColumns(jobs));
   },
 });
 
