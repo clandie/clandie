@@ -10,7 +10,9 @@ import * as actions from '../actions/boardActions';
 import * as userActions from '../actions/userActions';
 import * as jobActions from '../actions/jobActions';
 import * as interviewActions from '../actions/interviewActions';
+import * as columnActions from '../actions/columnActions';
 import * as types from '../constants/types';
+
 import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
 import { CLEAR_COLUMNS, GET_JOB, SET_COLUMNS } from '../constants/actionTypes';
 
@@ -87,6 +89,12 @@ const mapDispatchToProps = (dispatch: any) => ({
   clearColumns: () => {
     console.log('dispatched clear columns');
     dispatch({ type: CLEAR_COLUMNS });
+  },
+
+  // for dnd, updating column ui before updating db
+  updateColumns: (jobs:any[]) => {
+    console.log('dispatched update columns');
+    dispatch(columnActions.updateColumns(jobs));
   },
 });
 
@@ -296,6 +304,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
             updateJobs={this.props.updateJobs}
             columns={this.props.columns}
             setColumns={this.props.setColumns}
+            updateColumns={this.props.updateColumns}
           />
         </div>
       </>

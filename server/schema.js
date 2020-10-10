@@ -22,6 +22,19 @@ const typeDefs = gql`
     interviews(jobID: ID!): [Interview!]
   }
 
+  input JobInput {
+    _id: ID!
+    status: String!
+    company: String!
+    title: String!
+    location: String
+    salary: Int
+    url: String
+    notes: String
+    list_order: Int!
+  }
+
+
   type Mutation {
     createUser(name: String!, email: String!, password: String!): User!
     deleteUser(email: String!): User!
@@ -50,6 +63,7 @@ const typeDefs = gql`
       jobID: ID!
     ): JobResult!
     updateStatus(jobID: ID!, status: String!): Job!
+    updateListOrder(jobs: [JobInput]): [Job!]
 
     createInterview(title: String!, jobsID: ID!): InterviewResult!
     deleteInterview(interviewID: ID!): Interview!
