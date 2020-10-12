@@ -2,14 +2,14 @@
 erver domain to your server. Otherwise you may run into cross-origin resource s
 haring errors for your GraphQL server.
 */
-import express, { Request, Response, NextFunction } from 'express';
+import express from 'express';
 import path from 'path';
 import { ApolloServer } from 'apollo-server-express';
 require('dotenv').config();
 // import cors from 'cors';
 const PORT = 3000;
 
-const app: express.Application = express();
+const app = express();
 
 import schema from './schema';
 
@@ -18,7 +18,8 @@ import boardResolvers, { Board, BoardResult } from './resolvers/boardResolvers';
 import jobResolvers, { Job, JobResult } from './resolvers/jobResolvers';
 import Interview, { InterviewResult } from './resolvers/interviewResolvers';
 import Contact, { ContactResult } from './resolvers/contactResolvers';
-import db from './models/dbModel';
+import dbModel from './datasources/postgresConnection';
+import db from './datasources/postgresDB';
 
 // app.use(cors());
 app.use(express.json());
@@ -30,7 +31,15 @@ we can connect to the db before instantiation of Apollo Server. This also makes
 sure that Node processes environment variables before the server starts running 
 so that we can connect to db with user authentication properly */
 const startApolloServer = async () => {
-  const postgresDB = await db;
+  try {
+    const knexConfig = {
+      client: "pg",
+      connection: {
+        dbModel
+      }
+    };
+    // console.log('DB FROM SERVER.JS',  new db(knexConfig));
+    const postgresDB = await new db(knexConfig).postgresConnection();
   const server = await new ApolloServer({
     typeDefs: schema,
     resolvers: {
@@ -60,34 +69,36 @@ const startApolloServer = async () => {
     engine: {
       reportSchema: true,
     },
-    context: { postgresDB },
+    // context: () => ({postgresDB}),
+    dataSources: () => ({ postgresDB }),
   });
 
   server.applyMiddleware({ app, path: '/graphql' });
 
   // serve html
   // multiple endpoints in array as first arg to get method for serving index.html
-  app.get(['/', '/home', '/signup'], (req: Request, res: Response) => {
+  app.get(['/', '/home', '/signup'], (req, res) => {
     res.status(200).sendFile(path.resolve(__dirname, '../client/index.html'));
   });
 
   // catch all
-  app.use('*', (req: Request, res: Response) => {
+  app.use('*', (req, res) => {
     res.status(404).send('Page Not Found');
   });
 
   // global error handler will only catch errors for serving files - all other errors caught by graphql
-  app.use(
-    (err: Error, req: Request, res: Response, next: NextFunction): Response => {
-      const errorObj = {
-        log: 'Express error handler caught unknown error',
-        status: 400,
-        message: { err: 'error occurred' },
-      };
-      console.log(errorObj.log);
-      return res.status(errorObj.status).json(errorObj.message);
-    }
-  );
+  app.use((err, req, res, next) => {
+    const errorObj = {
+      log: 'Express error handler caught unknown error',
+      status: 400,
+      message: { err: 'error occurred' },
+    };
+    console.log(errorObj.log);
+    return res.status(errorObj.status).json(errorObj.message);
+  });
+}catch(err){
+  console.log('An error occurred in server set up: ', err);
+}
 };
 startApolloServer();
 

@@ -2,11 +2,12 @@ const { UserInputError } = require('apollo-server');
 
 module.exports = {
   Query: {
-    interviews: async (parent, { jobID }, { postgresDB }) => {
+    interviews: async (parent, { jobID }, { dataSources }) => {
       try {
+        const {postgresDB} = dataSources;
         const text = `SELECT * FROM interviews WHERE jobs_id=$1`;
         const params = [jobID];
-        const interviews = await postgresDB.query(text, params);
+        const interviews = await postgresDB(text, params);
         return interviews.rows;
       } catch (err) {
         console.log('An error occurred in interviews resolver: ', err);
@@ -23,11 +24,12 @@ module.exports = {
   },
 
   Interview: {
-    allInterviews: async ({ jobs_id }, args, { postgresDB }) => {
+    allInterviews: async ({ jobs_id }, args, { dataSources }) => {
       try {
+        const {postgresDB} = dataSources;
         const text = `SELECT * FROM interviews WHERE jobs_id=$1`;
         const params = [jobs_id];
-        const interviews = await postgresDB.query(text, params);
+        const interviews = await postgresDB(text, params);
         console.log('ALLINTERVIEWS: ', interviews);
         return interviews.rows;
       } catch (err) {
@@ -41,8 +43,9 @@ module.exports = {
   },
 
   Mutation: {
-    createInterview: async (parent, { title, jobsID }, { postgresDB }) => {
+    createInterview: async (parent, { title, jobsID }, { dataSources }) => {
       try {
+        const {postgresDB} = dataSources;
         if (title === '') throw new UserInputError();
         const text = `
         INSERT INTO
@@ -51,7 +54,7 @@ module.exports = {
         RETURNING *
       `;
         const params = [title, null, null, null, jobsID];
-        const newInterview = await postgresDB.query(text, params);
+        const newInterview = await postgresDB(text, params);
         return newInterview.rows[0];
       } catch (err) {
         console.log('An error occurred in updateInterview resolver:', err);
@@ -64,8 +67,9 @@ module.exports = {
       }
     },
 
-    deleteInterview: async (parent, { interviewID }, { postgresDB }) => {
+    deleteInterview: async (parent, { interviewID }, { dataSources }) => {
       try {
+        const {postgresDB} = dataSources;
         const text = `
           DELETE FROM
           interviews
@@ -73,7 +77,7 @@ module.exports = {
           RETURNING *
         `;
         const params = [interviewID];
-        const deletedInterview = await postgresDB.query(text, params);
+        const deletedInterview = await postgresDB(text, params);
         return deletedInterview.rows[0];
       } catch (err) {
         console.log('An error occurred in deleteInterview resolver: ', err);
@@ -84,9 +88,10 @@ module.exports = {
     updateInterview: async (
       parent,
       { title, date, time, notes, interviewID },
-      { postgresDB }
+      { dataSources }
     ) => {
       try {
+        const {postgresDB} = dataSources;
         if (title === '') throw new UserInputError();
 
         const text = `
@@ -100,7 +105,7 @@ module.exports = {
         time = time === '' ? null : time;
         const params = [title, date, time, notes, interviewID];
 
-        const updatedInterview = await postgresDB.query(text, params);
+        const updatedInterview = await postgresDB(text, params);
         return updatedInterview.rows[0];
       } catch (err) {
         console.log('An error occurred in updateInterview resolver: ', err);
