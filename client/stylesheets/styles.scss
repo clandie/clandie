@@ -206,19 +206,24 @@ body,
     background-color: $light-grey;
     height: 100%;
 
-    span {
-      display: inline-block;
-      width: 0;
-      height: 98%;
-      margin-top: 15px;
-      border-right: 1px solid $grey;
-    }
+    // span {
+    //   display: inline-block;
+    //   width: 0;
+    //   height: 98%;
+    //   margin-top: 15px;
+    //   border-right: 1px solid $grey;
+    // }
 
+    /* COLUMNS */
     .column {
       padding: 20px;
-      height: 100%;
+      // height: 100%;
+      align-self: flex-start;
       width: 50%;
       text-align: center;
+      border: 1px solid $grey;
+      border-radius: 8px;
+      margin: 5px;
 
       h1 {
         font-size: 25px;

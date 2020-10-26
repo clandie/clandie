@@ -158,7 +158,7 @@ class Board extends Component<IBoardProps, IBoardState> {
             // updateJobs={updateJobs}
             // setColumns={setColumns}
           />
-          <span className="divider"></span>
+          {/* <span className="divider"></span> */}
           <Column
             name={'applied'}
             open={open}
@@ -169,7 +169,7 @@ class Board extends Component<IBoardProps, IBoardState> {
             // updateJobs={updateJobs}
             // setColumns={setColumns}
           />
-          <span className="divider"></span>
+          {/* <span className="divider"></span> */}
           <Column
             name={'interviews'}
             open={open}
@@ -180,7 +180,7 @@ class Board extends Component<IBoardProps, IBoardState> {
             // updateJobs={updateJobs}
             // setColumns={setColumns}
           />
-          <span className="divider"></span>
+          {/* <span className="divider"></span> */}
           <Column
             name={'offers'}
             open={open}
@@ -191,7 +191,7 @@ class Board extends Component<IBoardProps, IBoardState> {
             // updateJobs={updateJobs}
             // setColumns={setColumns}
           />
-          <span className="divider"></span>
+          {/* <span className="divider"></span> */}
           <Column
             name={'rejected'}
             open={open}

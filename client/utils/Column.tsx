@@ -18,7 +18,7 @@ interface IColumnProps {
   // setColumns: (allJobs: any[]) => void;
 }
 const Column = (props: IColumnProps) => {
-  const { details, column } = props;
+  const { details, column, name } = props;
 
   //* fix typing for jobs
   const jobs: any[] = [];
@@ -34,19 +34,25 @@ const Column = (props: IColumnProps) => {
     );
   }
 
+  // Capitalize column name
+  let title = name[0].toUpperCase();
+  for (let i = 1; i < name.length; i++) {
+    title += name[i];
+  }
+
   return (
-    <Droppable droppableId={props.name}>
+    <Droppable droppableId={name}>
       {(provided) => (
         <div
           {...provided.droppableProps}
           ref={provided.innerRef}
           className="column"
-          key={props.name}
+          key={name}
         >
-          <h1>{props.name}</h1>
+          <h1>{title}</h1>
           <Button
             variant="light"
-            id={props.name}
+            id={name}
             className="addBtn"
             onClick={(e) => props.open(e)}
             block
