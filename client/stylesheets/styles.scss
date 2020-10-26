@@ -7,11 +7,14 @@ $peach: #ffe8d3;
 $babyblue: #ddfaff;
 $periwinkle: #e8eaff;
 $light-grey: #fbfbfb;
+$medium-grey: #c7c7c7;
 $dark-grey: #2a2a2a;
 $grey: #c7c7c7;
 $teal: #1e8894;
 $bright-teal: #02adad;
 $dark-teal: #005050;
+$dull-blue: #4f69be;
+$dark-dull-blue: #1f3681;
 
 html,
 body,
@@ -147,13 +150,13 @@ body,
       margin-top: 5px;
       padding-left: 20px;
       padding-right: 20px;
-      background-color: $teal;
+      background-color: $dull-blue;
       color: white;
-      border: 1px solid $teal;
+      border: 1px solid $dull-blue;
     }
     #dropdown-basic-button:hover {
-      background-color: $dark-teal;
-      border: 1px solid $dark-teal;
+      background-color: $dark-dull-blue;
+      border: 1px solid $dark-dull-blue;
     }
     #dropItem:focus {
       background-color: $lavender;
@@ -167,13 +170,15 @@ body,
 
       .addBoard-btn {
         margin: 5px;
-        background-color: $teal;
+        background-color: $dull-blue;
+        border: 1px solid $dull-blue;
+
         color: white;
       }
 
       .addBoard-btn:hover {
-        background-color: $dark-teal;
-        border: 1px solid $dark-teal;
+        background-color: $dark-dull-blue;
+        border: 1px solid $dark-dull-blue;
       }
     }
 
@@ -187,9 +192,9 @@ body,
       margin-top: 5px;
       padding-left: 15px;
       padding-right: 15px;
-      background-color: $dark-lav;
-      color: white;
-      border: 1px solid $dark-lav;
+      background-color: $periwinkle;
+      color: black;
+      border: 1px solid $periwinkle;
     }
 
     .sign-out:hover {
@@ -205,6 +210,9 @@ body,
     justify-content: space-evenly;
     background-color: $light-grey;
     height: 100%;
+    background-image: url('../assets/sunset.jpg');
+    background-repeat: no-repeat;
+    background-size: 100%;
 
     // span {
     //   display: inline-block;
@@ -218,6 +226,7 @@ body,
     .column {
       padding: 20px;
       // height: 100%;
+      background-color: $light-grey;
       align-self: flex-start;
       width: 50%;
       text-align: center;
@@ -233,14 +242,19 @@ body,
 
       .addBtn {
         background-color: white;
+        border: 1px solid $medium-grey;
         font-weight: 400;
         font-size: 30px;
       }
 
       .jobCard {
         .card {
-          margin: 10px;
+          margin-top: 12px;
           padding: 10px;
+          border: 1px solid $medium-grey;
+          -webkit-box-shadow: 0 10px 6px -6px $medium-grey;
+          -moz-box-shadow: 0 10px 6px -6px $medium-grey;
+          box-shadow: 0 10px 6px -6px $medium-grey;
 
           .cardTitle {
             font-weight: 600;
