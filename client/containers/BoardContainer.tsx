@@ -93,7 +93,7 @@ const mapDispatchToProps = (dispatch: any) => ({
 
   // for dnd, updating column ui before updating db
   updateListOrder: (jobs:any[]) => {
-    console.log('dispatched update columns');
+    console.log('dispatched update list order');
     dispatch(columnActions.updateListOrder(jobs));
   },
 });

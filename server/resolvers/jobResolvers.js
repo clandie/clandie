@@ -179,6 +179,8 @@ module.exports = {
       }
     },
     updateListOrder: async (parent, { jobs }, { postgresDB }) => {
+      console.log('in resolver', jobs)
+
       try {
         console.log('in resolver', jobs)
         let result;

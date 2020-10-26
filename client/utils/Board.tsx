@@ -46,6 +46,8 @@ class Board extends Component<IBoardProps, IBoardState> {
 
   // TODO: need to retype result
   onDragEnd = (result: any) => {
+    console.log('result', result);
+
     const { destination, source, draggableId } = result;
     // if no destination or if dropped in same location, return
     if (!destination) {
@@ -57,7 +59,6 @@ class Board extends Component<IBoardProps, IBoardState> {
     ) {
       return;
     }
-    console.log('result', result);
 
     // update state before updating db
     const { columns, allJobs, updateJobs, setColumns } = this.props;
@@ -131,6 +132,7 @@ class Board extends Component<IBoardProps, IBoardState> {
     setColumns(newJobsArr);
     updateJobs(newJobsArr);
 
+    console.log('newJobsArr', newJobsArr)
     // update status in db if placed in different column
     if (destination.droppableId !== source.droppableId) {
       this.props.updateStatus(draggableId, destination.droppableId);

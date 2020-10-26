@@ -41,6 +41,7 @@ const Column = (props: IColumnProps) => {
           {...provided.droppableProps}
           ref={provided.innerRef}
           className="column"
+          key={props.name}
         >
           <h1>{props.name}</h1>
           <Button
