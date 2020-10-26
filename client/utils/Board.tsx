@@ -104,7 +104,6 @@ class Board extends Component<IBoardProps, IBoardState> {
     
     // should now have updated columns array
     console.log('sourceCopy', sourceCopy);
-    //! index is buggy?
     console.log('dest copy', destinationCopy);
     
     // update allJobs array with new columns
@@ -132,7 +131,6 @@ class Board extends Component<IBoardProps, IBoardState> {
     setColumns(newJobsArr);
     updateJobs(newJobsArr);
 
-    console.log('newJobsArr', newJobsArr)
     // update status in db if placed in different column
     if (destination.droppableId !== source.droppableId) {
       this.props.updateStatus(draggableId, destination.droppableId);

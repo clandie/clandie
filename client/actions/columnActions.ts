@@ -4,7 +4,6 @@ import _ from 'lodash';
 import { GET_JOB, SET_COLUMNS } from '../constants/actionTypes';
 
 export const updateListOrder = (jobs: types.IJobs[]): AppThunk => async (dispatch) => {
-  console.log('jobs', jobs)
   const query = `mutation UpdateListOrder($jobs: [JobInput]) {
     updateListOrder(jobs: $jobs) {
       allJobs {
