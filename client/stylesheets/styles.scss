@@ -135,15 +135,22 @@ body,
   }
 }
 
+/*
+BOARD CONTAINER
+*/
 .boardContainer {
   height: 100%;
+  background-image: url('../assets/sunset.jpg');
+  background-repeat: no-repeat;
+  background-size: 100%;
 
   .boardHeader {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    height: 80px;
+    height: 60px;
+    background-color: rgba(251, 251, 251, 0.3);
 
     #dropdown-basic-button {
       margin-left: 20px;
@@ -182,9 +189,11 @@ body,
       }
     }
 
-    h1 {
+    h3 {
       text-align: center;
       padding: 10px;
+      margin-right: 100px;
+      // color: white;
     }
 
     .sign-out {
@@ -208,25 +217,12 @@ body,
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-    background-color: $light-grey;
     height: 100%;
-    background-image: url('../assets/sunset.jpg');
-    background-repeat: no-repeat;
-    background-size: 100%;
-
-    // span {
-    //   display: inline-block;
-    //   width: 0;
-    //   height: 98%;
-    //   margin-top: 15px;
-    //   border-right: 1px solid $grey;
-    // }
 
     /* COLUMNS */
     .column {
       padding: 20px;
-      // height: 100%;
-      background-color: $light-grey;
+      background-color: rgba(251, 251, 251, 0.9);
       align-self: flex-start;
       width: 50%;
       text-align: center;

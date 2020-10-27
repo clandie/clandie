@@ -4,18 +4,12 @@ import JobCard from './JobCard';
 import { Droppable } from 'react-beautiful-dnd';
 import * as types from '../constants/types';
 import _ from 'lodash';
-// import { useCallback } from 'react';
 
 interface IColumnProps {
   name: string;
   column: types.IJobs[];
   open: (e: any) => void;
   details: (jobId: number) => void;
-  // // props for dnd
-  // allJobs: types.IJobs[] | [];
-  // updateStatus: (jobId: number, status: string) => void;
-  // updateJobs: (allJobs: any[]) => void;
-  // setColumns: (allJobs: any[]) => void;
 }
 const Column = (props: IColumnProps) => {
   const { details, column, name } = props;
@@ -41,30 +35,31 @@ const Column = (props: IColumnProps) => {
   }
 
   return (
-    <Droppable droppableId={name}>
-      {(provided) => (
-        <div
-          {...provided.droppableProps}
-          ref={provided.innerRef}
-          className="column"
-          key={name}
-        >
-          <h1>{title}</h1>
-          <Button
-            variant="light"
-            id={name}
-            className="addBtn"
-            onClick={(e) => props.open(e)}
-            block
+    <div className="column"> 
+      <h1>{title}</h1>
+      <Button
+        variant="light"
+        id={name}
+        className="addBtn"
+        onClick={(e) => props.open(e)}
+        block
+      >
+        +
+      </Button>
+      <Droppable droppableId={name}>
+        {(provided) => (
+          <div
+            {...provided.droppableProps}
+            ref={provided.innerRef}
+            className="inner-column"
+            key={name}
           >
-            +
-          </Button>
-
-          <div className="jobList">{jobs}</div>
-          {provided.placeholder}
-        </div>
-      )}
-    </Droppable>
+            <div className="jobList">{jobs}</div>
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
+    </div>
   );
 };
 

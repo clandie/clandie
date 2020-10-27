@@ -287,7 +287,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
                 +{' '}
               </Button>
             </div>
-            <h1>{this.props.boardName}</h1>
+            <h3>{this.props.boardName}</h3>
             <Button className="sign-out" onClick={this.handleSignout}>
               Sign Out
             </Button>

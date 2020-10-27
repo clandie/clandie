@@ -153,54 +153,30 @@ class Board extends Component<IBoardProps, IBoardState> {
             open={open}
             details={details}
             column={columns.opportunities}
-            // allJobs={allJobs}
-            // updateStatus={updateStatus}
-            // updateJobs={updateJobs}
-            // setColumns={setColumns}
           />
-          {/* <span className="divider"></span> */}
           <Column
             name={'applied'}
             open={open}
             details={details}
             column={columns.applied}
-            // allJobs={allJobs}
-            // updateStatus={updateStatus}
-            // updateJobs={updateJobs}
-            // setColumns={setColumns}
           />
-          {/* <span className="divider"></span> */}
           <Column
             name={'interviews'}
             open={open}
             details={details}
             column={columns.interviews}
-            // allJobs={allJobs}
-            // updateStatus={updateStatus}
-            // updateJobs={updateJobs}
-            // setColumns={setColumns}
           />
-          {/* <span className="divider"></span> */}
           <Column
             name={'offers'}
             open={open}
             details={details}
             column={columns.offers}
-            // allJobs={allJobs}
-            // updateStatus={updateStatus}
-            // updateJobs={updateJobs}
-            // setColumns={setColumns}
           />
-          {/* <span className="divider"></span> */}
           <Column
             name={'rejected'}
             open={open}
             details={details}
             column={columns.rejected}
-            // allJobs={allJobs}
-            // updateStatus={updateStatus}
-            // updateJobs={updateJobs}
-            // setColumns={setColumns}
           />
         </div>
       </DragDropContext>
