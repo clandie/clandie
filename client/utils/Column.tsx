@@ -21,6 +21,7 @@ const Column = (props: IColumnProps) => {
       <JobCard
         company={column[i].company}
         title={column[i].title}
+        location={column[i].location}
         jobId={column[i]._id}
         details={details}
         index={Number(column[i].list_order)}

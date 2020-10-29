@@ -1,5 +1,9 @@
 // styles
 $lavender: #f1e8ff;
+$dull-lav: #ccc9e7;
+// $dark-purple: #8d82df;
+$dark-purple: #696492;
+$deep-purple: #3f396b;
 $dark-lav: #db3194;
 $lemon: #ffffc6;
 $light-lemon: #ffffea;
@@ -7,6 +11,7 @@ $peach: #ffe8d3;
 $babyblue: #ddfaff;
 $periwinkle: #e8eaff;
 $light-grey: #fbfbfb;
+$light-medium-grey: #dadada;
 $medium-grey: #c7c7c7;
 $dark-grey: #2a2a2a;
 $grey: #c7c7c7;
@@ -15,6 +20,8 @@ $bright-teal: #02adad;
 $dark-teal: #005050;
 $dull-blue: #4f69be;
 $dark-dull-blue: #1f3681;
+$brown: #5c4237;
+$gunmental: #2e3138;
 
 html,
 body,
@@ -140,7 +147,7 @@ BOARD CONTAINER
 */
 .boardContainer {
   height: 100%;
-  background-image: url('../assets/sunset.jpg');
+  background-image: url('../assets/beige.jpg');
   background-repeat: no-repeat;
   background-size: 100%;
 
@@ -157,13 +164,13 @@ BOARD CONTAINER
       margin-top: 5px;
       padding-left: 20px;
       padding-right: 20px;
-      background-color: $dull-blue;
+      background-color: $dark-purple;
       color: white;
-      border: 1px solid $dull-blue;
+      border: 1px solid $dark-purple;
     }
     #dropdown-basic-button:hover {
-      background-color: $dark-dull-blue;
-      border: 1px solid $dark-dull-blue;
+      background-color: $deep-purple;
+      border: 1px solid $deep-purple;
     }
     #dropItem:focus {
       background-color: $lavender;
@@ -177,15 +184,15 @@ BOARD CONTAINER
 
       .addBoard-btn {
         margin: 5px;
-        background-color: $dull-blue;
-        border: 1px solid $dull-blue;
+        background-color: $dark-purple;
+        border: 1px solid $dark-purple;
 
         color: white;
       }
 
       .addBoard-btn:hover {
-        background-color: $dark-dull-blue;
-        border: 1px solid $dark-dull-blue;
+        background-color: $deep-purple;
+        border: 1px solid $deep-purple;
       }
     }
 
@@ -201,14 +208,14 @@ BOARD CONTAINER
       margin-top: 5px;
       padding-left: 15px;
       padding-right: 15px;
-      background-color: $periwinkle;
+      background-color: $light-medium-grey;
       color: black;
-      border: 1px solid $periwinkle;
+      border: 1px solid $light-medium-grey;
     }
 
     .sign-out:hover {
-      background-color: $lavender;
-      border: 1px solid $lavender;
+      background-color: $light-grey;
+      border: 1px solid $light-grey;
       color: $dark-grey;
     }
   }
@@ -247,14 +254,40 @@ BOARD CONTAINER
         .card {
           margin-top: 12px;
           padding: 10px;
+          padding-bottom: 5px;
           border: 1px solid $medium-grey;
           -webkit-box-shadow: 0 10px 6px -6px $medium-grey;
           -moz-box-shadow: 0 10px 6px -6px $medium-grey;
           box-shadow: 0 10px 6px -6px $medium-grey;
 
-          .cardTitle {
-            font-weight: 600;
+          .cardBody {
+            display: flex;
+            flex-direction: column;
+
+            .cardTop {
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+             
+              .cardCompany {
+                font-size: 22px;
+                font-weight: 600;
+                align-self: flex-start;
+                margin-top: -15px;
+              }
+              .cardLocation {
+                font-weight: 200;
+                font-size: 14px;
+                margin-top: -10px;
+                margin-right: -10px;
+              }
+            }
+            
+            .cardTitle {
+              align-self: flex-start;
+            }
           }
+          
         }
       }
     }
