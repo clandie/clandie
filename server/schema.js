@@ -31,7 +31,18 @@ const typeDefs = gql`
     salary: Int
     url: String
     notes: String
+    interviews: [InterviewInput]
     list_order: Int!
+  }
+
+  input InterviewInput {
+    _id: ID!
+    title: String!
+    date: Date
+    time: Date
+    notes: String
+    jobs_id: ID!
+    allInterviews: [InterviewInput!]
   }
 
 

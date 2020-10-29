@@ -3,8 +3,7 @@ import { AppThunk } from '../store';
 import _ from 'lodash';
 import { GET_JOB, SET_COLUMNS } from '../constants/actionTypes';
 
-export const updateColumns = (jobs: types.IJobs[]): AppThunk => async (dispatch) => {
-
+export const updateListOrder = (jobs: types.IJobs[]): AppThunk => async (dispatch) => {
   const query = `mutation UpdateListOrder($jobs: [JobInput]) {
     updateListOrder(jobs: $jobs) {
       allJobs {
@@ -32,7 +31,7 @@ export const updateColumns = (jobs: types.IJobs[]): AppThunk => async (dispatch)
     .then((res) => res.json())
     .then((data) => {
       const { allJobs } = data.data.updateListOrder[0];
-      console.log('updated columns', allJobs);
+      console.log('updated list order', allJobs);
       dispatch({
         type: SET_COLUMNS,
         payload: allJobs,
@@ -43,6 +42,6 @@ export const updateColumns = (jobs: types.IJobs[]): AppThunk => async (dispatch)
       })
     })
     .catch((err) => {
-      console.log('err in update columns action', err);
+      console.log('err in update list order action', err);
     });
 };

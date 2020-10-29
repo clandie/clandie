@@ -4,21 +4,15 @@ import JobCard from './JobCard';
 import { Droppable } from 'react-beautiful-dnd';
 import * as types from '../constants/types';
 import _ from 'lodash';
-// import { useCallback } from 'react';
 
 interface IColumnProps {
   name: string;
   column: types.IJobs[];
   open: (e: any) => void;
   details: (jobId: number) => void;
-  // // props for dnd
-  // allJobs: types.IJobs[] | [];
-  // updateStatus: (jobId: number, status: string) => void;
-  // updateJobs: (allJobs: any[]) => void;
-  // setColumns: (allJobs: any[]) => void;
 }
 const Column = (props: IColumnProps) => {
-  const { details, column } = props;
+  const { details, column, name } = props;
 
   //* fix typing for jobs
   const jobs: any[] = [];
@@ -34,30 +28,38 @@ const Column = (props: IColumnProps) => {
     );
   }
 
-  return (
-    <Droppable droppableId={props.name}>
-      {(provided) => (
-        <div
-          {...provided.droppableProps}
-          ref={provided.innerRef}
-          className="column"
-        >
-          <h1>{props.name}</h1>
-          <Button
-            variant="light"
-            id={props.name}
-            className="addBtn"
-            onClick={(e) => props.open(e)}
-            block
-          >
-            +
-          </Button>
+  // Capitalize column name
+  let title = name[0].toUpperCase();
+  for (let i = 1; i < name.length; i++) {
+    title += name[i];
+  }
 
-          <div className="jobList">{jobs}</div>
-          {provided.placeholder}
-        </div>
-      )}
-    </Droppable>
+  return (
+    <div className="column"> 
+      <h1>{title}</h1>
+      <Button
+        variant="light"
+        id={name}
+        className="addBtn"
+        onClick={(e) => props.open(e)}
+        block
+      >
+        +
+      </Button>
+      <Droppable droppableId={name}>
+        {(provided) => (
+          <div
+            {...provided.droppableProps}
+            ref={provided.innerRef}
+            className="inner-column"
+            key={name}
+          >
+            <div className="jobList">{jobs}</div>
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
+    </div>
   );
 };
 

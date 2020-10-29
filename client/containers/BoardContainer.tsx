@@ -92,9 +92,9 @@ const mapDispatchToProps = (dispatch: any) => ({
   },
 
   // for dnd, updating column ui before updating db
-  updateColumns: (jobs:any[]) => {
-    console.log('dispatched update columns');
-    dispatch(columnActions.updateColumns(jobs));
+  updateListOrder: (jobs:any[]) => {
+    console.log('dispatched update list order');
+    dispatch(columnActions.updateListOrder(jobs));
   },
 });
 
@@ -287,7 +287,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
                 +{' '}
               </Button>
             </div>
-            <h1>{this.props.boardName}</h1>
+            <h3>{this.props.boardName}</h3>
             <Button className="sign-out" onClick={this.handleSignout}>
               Sign Out
             </Button>
@@ -304,7 +304,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
             updateJobs={this.props.updateJobs}
             columns={this.props.columns}
             setColumns={this.props.setColumns}
-            updateColumns={this.props.updateColumns}
+            updateListOrder={this.props.updateListOrder}
           />
         </div>
       </>

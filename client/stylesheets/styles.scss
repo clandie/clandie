@@ -7,11 +7,14 @@ $peach: #ffe8d3;
 $babyblue: #ddfaff;
 $periwinkle: #e8eaff;
 $light-grey: #fbfbfb;
+$medium-grey: #c7c7c7;
 $dark-grey: #2a2a2a;
 $grey: #c7c7c7;
 $teal: #1e8894;
 $bright-teal: #02adad;
 $dark-teal: #005050;
+$dull-blue: #4f69be;
+$dark-dull-blue: #1f3681;
 
 html,
 body,
@@ -132,28 +135,35 @@ body,
   }
 }
 
+/*
+BOARD CONTAINER
+*/
 .boardContainer {
   height: 100%;
+  background-image: url('../assets/sunset.jpg');
+  background-repeat: no-repeat;
+  background-size: 100%;
 
   .boardHeader {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    height: 80px;
+    height: 60px;
+    background-color: rgba(251, 251, 251, 0.3);
 
     #dropdown-basic-button {
       margin-left: 20px;
       margin-top: 5px;
       padding-left: 20px;
       padding-right: 20px;
-      background-color: $teal;
+      background-color: $dull-blue;
       color: white;
-      border: 1px solid $teal;
+      border: 1px solid $dull-blue;
     }
     #dropdown-basic-button:hover {
-      background-color: $dark-teal;
-      border: 1px solid $dark-teal;
+      background-color: $dark-dull-blue;
+      border: 1px solid $dark-dull-blue;
     }
     #dropItem:focus {
       background-color: $lavender;
@@ -167,19 +177,23 @@ body,
 
       .addBoard-btn {
         margin: 5px;
-        background-color: $teal;
+        background-color: $dull-blue;
+        border: 1px solid $dull-blue;
+
         color: white;
       }
 
       .addBoard-btn:hover {
-        background-color: $dark-teal;
-        border: 1px solid $dark-teal;
+        background-color: $dark-dull-blue;
+        border: 1px solid $dark-dull-blue;
       }
     }
 
-    h1 {
+    h3 {
       text-align: center;
       padding: 10px;
+      margin-right: 100px;
+      // color: white;
     }
 
     .sign-out {
@@ -187,9 +201,9 @@ body,
       margin-top: 5px;
       padding-left: 15px;
       padding-right: 15px;
-      background-color: $dark-lav;
-      color: white;
-      border: 1px solid $dark-lav;
+      background-color: $periwinkle;
+      color: black;
+      border: 1px solid $periwinkle;
     }
 
     .sign-out:hover {
@@ -203,22 +217,18 @@ body,
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-    background-color: $light-grey;
     height: 100%;
 
-    span {
-      display: inline-block;
-      width: 0;
-      height: 98%;
-      margin-top: 15px;
-      border-right: 1px solid $grey;
-    }
-
+    /* COLUMNS */
     .column {
       padding: 20px;
-      height: 100%;
+      background-color: rgba(251, 251, 251, 0.9);
+      align-self: flex-start;
       width: 50%;
       text-align: center;
+      border: 1px solid $grey;
+      border-radius: 8px;
+      margin: 5px;
 
       h1 {
         font-size: 25px;
@@ -228,14 +238,19 @@ body,
 
       .addBtn {
         background-color: white;
+        border: 1px solid $medium-grey;
         font-weight: 400;
         font-size: 30px;
       }
 
       .jobCard {
         .card {
-          margin: 10px;
+          margin-top: 12px;
           padding: 10px;
+          border: 1px solid $medium-grey;
+          -webkit-box-shadow: 0 10px 6px -6px $medium-grey;
+          -moz-box-shadow: 0 10px 6px -6px $medium-grey;
+          box-shadow: 0 10px 6px -6px $medium-grey;
 
           .cardTitle {
             font-weight: 600;

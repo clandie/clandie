@@ -15,7 +15,7 @@ interface IBoardProps {
   updateStatus: (jobId: number, status: string) => void;
   updateJobs: (allJobs: any[]) => void;
   setColumns: (allJobs: any[]) => void;
-  updateColumns: (jobs: types.IJobs[]) => void;
+  updateListOrder: (jobs: types.IJobs[]) => void;
 }
 
 interface IBoardState {
@@ -46,6 +46,8 @@ class Board extends Component<IBoardProps, IBoardState> {
 
   // TODO: need to retype result
   onDragEnd = (result: any) => {
+    console.log('result', result);
+
     const { destination, source, draggableId } = result;
     // if no destination or if dropped in same location, return
     if (!destination) {
@@ -57,7 +59,6 @@ class Board extends Component<IBoardProps, IBoardState> {
     ) {
       return;
     }
-    console.log('result', result);
 
     // update state before updating db
     const { columns, allJobs, updateJobs, setColumns } = this.props;
@@ -92,17 +93,28 @@ class Board extends Component<IBoardProps, IBoardState> {
 
     const jobCard = sourceCopy[source.index];
     console.log('job card', jobCard);
-    removeCard(sourceCopy, source.index);
-    insertCard(destinationCopy, destination.index, jobCard);
-
+    if (destination.droppableId !== source.droppableId) {
+      removeCard(sourceCopy, source.index);
+      insertCard(destinationCopy, destination.index, jobCard);  
+    } else {
+      // if card is dropped in the same column, use the source array
+      removeCard(sourceCopy, source.index);
+      insertCard(sourceCopy, destination.index, jobCard)
+    }
+    
     // should now have updated columns array
     console.log('sourceCopy', sourceCopy);
-    //! index is buggy?
     console.log('dest copy', destinationCopy);
     
     // update allJobs array with new columns
     const jobsCopy = _.cloneDeep(allJobs);
-    const combined = sourceCopy.concat(destinationCopy);
+    let combined;
+    // if being dropped in the same column use only source array, otherwise combine
+    if (destination.droppableId === source.droppableId) {
+      combined = sourceCopy;
+    } else {
+      combined = sourceCopy.concat(destinationCopy);
+    }
     let newJobsArr = [];
     for (let i = 0; i < jobsCopy.length; i++) {
       for (let j = 0; j < combined.length; j++)  {
@@ -114,9 +126,7 @@ class Board extends Component<IBoardProps, IBoardState> {
         }
       }
     }
-    console.log('before', jobsCopy)
-    console.log('after', newJobsArr)
-
+  
     // set columns and update jobs in state
     setColumns(newJobsArr);
     updateJobs(newJobsArr);
@@ -124,12 +134,12 @@ class Board extends Component<IBoardProps, IBoardState> {
     // update status in db if placed in different column
     if (destination.droppableId !== source.droppableId) {
       this.props.updateStatus(draggableId, destination.droppableId);
-      this.props.updateColumns(
-        newJobsArr
-      );
+      this.props.updateListOrder(newJobsArr)
+    } else {
+      // update only list order if placed in same column
+      this.props.updateListOrder(newJobsArr)
     }
 
-    //update list order - need to figure out how to update list orders for other jobs that are affected
   };
 
   // render each column
@@ -143,54 +153,30 @@ class Board extends Component<IBoardProps, IBoardState> {
             open={open}
             details={details}
             column={columns.opportunities}
-            // allJobs={allJobs}
-            // updateStatus={updateStatus}
-            // updateJobs={updateJobs}
-            // setColumns={setColumns}
           />
-          <span className="divider"></span>
           <Column
             name={'applied'}
             open={open}
             details={details}
             column={columns.applied}
-            // allJobs={allJobs}
-            // updateStatus={updateStatus}
-            // updateJobs={updateJobs}
-            // setColumns={setColumns}
           />
-          <span className="divider"></span>
           <Column
             name={'interviews'}
             open={open}
             details={details}
             column={columns.interviews}
-            // allJobs={allJobs}
-            // updateStatus={updateStatus}
-            // updateJobs={updateJobs}
-            // setColumns={setColumns}
           />
-          <span className="divider"></span>
           <Column
             name={'offers'}
             open={open}
             details={details}
             column={columns.offers}
-            // allJobs={allJobs}
-            // updateStatus={updateStatus}
-            // updateJobs={updateJobs}
-            // setColumns={setColumns}
           />
-          <span className="divider"></span>
           <Column
             name={'rejected'}
             open={open}
             details={details}
             column={columns.rejected}
-            // allJobs={allJobs}
-            // updateStatus={updateStatus}
-            // updateJobs={updateJobs}
-            // setColumns={setColumns}
           />
         </div>
       </DragDropContext>

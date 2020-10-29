@@ -12,7 +12,7 @@ interface ICardProps {
 
 const JobCard = (props: ICardProps) => {
   return (
-    <Draggable draggableId={String(props.jobId)} index={props.index}>
+    <Draggable draggableId={String(props.jobId)} index={props.index} key={props.jobId}>
       {(provided) => (
         <div
           {...provided.draggableProps}
