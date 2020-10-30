@@ -24,13 +24,13 @@ export const getJob = (boardId: number): AppThunk => async (dispatch) => {
       salary,
       url,
       notes,
-      interviews{
-        _id,
-        title,
-        date,
-        time,
-        notes
-      }
+      #interviews{
+       # _id,
+       # title,
+       # date,
+       # time,
+       # notes
+     #}
       list_order,
     }
   }`;
@@ -53,7 +53,8 @@ export const getJob = (boardId: number): AppThunk => async (dispatch) => {
         type: SET_COLUMNS,
         payload: allJobs.data.jobs,
       });
-    });
+    })
+    .catch((err) => console.log('error in get job action', err));
 };
 
 export const createJob = (jobObj: types.IJobInput): AppThunk => async (
@@ -103,7 +104,6 @@ export const createJob = (jobObj: types.IJobInput): AppThunk => async (
         payload: allJobs,
       });
     })
-
     .catch((err) => {
       console.log('error in create job action', err);
     });
