@@ -14,7 +14,7 @@ import * as columnActions from '../actions/columnActions';
 import * as types from '../constants/types';
 
 import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
-import { CLEAR_COLUMNS, GET_JOB, SET_COLUMNS } from '../constants/actionTypes';
+import { CLEAR_COLUMNS, GET_JOB, SET_COLUMNS} from '../constants/actionTypes';
 
 const mapStateToProps = (store: TAppState) => ({
   boardId: store.boards.id,
@@ -24,6 +24,7 @@ const mapStateToProps = (store: TAppState) => ({
   userId: store.users.id,
   allJobs: store.jobs.jobs,
   columns: store.columns,
+  allInterviews: store.interviews.interviews
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
@@ -74,6 +75,10 @@ const mapDispatchToProps = (dispatch: any) => ({
       type: GET_JOB,
       payload: allJobs,
     });
+  },
+  getInterview: (jobId: number) => {
+    console.log('dispatched get interview');
+    dispatch(interviewActions.getInterview(jobId));
   },
   createInterview: (title: string, jobId: number) => {
     console.log('dispatched create interview');
@@ -271,6 +276,8 @@ class BoardContainer extends Component<BoardProps, BoardState> {
           updateDetails={this.props.updateDetails}
           boardId={this.props.boardId}
           deleteJob={this.props.deleteJob}
+          allInterviews={this.props.allInterviews}
+          getInterview={this.props.getInterview}
           createInterview={this.props.createInterview}
         />
         <div className="boardContainer">

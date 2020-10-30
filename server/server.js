@@ -32,14 +32,13 @@ sure that Node processes environment variables before the server starts running
 so that we can connect to db with user authentication properly */
 const startApolloServer = async () => {
   try {
-    const knexConfig = {
-      client: "pg",
-      connection: {
-        dbModel
-      }
-    };
-    // console.log('DB FROM SERVER.JS',  new db(knexConfig));
-    const postgresDB = await new db(knexConfig).postgresConnection();
+  const knexConfig = {
+    client: "pg",
+    connection: {
+      dbModel
+    }
+  };
+  const postgresDB = await new db(knexConfig).postgresConnection();
   const server = await new ApolloServer({
     typeDefs: schema,
     resolvers: {
@@ -69,7 +68,6 @@ const startApolloServer = async () => {
     engine: {
       reportSchema: true,
     },
-    // context: () => ({postgresDB}),
     dataSources: () => ({ postgresDB }),
   });
 

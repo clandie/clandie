@@ -182,11 +182,11 @@ module.exports = {
         return err;
       }
     },
-    updateListOrder: async (parent, { jobs }, { postgresDB }) => {
-      console.log('in resolver', jobs)
+    updateListOrder: async (parent, { jobs }, { dataSources }) => {
 
       try {
-        console.log('in resolver', jobs)
+        const {postgresDB} = dataSources;
+
         let result;
         for (let i = 0; i < jobs.length; i++) {
           const text = `
@@ -196,7 +196,7 @@ module.exports = {
             RETURNING *
           `;
           const params = [jobs[i].list_order, jobs[i]._id];
-          const updatedListOrder = await postgresDB.query(text, params);
+          const updatedListOrder = await postgresDB(text, params);
           console.log('update list order complete', updatedListOrder.rows);
           result = updatedListOrder.rows;
         }

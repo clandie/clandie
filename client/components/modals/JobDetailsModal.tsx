@@ -3,7 +3,7 @@ import { Tab, Tabs, Modal } from 'react-bootstrap';
 import Details from '../tabs/Details';
 import Interviews from '../tabs/Interviews';
 import Contacts from '../tabs/Contacts';
-import { IDetails, ISelectedJob } from '../../constants/types';
+import { IDetails, ISelectedJob} from '../../constants/types';
 
 interface IDetailsModalProps {
   show: boolean;
@@ -12,7 +12,16 @@ interface IDetailsModalProps {
   updateDetails: (detailsObj: IDetails, boardId: number) => void;
   boardId: number;
   deleteJob: (jobId: number, boardId: number) => void;
+  getInterview: (jobId: number) => void;
   createInterview: (title: string, jobId: number) => void;
+  allInterviews: | {
+    _id: number;
+    title: string;
+    date: Date;
+    time: Date;
+    notes: string;
+  }[]
+| null;
 }
 
 class JobDetailsModal extends Component<IDetailsModalProps> {
@@ -21,11 +30,11 @@ class JobDetailsModal extends Component<IDetailsModalProps> {
     // must check if selectedJob is not null so we don't get a type error
     let company, title, jobId;
 
-    let allInterviews = null;
+    // let allInterviews = null;
     if (selectedJob !== null) {
       company = selectedJob.company;
       title = selectedJob.title;
-      allInterviews = selectedJob.interviews;
+      // allInterviews = selectedJob.interviews;
       jobId = selectedJob._id;
     }
 
@@ -59,7 +68,8 @@ class JobDetailsModal extends Component<IDetailsModalProps> {
             </Tab>
             <Tab eventKey="interviews" title="Interviews">
               <Interviews
-                allInterviews={allInterviews}
+                allInterviews={this.props.allInterviews}
+                getInterview={this.props.getInterview}
                 createInterview={this.props.createInterview}
                 jobId={jobId}
               />
