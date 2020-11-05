@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
 
+
 interface ILoginProps {
   verifyUser(userObj: ILoginState): void;
   authorized?: boolean;
@@ -49,6 +50,7 @@ class Login extends Component<ILoginProps, ILoginState> {
       <div className="login-container">
         <div className="login-img"></div>
         <div className="login-box">
+          <img src={require('../assets/full-logo.png')}/>
           <Form className="login-form">
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
