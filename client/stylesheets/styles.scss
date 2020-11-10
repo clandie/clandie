@@ -68,7 +68,7 @@ body,
     background-color:  rgba(255, 255, 255, 0.7);
 
 
-    .logo {
+    .full-logo {
       width: 250px;
       height: 250px;
       margin-bottom: 20px;
@@ -176,8 +176,28 @@ BOARD CONTAINER
     height: 60px;
     background-color: rgba(251, 251, 251, 0.3);
 
+   
+
+    .board-options {
+      display: flex;
+      flex-direction: row;
+      margin-top: 15px;
+      margin-left: 10px;
+
+      .logo {
+        width: 60px;
+        height: 60px;
+        background-image: url('../assets/logo.png');
+        background-size: 70%;
+        background-repeat: no-repeat;
+        margin-left: 5px;
+        margin-top: 5px;
+      }
+
+
     #dropdown-basic-button {
-      margin-left: 20px;
+      height: 40px;
+      // margin-left: 20px;
       margin-top: 5px;
       padding-left: 20px;
       padding-right: 20px;
@@ -196,12 +216,10 @@ BOARD CONTAINER
       border: 1px solid $lavender;
     }
 
-    .board-options {
-      display: flex;
-      flex-direction: row;
-
       .addBoard-btn {
         margin: 5px;
+        width: 40px;
+        height: 40px;
         background-color: white;
         border: 1px solid white;
 

@@ -51,7 +51,7 @@ class Signup extends Component<ISignupProps, ISignupState> {
     return (
       <div className="login-container">
         <div className="login-box">
-          <div className="logo"></div>
+          <div className="full-logo"></div>
           <Form className="login-form">
             <Form.Group controlId="formBasicName">
               <Form.Label>Name</Form.Label>
