@@ -40,25 +40,42 @@ body,
   justify-content: center;
   align-items: center;
   height: 100%;
+  background-image: url('../assets/city-blur.jpg');
+  background-size: 100%;
+  background-repeat: no-repeat;
 
-  .login-img {
-    width: 100%;
-    height: 100%;
-    // background-color: $periwinkle;
-    // background-image: url('../assets/laptop-full.jpg');
-    background-image: url('../assets/begin.jpg');
-    background-size: 125%;
-    background-repeat: no-repeat;
-    // background-position: bottom;
-  }
+
+  // .login-img {
+  //   // width: 100%;
+  //   // height: 100%;
+  //   // background-color: $periwinkle;
+  //   // background-image: url('../assets/laptop-full.jpg');
+  //   background-image: url('../assets/begin.jpg');
+  //   background-size: 125%;
+  //   background-repeat: no-repeat;
+  //   // background-position: bottom;
+  // }
 
   .login-box {
-    width: 70%;
-    height: 100%;
+    width: 600px;
+    height: 800px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border: 1px solid $grey;
+    border-radius: 10px;
+    background-color:  rgba(255, 255, 255, 0.7);
+
+
+    .logo {
+      width: 250px;
+      height: 250px;
+      margin-bottom: 20px;
+      background-image: url('../assets/full-logo.png');
+      background-size: 100%;
+      background-repeat: no-repeat;
+    }
 
     .login-form {
       width: 500px;
@@ -147,7 +164,7 @@ BOARD CONTAINER
 */
 .boardContainer {
   height: 100%;
-  background-image: url('../assets/lattes.jpg');
+  background-image: url('../assets/mountains.jpg');
   background-repeat: no-repeat;
   background-size: 100%;
 

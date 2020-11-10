@@ -50,8 +50,8 @@ class Signup extends Component<ISignupProps, ISignupState> {
     const { name, email, password } = this.state;
     return (
       <div className="login-container">
-        <div className="login-img"></div>
         <div className="login-box">
+          <div className="logo"></div>
           <Form className="login-form">
             <Form.Group controlId="formBasicName">
               <Form.Label>Name</Form.Label>
