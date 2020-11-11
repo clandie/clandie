@@ -12,7 +12,7 @@ const getENV = async () => {
   const PG_URI = `postgres://${user}:${pass}@drona.db.elephantsql.com:5432/${user}`;
 
   pool = new Pool({
-    connectionString: PG_URI + '?connection_limit=10',
+    connectionString: PG_URI,
   });
 };
 getENV();

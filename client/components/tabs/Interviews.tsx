@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import { Form, Col, Button, Card } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion';
 import InterviewCard from '../../utils/InterviewCard';
+import _ from 'lodash';
 // import {IInterviews} from '../../constants/types';
 // import DatePicker from 'react-bootstrap-date-picker';
 // import { ControlLabel } from 'react-bootstrap';
 // console.log('react bootstrap date picker:', DatePicker);
+// import DatePicker from 'react-datepicker';
 
 interface IInterviewsProps {
   jobId?: number;
@@ -55,6 +57,7 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
     };
     this.handleSave = this.handleSave.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.saveDate = this.saveDate.bind(this)
   }
 
   componentDidMount() {
@@ -83,6 +86,27 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
     if (jobId) createInterview(this.state.newInterviewInput.title, jobId);
   }
 
+  saveDate(date: Date, interviewId: number) {
+    console.log('event from saveDate, ', `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`)
+    // e.preventDefault();
+    const stateClone = _.cloneDeep(this.state);
+    const interviews = stateClone['listOfInterviews'];
+
+    const newInterviews = [];
+    if(interviews){
+    for(let i = 0; i < interviews.length; i++){
+      if(interviews[i]._id === interviewId) interviews[i].date = date;
+      console.log(interviews[i])
+      newInterviews.push(interviews[i]);
+    }
+  }
+
+    this.setState({
+      ...this.state,
+      listOfInterviews: newInterviews
+    })
+  }
+
   render() {
     // iterate over array of interviews to be rendered instead of rendering one InterviewCard
     const { allInterviews } = this.props;
@@ -91,15 +115,20 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
       for (let i = 0; i < allInterviews.length; i++) {
         interviews.push(
           <InterviewCard
+          id={allInterviews[i]._id}
             title={allInterviews[i].title}
             date={allInterviews[i].date}
             time={allInterviews[i].time}
             notes={allInterviews[i].notes}
+            saveDate={this.saveDate}
             // jobId={allInterviews[i]._id}
           ></InterviewCard>
         );
       }
     }
+
+    console.log(this.state)
+    console.log(allInterviews)
 
     return (
       <div className="interviewsTab">
@@ -123,12 +152,11 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
                       ></Form.Control>
                     </Form.Group>
                   </Form.Row>
-                  <Form.Row>
+                  {/* <Form.Row>
                     <Form.Group as={Col} controlId="formDate">
-                      {/* <ControlLabel>Date</ControlLabel> */}
-                      {/* <DatePicker /> */}
                       <Form.Label>Date</Form.Label>
-                      <Form.Control></Form.Control>
+                      <Form.Control>
+                      </Form.Control>
                     </Form.Group>
                     <Form.Group as={Col} controlId="formTime">
                       <Form.Label>Time</Form.Label>
@@ -145,7 +173,7 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
                         onChange={this.handleChange}
                       ></Form.Control>
                     </Form.Group>
-                  </Form.Row>
+                  </Form.Row> */}
                   <Button
                     className="save-btn"
                     type="submit"

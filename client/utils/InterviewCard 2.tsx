@@ -1,23 +1,17 @@
 import React from 'react';
 import { Form, Col, Button, Card } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion';
-import DatePicker from 'react-datepicker';
-import "react-datepicker/dist/react-datepicker.css";
 
 interface IInterviewCardProps {
-  id: number;
   title: string;
   date: Date;
   time: Date;
   notes: string;
-  saveDate: (e: any, interviewid: number) => void;
   // jobId: number;
 }
 
 const InterviewCard = (props: IInterviewCardProps) => {
-  console.log('props.date rom interviewCard', props.date)
   return (
-    <div>
     <Accordion defaultActiveKey="0">
       <Card>
         <Accordion.Toggle as={Card.Header} eventKey="1">
@@ -35,12 +29,11 @@ const InterviewCard = (props: IInterviewCardProps) => {
               </Form.Row>
               <Form.Row>
                 <Form.Group as={Col} controlId="formDate">
+                  {/* <ControlLabel>Date</ControlLabel> */}
+                  {/* <DatePicker /> */}
                   <Form.Label>Date</Form.Label>
-                  {'/n'}
-                    <DatePicker selected={props.date} onChange={(date) => {props.saveDate(date, props.id)}}/>
+                  <Form.Control></Form.Control>
                 </Form.Group>
-
-
                 <Form.Group as={Col} controlId="formTime">
                   <Form.Label>Time</Form.Label>
                   <Form.Control></Form.Control>
@@ -59,7 +52,6 @@ const InterviewCard = (props: IInterviewCardProps) => {
         </Accordion.Collapse>
       </Card>
     </Accordion>
-    </div>
   );
 };
 
