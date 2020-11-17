@@ -22,6 +22,7 @@ $dull-blue: #4f69be;
 $dark-dull-blue: #1f3681;
 $brown: #5c4237;
 $gunmental: #2e3138;
+$beige: #ece2d6;
 
 html,
 body,
@@ -152,8 +153,11 @@ BOARD CONTAINER
 */
 .boardContainer {
   height: 100%;
-  background-image: url('../assets/paris.jpg');
+  background-color: $beige;
+  // background-image: url('../assets/coffee-doodle.png');
+  // background-position: 95% 100%;
   background-repeat: no-repeat;
+  // background-image: url('../assets/city-blur.jpg');
   background-size: 100%;
 
   .boardHeader {
@@ -264,6 +268,56 @@ BOARD CONTAINER
         font-size: 25px;
         margin: 20px;
         padding: 20px;
+      }
+
+      // column images
+      .column-header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        margin-right: 20px;
+
+        .opportunities-img {
+          width: 60px;
+          height: 65px;
+          background: url('../assets/doodles.png') -75px -65px;
+          background-size: 250%;
+          background-repeat: no-repeat;
+          margin-left: -25px;
+        }
+        .applied-img {
+          width: 55px;
+          height: 55px;
+          background: url('../assets/doodles.png') -70px -5px;
+          background-size: 250%;
+          background-repeat: no-repeat;
+          margin-left: -25px;
+        }
+        .interviews-img {
+          width: 55px;
+          height: 65px;
+          background: url('../assets/doodles.png') -20px -5px;
+          background-size: 240%;
+          background-repeat: no-repeat;
+          margin-left: -20px;
+        }
+        .offers-img {
+          width: 65px;
+          height: 45px;
+          background: url('../assets/doodles.png') -15px -88px;
+          background-size: 250%;
+          background-repeat: no-repeat;
+          margin-left: -25px;
+        }
+        .rejected-img {
+          width: 60px;
+          height: 65px;
+          background: url('../assets/doodles.png') -75px -65px;
+          background-size: 250%;
+          background-repeat: no-repeat;
+          margin-left: -25px;
+        }
       }
 
       .addBtn {

@@ -71,7 +71,6 @@ class Details extends Component<IDetailProps, IDetailState> {
     const { selectedJob, boardId, deleteJob, close } = this.props;
     let jobId: number;
     if (selectedJob !== null) jobId = selectedJob._id;
-    console.log('state notes', this.state.notes)
     return (
       <div className="detailsTab">
         <Form>
