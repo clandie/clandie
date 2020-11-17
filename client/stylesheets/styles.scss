@@ -322,6 +322,27 @@ BOARD CONTAINER
 .detailsTab {
   margin: 20px;
 
+  .detailsLocation {
+    height: 40px;
+    width: 350px;
+    padding: 8px;
+  }
+  .detailsSalary {
+    height: 40px;
+    width: 350px;
+    padding: 8px;
+  }
+  .detailsUrl {
+    height: 40px;
+    width: 725px;
+    padding: 8px;
+  }
+  .detailsNotes {
+    height: 200px;
+    width: 725px;
+    padding: 10px;
+  }
+
   .delete-btn {
     background-color: $dark-lav;
     color: white;

@@ -66,51 +66,32 @@ class Details extends Component<IDetailProps, IDetailState> {
     }
   }
 
+  //* replaced form control with html text area - we may not even need forms for this tab
   render() {
     const { selectedJob, boardId, deleteJob, close } = this.props;
     let jobId: number;
     if (selectedJob !== null) jobId = selectedJob._id;
+    console.log('state notes', this.state.notes)
     return (
       <div className="detailsTab">
         <Form>
           <Form.Row>
             <Form.Group as={Col} controlId="formLocation">
               <Form.Label>Location</Form.Label>
-              <Form.Control
-                type="text"
-                name="location"
-                placeholder={this.state.location}
-                onChange={this.handleChange}
-              />
+              <textarea className="detailsLocation" onChange={this.handleChange} value={this.state.location}></textarea>
             </Form.Group>
-
             <Form.Group as={Col} controlId="formSalary">
               <Form.Label>Salary</Form.Label>
-              <Form.Control
-                type="text"
-                name="salary"
-                placeholder={this.state.salary}
-                onChange={this.handleChange}
-              />
+              <textarea className="detailsSalary" onChange={this.handleChange} value={this.state.salary}></textarea>
             </Form.Group>
           </Form.Row>
           <Form.Group controlId="formUrl">
             <Form.Label>URL</Form.Label>
-            <Form.Control
-              type="text"
-              name="url"
-              placeholder={this.state.url}
-              onChange={this.handleChange}
-            />
+            <textarea className="detailsUrl" onChange={this.handleChange} value={this.state.url}></textarea>
           </Form.Group>
           <Form.Group controlId="exampleForm.ControlTextarea1">
             <Form.Label>Notes</Form.Label>
-            <Form.Control
-              as="textarea"
-              name="notes"
-              placeholder={this.state.notes}
-              onChange={this.handleChange}
-            />
+            <textarea className="detailsNotes" onChange={this.handleChange} value={this.state.notes}></textarea>
           </Form.Group>
           <Button
             className="delete-btn"
