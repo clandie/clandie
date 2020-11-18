@@ -77,20 +77,20 @@ class Details extends Component<IDetailProps, IDetailState> {
           <Form.Row>
             <Form.Group as={Col} controlId="formLocation">
               <Form.Label>Location</Form.Label>
-              <textarea className="detailsLocation" onChange={this.handleChange} value={this.state.location}></textarea>
+              <textarea className="detailsLocation" onChange={this.handleChange} name="location" value={this.state.location ? this.state.location : ''}></textarea>
             </Form.Group>
             <Form.Group as={Col} controlId="formSalary">
               <Form.Label>Salary</Form.Label>
-              <textarea className="detailsSalary" onChange={this.handleChange} value={this.state.salary}></textarea>
+              <textarea className="detailsSalary" onChange={this.handleChange} name="salary" value={this.state.salary ? this.state.salary : ''}></textarea>
             </Form.Group>
           </Form.Row>
           <Form.Group controlId="formUrl">
             <Form.Label>URL</Form.Label>
-            <textarea className="detailsUrl" onChange={this.handleChange} value={this.state.url}></textarea>
+            <textarea className="detailsUrl" onChange={this.handleChange} name="url" value={this.state.url ? this.state.url : ''}></textarea>
           </Form.Group>
           <Form.Group controlId="exampleForm.ControlTextarea1">
             <Form.Label>Notes</Form.Label>
-            <textarea className="detailsNotes" onChange={this.handleChange} value={this.state.notes}></textarea>
+            <textarea className="detailsNotes" onChange={this.handleChange} name="notes" value={this.state.notes ? this.state.notes : ''}></textarea>
           </Form.Group>
           <Button
             className="delete-btn"
