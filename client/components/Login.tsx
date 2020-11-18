@@ -47,8 +47,8 @@ class Login extends Component<ILoginProps, ILoginState> {
     }
     return (
       <div className="login-container">
-        <div className="login-img"></div>
         <div className="login-box">
+          <div className="full-logo"></div>
           <Form className="login-form">
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>

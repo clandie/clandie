@@ -21,6 +21,7 @@ const Column = (props: IColumnProps) => {
       <JobCard
         company={column[i].company}
         title={column[i].title}
+        location={column[i].location}
         jobId={column[i]._id}
         details={details}
         index={Number(column[i].list_order)}
@@ -36,7 +37,10 @@ const Column = (props: IColumnProps) => {
 
   return (
     <div className="column"> 
-      <h1>{title}</h1>
+      <div className="column-header"> 
+        <h1>{title}</h1>
+        <div className={`${title.toLowerCase()}-img`}></div>
+      </div>
       <Button
         variant="light"
         id={name}
