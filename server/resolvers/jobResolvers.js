@@ -183,11 +183,10 @@ module.exports = {
       }
     },
     updateListOrder: async (parent, { jobs }, { dataSources }) => {
-      console.log('in resolver', jobs)
 
       try {
-        console.log('in resolver', jobs)
         const {postgresDB} = dataSources;
+
         let result;
         for (let i = 0; i < jobs.length; i++) {
           const text = `

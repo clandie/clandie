@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Form, Col, Button, Card } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion';
 import InterviewCard from '../../utils/InterviewCard';
+// import {IInterviews} from '../../constants/types';
 // import DatePicker from 'react-bootstrap-date-picker';
 // import { ControlLabel } from 'react-bootstrap';
 // console.log('react bootstrap date picker:', DatePicker);
@@ -17,6 +18,8 @@ interface IInterviewsProps {
         notes: string;
       }[]
     | null;
+  // allInterviews: IInterviews;
+  getInterview: (jobId: number) => void;
   createInterview: (title: string, jobId: number) => void;
 }
 
@@ -44,7 +47,7 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
     this.state = {
       listOfInterviews: [],
       newInterviewInput: {
-        title: 'has not been updated',
+        title: '',
         date: null,
         time: null,
         notes: '',
@@ -55,10 +58,12 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
   }
 
   componentDidMount() {
-    const { allInterviews } = this.props;
+    if(this.props.jobId) this.props.getInterview(this.props.jobId);
+
+    // const { allInterviews } = this.props;
 
     this.setState({
-      listOfInterviews: allInterviews,
+      listOfInterviews: this.props.allInterviews,
     });
   }
 

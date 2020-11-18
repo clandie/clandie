@@ -32,6 +32,7 @@ export const CLEAR_JOB = 'CLEAR_JOB';
 // Interview Action Types
 export const GET_INTERVIEW = 'GET_INTERVIEW';
 export const CREATE_INTERVIEW = 'CREATE_INTERVIEW';
+
 // Column Action Types
 export const UPDATE_OPPORTUNITIES = 'UPDATE_OPPORTUNITIES';
 export const UPDATE_APPLIED = 'UPDATE_APPLIED';
@@ -212,6 +213,7 @@ export type BoardActionTypes =
 export type JobActionTypes = GetJob | CreateJob | ClearJob;
 
 export type InterviewActionTypes = GetInterview | CreateInterview;
+
 export type ColumnActionTypes =
   // | UpdateOpportunities
   // | UpdateApplied
