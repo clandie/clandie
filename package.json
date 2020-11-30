@@ -2,6 +2,9 @@
   "name": "clandie",
   "version": "1.0.0",
   "main": "index.tsx",
+  "engines": {
+    "node": "12.16.2"
+  },
   "scripts": {
     "start": "NODE_ENV=production nodemon -r esm server/server.js",
     "build": "webpack -p",
