@@ -2,6 +2,9 @@
   "name": "clandie",
   "version": "1.0.0",
   "main": "index.tsx",
+  "engines": {
+    "node": "12.16.2"
+  },
   "scripts": {
     "start": "NODE_ENV=production nodemon -r esm server/server.js",
     "build": "webpack -p",
@@ -53,13 +56,14 @@
     "apollo-server-express": "^2.16.1",
     "bootstrap": "^4.5.2",
     "cors": "^2.8.5",
+    "datasource-sql": "^1.3.0",
     "dotenv": "^8.2.0",
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "express-graphql": "^0.11.0",
     "graphql": "^15.3.0",
     "lodash": "^4.17.20",
-    "pg": "^9.2.0",
+    "pg": "^8.5.1",
     "react": "^16.13.1",
     "react-beautiful-dnd": "^13.0.0",
     "react-bootstrap": "^1.3.0",
