@@ -1,26 +1,15 @@
 import React, { Component } from 'react';
 import { Form, Col, Button } from 'react-bootstrap';
-import { IDetails } from '../../constants/types';
+import { IDetails, ISelectedJob } from '../../constants/types';
 
 interface IDetailProps {
   updateDetails: (detailsObj: IDetails, boardId: number) => void;
-  selectedJob: {
-    _id: number;
-    status: string;
-    company: string;
-    title: string;
-    location: string;
-    notes: string;
-    salary: string;
-    url: string;
-  } | null;
+  selectedJob: ISelectedJob | null;
   boardId: number;
   deleteJob: (jobId: number, boardId: number) => void;
   close: () => void;
 }
 interface IDetailState {
-  // company?: string;
-  // title?: string;
   location?: string;
   salary?: string;
   url?: string;
@@ -31,8 +20,6 @@ class Details extends Component<IDetailProps, IDetailState> {
     super(props);
 
     this.state = {
-      // company: '',
-      // title: '',
       location: '',
       salary: '',
       url: '',
@@ -79,6 +66,7 @@ class Details extends Component<IDetailProps, IDetailState> {
     }
   }
 
+  //* replaced form control with html text area - we may not even need forms for this tab
   render() {
     const { selectedJob, boardId, deleteJob, close } = this.props;
     let jobId: number;
@@ -89,41 +77,20 @@ class Details extends Component<IDetailProps, IDetailState> {
           <Form.Row>
             <Form.Group as={Col} controlId="formLocation">
               <Form.Label>Location</Form.Label>
-              <Form.Control
-                type="text"
-                name="location"
-                placeholder={this.state.location}
-                onChange={this.handleChange}
-              />
+              <textarea className="detailsLocation" onChange={this.handleChange} name="location" value={this.state.location ? this.state.location : ''}></textarea>
             </Form.Group>
-
             <Form.Group as={Col} controlId="formSalary">
               <Form.Label>Salary</Form.Label>
-              <Form.Control
-                type="text"
-                name="salary"
-                placeholder={this.state.salary}
-                onChange={this.handleChange}
-              />
+              <textarea className="detailsSalary" onChange={this.handleChange} name="salary" value={this.state.salary ? this.state.salary : ''}></textarea>
             </Form.Group>
           </Form.Row>
           <Form.Group controlId="formUrl">
             <Form.Label>URL</Form.Label>
-            <Form.Control
-              type="text"
-              name="url"
-              placeholder={this.state.url}
-              onChange={this.handleChange}
-            />
+            <textarea className="detailsUrl" onChange={this.handleChange} name="url" value={this.state.url ? this.state.url : ''}></textarea>
           </Form.Group>
           <Form.Group controlId="exampleForm.ControlTextarea1">
             <Form.Label>Notes</Form.Label>
-            <Form.Control
-              as="textarea"
-              name="notes"
-              placeholder={this.state.notes}
-              onChange={this.handleChange}
-            />
+            <textarea className="detailsNotes" onChange={this.handleChange} name="notes" value={this.state.notes ? this.state.notes : ''}></textarea>
           </Form.Group>
           <Button
             className="delete-btn"

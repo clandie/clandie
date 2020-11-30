@@ -18,3 +18,23 @@ export interface BoardState {
 export interface JobState {
   jobs: { status: string; company: string; title: string }[] | [];
 }
+
+// interview reducer state
+export interface InterviewState {
+  interviews: {
+    _id: number;
+    title: string;
+    date: Date;
+    time: Date;
+    notes: string
+  }[] | null;
+}
+
+// column reducer state
+export interface ColumnState {
+  opportunities: [];
+  applied: [];
+  interviews: [];
+  offers: [];
+  rejected: [];
+}

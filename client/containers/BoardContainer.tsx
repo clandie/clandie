@@ -9,8 +9,12 @@ import { TAppState } from '../store';
 import * as actions from '../actions/boardActions';
 import * as userActions from '../actions/userActions';
 import * as jobActions from '../actions/jobActions';
+import * as interviewActions from '../actions/interviewActions';
+import * as columnActions from '../actions/columnActions';
 import * as types from '../constants/types';
+
 import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
+import { CLEAR_COLUMNS, GET_JOB, SET_COLUMNS} from '../constants/actionTypes';
 
 const mapStateToProps = (store: TAppState) => ({
   boardId: store.boards.id,
@@ -19,6 +23,8 @@ const mapStateToProps = (store: TAppState) => ({
   user: store.users.name,
   userId: store.users.id,
   allJobs: store.jobs.jobs,
+  columns: store.columns,
+  allInterviews: store.interviews.interviews
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
@@ -50,13 +56,50 @@ const mapDispatchToProps = (dispatch: any) => ({
     console.log('dispatched clear job');
     dispatch(jobActions.clearJob());
   },
-  updateDetails: (detailsObj: types.IDetails, boardId: number) => {
+  updateDetails: (detailsObj: types.IDetails) => {
     console.log('dispatched update details');
-    dispatch(jobActions.updateDetails(detailsObj, boardId));
+    dispatch(jobActions.updateDetails(detailsObj));
   },
   deleteJob: (jobId: number, boardId: number) => {
     console.log('dispatched delete job');
     dispatch(jobActions.deleteJob(jobId, boardId));
+  },
+  updateStatus: (jobId: number, status: string) => {
+    console.log('dispatched update status');
+    dispatch(jobActions.updateStatus(jobId, status));
+  },
+  // updateJobs is for dnd functionality - update state before updating db
+  updateJobs: (allJobs: any[]) => {
+    console.log('dispatched update jobs');
+    dispatch({
+      type: GET_JOB,
+      payload: allJobs,
+    });
+  },
+  getInterview: (jobId: number) => {
+    console.log('dispatched get interview');
+    dispatch(interviewActions.getInterview(jobId));
+  },
+  createInterview: (title: string, jobId: number) => {
+    console.log('dispatched create interview');
+    dispatch(interviewActions.createInterview(title, jobId));
+  },
+  setColumns: (allJobs: any[]) => {
+    console.log('dispatched set columns');
+    dispatch({
+      type: SET_COLUMNS,
+      payload: allJobs,
+    });
+  },
+  clearColumns: () => {
+    console.log('dispatched clear columns');
+    dispatch({ type: CLEAR_COLUMNS });
+  },
+
+  // for dnd, updating column ui before updating db
+  updateListOrder: (jobs:any[]) => {
+    console.log('dispatched update list order');
+    dispatch(columnActions.updateListOrder(jobs));
   },
 });
 
@@ -68,17 +111,8 @@ interface BoardState {
   showJobModal: boolean;
   showCreateBoard: boolean;
   showDetailsModal: boolean;
-  currentColumn: string | null;
-  selectedJob: {
-    _id: number;
-    status: string;
-    company: string;
-    title: string;
-    location: string;
-    notes: string;
-    salary: string;
-    url: string;
-  } | null;
+  currentColumn: { columnName: string; columnOrder: number | null };
+  selectedJob: types.ISelectedJob | null;
 
   dropdownItems: JSX.Element[] | [];
 }
@@ -92,7 +126,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
       showJobModal: false,
       showCreateBoard: false,
       showDetailsModal: false,
-      currentColumn: null,
+      currentColumn: { columnName: '', columnOrder: null },
       selectedJob: null,
       dropdownItems: [],
     };
@@ -147,10 +181,16 @@ class BoardContainer extends Component<BoardProps, BoardState> {
     this.props.clearUserInfo();
     this.props.clearBoard();
     this.props.clearJob();
+    this.props.clearColumns();
   }
 
   handleOpen(e: any) {
-    this.setState({ showJobModal: true, currentColumn: e.target.id });
+    //determine list order for column
+    const order = this.props.columns[e.target.id].length;
+    this.setState({
+      showJobModal: true,
+      currentColumn: { columnName: e.target.id, columnOrder: order },
+    });
   }
 
   handleClose() {
@@ -159,7 +199,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
       showJobModal: false,
       showCreateBoard: false,
       showDetailsModal: false,
-      currentColumn: null,
+      currentColumn: { columnName: '', columnOrder: null },
     });
   }
 
@@ -236,10 +276,14 @@ class BoardContainer extends Component<BoardProps, BoardState> {
           updateDetails={this.props.updateDetails}
           boardId={this.props.boardId}
           deleteJob={this.props.deleteJob}
+          allInterviews={this.props.allInterviews}
+          getInterview={this.props.getInterview}
+          createInterview={this.props.createInterview}
         />
         <div className="boardContainer">
           <div className="boardHeader">
             <div className="board-options">
+            <div className="logo"></div>
               <DropdownButton
                 id="dropdown-basic-button"
                 title={this.props.boardName || ''}
@@ -251,7 +295,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
                 +{' '}
               </Button>
             </div>
-            <h1>{this.props.boardName}</h1>
+            <h3>{this.props.boardName}</h3>
             <Button className="sign-out" onClick={this.handleSignout}>
               Sign Out
             </Button>
@@ -264,6 +308,11 @@ class BoardContainer extends Component<BoardProps, BoardState> {
             getJob={this.props.getJob}
             allJobs={this.props.allJobs}
             details={this.renderDetailsModal}
+            updateStatus={this.props.updateStatus}
+            updateJobs={this.props.updateJobs}
+            columns={this.props.columns}
+            setColumns={this.props.setColumns}
+            updateListOrder={this.props.updateListOrder}
           />
         </div>
       </>

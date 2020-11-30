@@ -22,6 +22,30 @@ const typeDefs = gql`
     interviews(jobID: ID!): [Interview!]
   }
 
+  input JobInput {
+    _id: ID!
+    status: String!
+    company: String!
+    title: String!
+    location: String
+    salary: Int
+    url: String
+    notes: String
+    interviews: [InterviewInput]
+    list_order: Int!
+  }
+
+  input InterviewInput {
+    _id: ID!
+    title: String!
+    date: Date
+    time: Date
+    notes: String
+    jobs_id: ID!
+    allInterviews: [InterviewInput!]
+  }
+
+
   type Mutation {
     createUser(name: String!, email: String!, password: String!): User!
     deleteUser(email: String!): User!
@@ -36,6 +60,7 @@ const typeDefs = gql`
       company: String!
       title: String!
       boardID: ID!
+      list_order: Int!
     ): JobResult!
     deleteJob(jobID: ID!): Job!
     updateJob(
@@ -48,6 +73,8 @@ const typeDefs = gql`
       notes: String
       jobID: ID!
     ): JobResult!
+    updateStatus(jobID: ID!, status: String!): Job!
+    updateListOrder(jobs: [JobInput]): [Job!]
 
     createInterview(title: String!, jobsID: ID!): InterviewResult!
     deleteInterview(interviewID: ID!): Interview!
@@ -105,6 +132,7 @@ const typeDefs = gql`
     url: String
     notes: String
     boards_id: ID!
+    list_order: Int!
     contacts: [Contact!]
     interviews: [Interview!]
     allJobs: [Job!]
@@ -127,6 +155,7 @@ const typeDefs = gql`
     time: Date
     notes: String
     jobs_id: ID!
+    allInterviews: [Interview!]
   }
 `;
 

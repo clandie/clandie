@@ -9,6 +9,8 @@
  * ************************************
  */
 
+import { IJobs } from './types';
+
 // User Action Types
 export const ADD_USER = 'ADD_USER';
 export const VERIFY_USER = 'VERIFY_USER';
@@ -26,6 +28,20 @@ export const CLEAR_BOARD = 'CLEAR_BOARD';
 export const GET_JOB = 'GET_JOB;';
 export const CREATE_JOB = 'CREATE_JOB';
 export const CLEAR_JOB = 'CLEAR_JOB';
+
+// Interview Action Types
+export const GET_INTERVIEW = 'GET_INTERVIEW';
+export const CREATE_INTERVIEW = 'CREATE_INTERVIEW';
+
+// Column Action Types
+export const UPDATE_OPPORTUNITIES = 'UPDATE_OPPORTUNITIES';
+export const UPDATE_APPLIED = 'UPDATE_APPLIED';
+export const UPDATE_INTERVIEWS = 'UPDATE_INTERVIEWS';
+export const UPDATE_OFFERS = 'UPDATE_OFFERS';
+export const UPDATE_REJECTED = 'UPDATE_REJECTED';
+export const CLEAR_COLUMNS = 'CLEAR_COLUMNS';
+export const UPDATE_COLUMNS = 'UPDATE_COLUMNS';
+export const SET_COLUMNS = 'SET_COLUMNS';
 
 //USER ACTION TYPES
 
@@ -120,6 +136,67 @@ interface ClearJob {
   type: typeof CLEAR_JOB;
 }
 
+// INTERVIEW ACTION TYPES
+interface GetInterview {
+  type: typeof GET_INTERVIEW;
+  payload: {
+    allInterviews: {
+      title: string;
+      date: Date;
+      time: Date;
+      notes: string;
+      job_id: number;
+    };
+  };
+}
+
+interface CreateInterview {
+  type: typeof CREATE_INTERVIEW;
+  payload: {
+    title: string;
+    job_id: number;
+  };
+}
+// COLUMN ACTION TYPES
+interface UpdateColumns {
+  type: typeof UPDATE_COLUMNS;
+  payload: IJobs[];
+}
+
+// interface UpdateOpportunities {
+//   type: typeof UPDATE_OPPORTUNITIES;
+//   payload: { job: IJobs; list_order: number };
+// }
+
+// interface UpdateApplied {
+//   type: typeof UPDATE_APPLIED;
+//   payload: { job: IJobs; list_order: number };
+// }
+
+// interface UpdateInterviews {
+//   type: typeof UPDATE_INTERVIEWS;
+//   payload: { job: IJobs; list_order: number };
+// }
+
+// interface UpdateOffers {
+//   type: typeof UPDATE_OFFERS;
+//   payload: { job: IJobs; list_order: number };
+// }
+
+// interface UpdateRejected {
+//   type: typeof UPDATE_REJECTED;
+//   payload: { job: IJobs; list_order: number };
+// }
+
+interface ClearColumns {
+  type: typeof CLEAR_COLUMNS;
+}
+
+interface SetColumns {
+  type: typeof SET_COLUMNS;
+  payload: IJobs[];
+}
+
 export type UserActionTypes =
   | AddUser
   | VerifyUser
@@ -134,3 +211,13 @@ export type BoardActionTypes =
   | ClearBoard;
 
 export type JobActionTypes = GetJob | CreateJob | ClearJob;
+
+export type InterviewActionTypes = GetInterview | CreateInterview;
+
+export type ColumnActionTypes =
+  // | UpdateOpportunities
+  // | UpdateApplied
+  // | UpdateInterviews
+  // | UpdateOffers
+  // | UpdateRejected
+  ClearColumns | UpdateColumns | SetColumns;
