@@ -6,7 +6,7 @@
     "node": "12.16.2"
   },
   "scripts": {
-    "start": "NODE_ENV=production nodemon -r esm server/server.js",
+    "start": "NODE_ENV=production node -r esm server/server.js",
     "build": "webpack -p",
     "dev": "NODE_ENV=development nodemon -r esm server/server.js -- hot & webpack-dev-server --hot --inline"
   },
