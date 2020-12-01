@@ -1,4 +1,7 @@
 # KOFFEE
+<p align="center">
+![alt text] (https://github.com/clandie/clandie/blob/master/client/assets/full-logo.png)
+</p>
 
 <p align="center">
 Koffee is a job application tracker and organizer. It provides a simple, lightweight solution that allows users to manage opportunities in their job search. The Koffee board keeps track of every detail about your job applications - location, salary, notes, interviews, contacts and more.
@@ -15,7 +18,7 @@ Koffee is a job application tracker and organizer. It provides a simple, lightwe
 
 ## Contributing
 
-## Cloning the Repo
+### Cloning the Repo
 1. Fork the project and the clone the repo to your local machine
 2. Install dependencies
    Using Yarn (highly recommended):
