@@ -35,12 +35,14 @@ const Column = (props: IColumnProps) => {
     title += name[i];
   }
 
+  //* column-header: sprite images currently not in use
+  
   return (
     <div className="column"> 
-      <div className="column-header"> 
+      {/* <div className="column-header">  */}
         <h1>{title}</h1>
-        <div className={`${title.toLowerCase()}-img`}></div>
-      </div>
+        {/* <div className={`${title.toLowerCase()}-img`}></div> */}
+      {/* </div> */}
       <Button
         variant="light"
         id={name}
