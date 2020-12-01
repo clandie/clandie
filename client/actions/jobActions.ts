@@ -171,6 +171,10 @@ export const updateDetails = (detailsObj: types.IDetails): AppThunk => async (
     .then((data) => {
       console.log('data', data);
       dispatch({
+        type: SET_COLUMNS,
+        payload: data.data.updateJob.allJobs,
+      });
+      dispatch({
         type: GET_JOB,
         payload: data.data.updateJob.allJobs,
       });

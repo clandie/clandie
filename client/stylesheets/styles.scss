@@ -1,5 +1,9 @@
 // styles
 $lavender: #f1e8ff;
+$dull-lav: #ccc9e7;
+// $dark-purple: #8d82df;
+$dark-purple: #696492;
+$deep-purple: #3f396b;
 $dark-lav: #db3194;
 $lemon: #ffffc6;
 $light-lemon: #ffffea;
@@ -7,6 +11,7 @@ $peach: #ffe8d3;
 $babyblue: #ddfaff;
 $periwinkle: #e8eaff;
 $light-grey: #fbfbfb;
+$light-medium-grey: #dadada;
 $medium-grey: #c7c7c7;
 $dark-grey: #2a2a2a;
 $grey: #c7c7c7;
@@ -15,6 +20,9 @@ $bright-teal: #02adad;
 $dark-teal: #005050;
 $dull-blue: #4f69be;
 $dark-dull-blue: #1f3681;
+$brown: #5c4237;
+$gunmental: #2e3138;
+$beige: #ece2d6;
 
 html,
 body,
@@ -33,28 +41,33 @@ body,
   justify-content: center;
   align-items: center;
   height: 100%;
-
-  .login-img {
-    width: 100%;
-    height: 100%;
-    // background-color: $periwinkle;
-    // background-image: url('../assets/laptop-full.jpg');
-    background-image: url('../assets/begin.jpg');
-    background-size: 125%;
-    background-repeat: no-repeat;
-    background-position: bottom;
-  }
+  background-image: url('../assets/city-blur.jpg');
+  background-size: 100%;
+  background-repeat: no-repeat;
 
   .login-box {
-    width: 70%;
-    height: 100%;
+    width: 480px;
+    height: 700px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border: 1px solid $grey;
+    border-radius: 10px;
+    background-color:  rgba(255, 255, 255, 0.7);
+
+
+    .full-logo {
+      width: 200px;
+      height: 200px;
+      margin-bottom: 20px;
+      background-image: url('../assets/full-logo.png');
+      background-size: 100%;
+      background-repeat: no-repeat;
+    }
 
     .login-form {
-      width: 500px;
+      width: 370px;
       margin-bottom: 50px;
 
       .login-btn {
@@ -140,8 +153,11 @@ BOARD CONTAINER
 */
 .boardContainer {
   height: 100%;
-  background-image: url('../assets/sunset.jpg');
+  background-color: $beige;
+  // background-image: url('../assets/coffee-doodle.png');
+  // background-position: 95% 100%;
   background-repeat: no-repeat;
+  // background-image: url('../assets/city-blur.jpg');
   background-size: 100%;
 
   .boardHeader {
@@ -152,18 +168,38 @@ BOARD CONTAINER
     height: 60px;
     background-color: rgba(251, 251, 251, 0.3);
 
+   
+
+    .board-options {
+      display: flex;
+      flex-direction: row;
+      margin-top: 15px;
+      margin-left: 10px;
+
+      .logo {
+        width: 60px;
+        height: 60px;
+        background-image: url('../assets/logo.png');
+        background-size: 70%;
+        background-repeat: no-repeat;
+        margin-left: 5px;
+        margin-top: 5px;
+      }
+
+
     #dropdown-basic-button {
-      margin-left: 20px;
+      height: 40px;
       margin-top: 5px;
       padding-left: 20px;
       padding-right: 20px;
-      background-color: $dull-blue;
-      color: white;
-      border: 1px solid $dull-blue;
+      background-color: white;
+      color: black;
+      border: 1px solid white;
     }
     #dropdown-basic-button:hover {
-      background-color: $dark-dull-blue;
-      border: 1px solid $dark-dull-blue;
+      background-color: $brown;
+      border: 1px solid $brown;
+      color: white;
     }
     #dropItem:focus {
       background-color: $lavender;
@@ -171,21 +207,20 @@ BOARD CONTAINER
       border: 1px solid $lavender;
     }
 
-    .board-options {
-      display: flex;
-      flex-direction: row;
-
       .addBoard-btn {
         margin: 5px;
-        background-color: $dull-blue;
-        border: 1px solid $dull-blue;
+        width: 40px;
+        height: 40px;
+        background-color: white;
+        border: 1px solid white;
 
-        color: white;
+        color: black;
       }
 
       .addBoard-btn:hover {
-        background-color: $dark-dull-blue;
-        border: 1px solid $dark-dull-blue;
+        background-color: $brown;
+        border: 1px solid $brown;
+        color: white;
       }
     }
 
@@ -201,14 +236,13 @@ BOARD CONTAINER
       margin-top: 5px;
       padding-left: 15px;
       padding-right: 15px;
-      background-color: $periwinkle;
+      background-color: rgba(251, 251, 251, 0.1);
       color: black;
-      border: 1px solid $periwinkle;
+      border: none;
     }
 
     .sign-out:hover {
-      background-color: $lavender;
-      border: 1px solid $lavender;
+      background-color: $light-grey;
       color: $dark-grey;
     }
   }
@@ -217,7 +251,7 @@ BOARD CONTAINER
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-    height: 100%;
+
 
     /* COLUMNS */
     .column {
@@ -236,6 +270,56 @@ BOARD CONTAINER
         padding: 20px;
       }
 
+      // column images
+      .column-header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        margin-right: 20px;
+
+        .opportunities-img {
+          width: 60px;
+          height: 65px;
+          background: url('../assets/doodles.png') -75px -65px;
+          background-size: 250%;
+          background-repeat: no-repeat;
+          margin-left: -25px;
+        }
+        .applied-img {
+          width: 55px;
+          height: 55px;
+          background: url('../assets/doodles.png') -70px -5px;
+          background-size: 250%;
+          background-repeat: no-repeat;
+          margin-left: -25px;
+        }
+        .interviews-img {
+          width: 55px;
+          height: 65px;
+          background: url('../assets/doodles.png') -20px -5px;
+          background-size: 240%;
+          background-repeat: no-repeat;
+          margin-left: -20px;
+        }
+        .offers-img {
+          width: 65px;
+          height: 45px;
+          background: url('../assets/doodles.png') -15px -88px;
+          background-size: 250%;
+          background-repeat: no-repeat;
+          margin-left: -25px;
+        }
+        .rejected-img {
+          width: 60px;
+          height: 65px;
+          background: url('../assets/doodles.png') -75px -65px;
+          background-size: 250%;
+          background-repeat: no-repeat;
+          margin-left: -25px;
+        }
+      }
+
       .addBtn {
         background-color: white;
         border: 1px solid $medium-grey;
@@ -247,14 +331,40 @@ BOARD CONTAINER
         .card {
           margin-top: 12px;
           padding: 10px;
+          padding-bottom: 5px;
           border: 1px solid $medium-grey;
           -webkit-box-shadow: 0 10px 6px -6px $medium-grey;
           -moz-box-shadow: 0 10px 6px -6px $medium-grey;
           box-shadow: 0 10px 6px -6px $medium-grey;
 
-          .cardTitle {
-            font-weight: 600;
+          .cardBody {
+            display: flex;
+            flex-direction: column;
+
+            .cardTop {
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+             
+              .cardCompany {
+                font-size: 22px;
+                font-weight: 600;
+                align-self: flex-start;
+                margin-top: -15px;
+              }
+              .cardLocation {
+                font-weight: 200;
+                font-size: 14px;
+                margin-top: -10px;
+                margin-right: -10px;
+              }
+            }
+            
+            .cardTitle {
+              align-self: flex-start;
+            }
           }
+          
         }
       }
     }
@@ -265,6 +375,27 @@ BOARD CONTAINER
 
 .detailsTab {
   margin: 20px;
+
+  .detailsLocation {
+    height: 40px;
+    width: 350px;
+    padding: 8px;
+  }
+  .detailsSalary {
+    height: 40px;
+    width: 350px;
+    padding: 8px;
+  }
+  .detailsUrl {
+    height: 40px;
+    width: 725px;
+    padding: 8px;
+  }
+  .detailsNotes {
+    height: 200px;
+    width: 725px;
+    padding: 10px;
+  }
 
   .delete-btn {
     background-color: $dark-lav;
