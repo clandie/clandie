@@ -39,9 +39,6 @@ class Login extends Component<ILoginProps, ILoginState> {
       email: this.state.email,
       password: this.state.password,
     };
-    // if (userObj.email === '' || userObj.password === '') {
-    //   return alert('Please provide email and password')
-    // }
     this.props.verifyUser(userObj);
   };
 
@@ -60,7 +57,7 @@ class Login extends Component<ILoginProps, ILoginState> {
   }
 
   render() {
-    if (this.props.authorized) {
+    if (this.props.authorized === true) {
       return <Redirect to="/home" />;
     }
     return (

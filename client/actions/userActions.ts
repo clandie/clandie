@@ -69,14 +69,14 @@ export const addUser = (userObj: types.ISignupState): AppThunk => async (
 export const verifyUser = (userObj: types.ILoginState): AppThunk => async (
   dispatch
 ) => {
-  // let userId: number;
-  // if (userObj.email === '' || userObj.password === '') {
-  //   console.log('here')
-  //   dispatch({
-  //     type: INCOMPLETE_USER_INFO,
-  //   });
-  //   return;
-  // }
+  // if incomplete user info, update state and return error message
+  if (userObj.email === '' || userObj.password === '') {
+    console.log('here')
+    dispatch({
+      type: INCOMPLETE_USER_INFO,
+    });
+    return;
+  }
   const userEmail = `${userObj.email}`;
   const userPassword = `${userObj.password}`;
   const query = `query VerifyUser($userEmail: String!, $userPassword: String!) { 
@@ -114,7 +114,6 @@ export const verifyUser = (userObj: types.ILoginState): AppThunk => async (
         dispatch({
           type: INVALID_USER_INFO
         })
-        // return alert(user.message)
       };
     })
     .catch((err) => {

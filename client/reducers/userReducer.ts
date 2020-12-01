@@ -49,7 +49,7 @@ const userReducer = (state = initialState, action: UserActionTypes) => {
     case INCOMPLETE_USER_INFO:
       return {
         ...state,
-        authorized: null
+        authorized: 'incomplete'
       }
 
     default:
