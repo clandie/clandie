@@ -4,7 +4,7 @@
 </p>
 
 <p align="center">
-Koffee is a job application tracker and organizer. It provides a simple, lightweight solution that allows users to manage opportunities in their job search. The Koffee board keeps track of every detail about your job applications including location, salary, notes, interviews, contacts and more.
+Koffee :coffee: is a job application tracker and organizer. It provides a simple, lightweight solution that allows users to manage opportunities in their job search. The Koffee board keeps track of every detail about your job applications including location, salary, notes, interviews, contacts and more.
 </p>
 
 ## Getting Started
@@ -21,6 +21,7 @@ Koffee is a job application tracker and organizer. It provides a simple, lightwe
 ### Cloning the Repo
 1. Fork the project and the clone the repo to your local machine
 2. Install dependencies
+
    Using Yarn (highly recommended):
    ```
    yarn install
@@ -31,8 +32,8 @@ Koffee is a job application tracker and organizer. It provides a simple, lightwe
    npm install
    ```
 
-3. Make Changes
-4. Open a Pull Request
+3. Make changes
+4. Open a pull request
 
 ### Development
 To run the dev version of our application:
