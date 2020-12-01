@@ -5,7 +5,7 @@ import { Link, Redirect } from 'react-router-dom';
 
 interface ISignupProps {
   addUser(userObj: ISignupState): void;
-  authorized?: boolean;
+  authorized: boolean | null | string;
 }
 interface ISignupState {
   name?: string;
@@ -24,6 +24,7 @@ class Signup extends Component<ISignupProps, ISignupState> {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSignup = this.handleSignup.bind(this);
+    this.renderError = this.renderError.bind(this);
   }
 
   // update state on form change
@@ -43,8 +44,17 @@ class Signup extends Component<ISignupProps, ISignupState> {
     this.props.addUser(userObj);
   };
 
+  // render error message if unauthenticated
+  renderError = (authorized: boolean | null |string) => {
+    if (authorized === 'incomplete') {
+      return (
+        <p id="invalid-user" style={{color: "red"}}>* Please fill in all fields</p>
+      )
+    }
+  }
+
   render() {
-    if (this.props.authorized) {
+    if (this.props.authorized === true) {
       return <Redirect to="/home" />;
     }
     const { name, email, password } = this.state;
@@ -85,6 +95,7 @@ class Signup extends Component<ISignupProps, ISignupState> {
                 onChange={this.handleChange}
               />
             </Form.Group>
+            {this.renderError(this.props.authorized)}
             <div className="login-btn">
               <Button
                 className="submit-btn"
