@@ -102,6 +102,7 @@ body,
 // BOARD
 
 .boardModal {
+  
   #contained-modal-title-vcenter {
     font-size: 18px;
   }
@@ -109,7 +110,8 @@ body,
     font-size: 14px;
   }
   .modal-body {
-    padding: 20px;
+    height: 450px;
+    overflow: scroll;
   }
 
   .boardInput {
@@ -132,6 +134,11 @@ body,
     }
   }
   .boardCard:hover {
+    background-color: white;
+    color: $teal;
+  }
+
+  .boardCard:focus {
     background-color: white;
     color: $teal;
   }
