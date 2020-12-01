@@ -1,5 +1,6 @@
 import { AppThunk } from '../store';
-import { CREATE_INTERVIEW, GET_INTERVIEW } from '../constants/actionTypes';
+import { CREATE_INTERVIEW, GET_INTERVIEW, UPDATE_INTERVIEW } from '../constants/actionTypes';
+import {IInterviews} from '../constants/types';
 
 export const getInterview = (jobId: number): AppThunk => async (dispatch) => {
   const query = `query GetInterview($jobId: ID!){
@@ -38,7 +39,7 @@ export const createInterview = (
   title: string,
   jobId: number
 ): AppThunk => async (dispatch) => {
-  console.log('args to createInterview: ', title, jobId);
+  // console.log('args to createInterview: ', title, jobId);
   const query = `mutation CreateInterview($title: String!, $jobId: ID!) {
     createInterview (title: $title, jobsID: $jobId) {
       __typename
@@ -66,7 +67,7 @@ export const createInterview = (
   })
     .then((res) => res.json())
     .then((newInterview) => {
-      console.log('NEW INTERVIEW: ', newInterview);
+      // console.log('NEW INTERVIEW: ', newInterview);
       dispatch({
         type: CREATE_INTERVIEW,
         payload: newInterview.data.interviews,
@@ -77,4 +78,58 @@ export const createInterview = (
       });
     })
     .catch((err) => console.log('error in create interview action', err));
+};
+
+
+export const updateInterview = (interviewObj: IInterviews | undefined): AppThunk => async (dispatch) => {
+  // console.log('args to updateInterview: ', interviewObj)
+  
+  let interviewID, title, date, time, notes;
+  if (interviewObj){
+    interviewID = interviewObj._id;
+    title = interviewObj.title;
+    date = interviewObj.date;
+    time = interviewObj.time;
+    notes = interviewObj.notes; 
+  }
+  // const {_id, title, date, time, notes} = interviewObj;
+  const query =   `mutation UpdateInterview ($title: String, $date: String, $time: String, $notes: String, $interviewID: ID!) {
+    updateInterview (title: $title, date: $date, time: $time, notes: $notes, interviewID: $interviewID) {
+      __typename
+      ... on Interview {
+        allInterviews{
+          _id
+          title
+          date
+          time
+          notes
+        }
+      }
+      ... on BadUserInput {
+        message
+      }
+    }
+  }`
+
+  fetch('/graphql', {
+    method: 'POST',
+    body: JSON.stringify({
+      query,
+      variables: { title, date, time, notes, interviewID },
+    }),
+    headers: { 'Content-Type': 'application/json', Accept: 'applicaiton/json' },
+  })
+  .then((res) => res.json())
+  .then((updatedInterviews) => {
+    console.log('updates from interviewActions.ts', updatedInterviews);
+    dispatch({
+      type: UPDATE_INTERVIEW,
+      payload: updatedInterviews.data.updateInterview.allInterviews
+    });
+    dispatch({
+      type: GET_INTERVIEW,
+      payload: updatedInterviews.data.updateInterview.allInterviews
+    });
+  })
+  .catch((err) => console.log('error in update interview action', err));
 };

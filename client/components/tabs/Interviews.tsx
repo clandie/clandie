@@ -3,6 +3,7 @@ import { Form, Col, Button, Card } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion';
 import InterviewCard from '../../utils/InterviewCard';
 import _ from 'lodash';
+import { IInterviews } from '../../constants/types';
 // import {IInterviews} from '../../constants/types';
 // import DatePicker from 'react-bootstrap-date-picker';
 // import { ControlLabel } from 'react-bootstrap';
@@ -23,6 +24,7 @@ interface IInterviewsProps {
   // allInterviews: IInterviews;
   getInterview: (jobId: number) => void;
   createInterview: (title: string, jobId: number) => void;
+  updateInterview: (interviewObj: IInterviews | undefined) => void;
 }
 
 interface IInterviewsState {
@@ -57,7 +59,8 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
     };
     this.handleSave = this.handleSave.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.saveDate = this.saveDate.bind(this)
+    this.saveDate = this.saveDate.bind(this);
+    this.handleTimeChange = this.handleTimeChange.bind(this);
   }
 
   componentDidMount() {
@@ -87,24 +90,40 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
   }
 
   saveDate(date: Date, interviewId: number) {
-    console.log('event from saveDate, ', `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`)
+    console.log('event from saveDate, ', date)
+    console.log('interviewId type: ', typeof interviewId)
     // e.preventDefault();
     const stateClone = _.cloneDeep(this.state);
     const interviews = stateClone['listOfInterviews'];
+    console.log('interviews from state clone: ', interviews)
 
+
+    let interviewToUpdate;
     const newInterviews = [];
     if(interviews){
-    for(let i = 0; i < interviews.length; i++){
-      if(interviews[i]._id === interviewId) interviews[i].date = date;
-      console.log(interviews[i])
-      newInterviews.push(interviews[i]);
+      console.log('in conditional to check if interviews exists')
+      for(let i = 0; i < interviews.length; i++){
+        if(interviews[i]._id === interviewId) {
+          interviews[i].date = date;
+          interviewToUpdate = interviews[i];
+        }
+        newInterviews.push(interviews[i]);
+      }
     }
-  }
 
+    console.log('arg to be sent to updateInterview action', interviewToUpdate)
+    // if(this.props.jobId) this.props.getInterview(this.props.jobId);
+    this.props.updateInterview(interviewToUpdate);
+    
     this.setState({
       ...this.state,
       listOfInterviews: newInterviews
     })
+  }
+
+  handleTimeChange(time: Date) {
+    console.log('time from handleTimeChange', time.toLocaleTimeString())
+    return time;
   }
 
   render() {
@@ -113,22 +132,21 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
     const interviews = [];
     if (allInterviews) {
       for (let i = 0; i < allInterviews.length; i++) {
+        console.log('states date: ', allInterviews[i].date)
         interviews.push(
           <InterviewCard
-          id={allInterviews[i]._id}
+            id={allInterviews[i]._id}
             title={allInterviews[i].title}
             date={allInterviews[i].date}
             time={allInterviews[i].time}
             notes={allInterviews[i].notes}
             saveDate={this.saveDate}
+            timeChange={this.handleTimeChange}
             // jobId={allInterviews[i]._id}
           ></InterviewCard>
         );
       }
     }
-
-    console.log(this.state)
-    console.log(allInterviews)
 
     return (
       <div className="interviewsTab">

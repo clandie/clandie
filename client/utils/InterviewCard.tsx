@@ -4,18 +4,21 @@ import Accordion from 'react-bootstrap/Accordion';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
+
 interface IInterviewCardProps {
   id: number;
   title: string;
   date: Date;
   time: Date;
   notes: string;
-  saveDate: (e: any, interviewid: number) => void;
+  saveDate: (date: Date, interviewid: number) => void;
+  timeChange: (time: Date) => void;
   // jobId: number;
 }
 
 const InterviewCard = (props: IInterviewCardProps) => {
-  console.log('props.date rom interviewCard', props.date)
+  console.log('props.date from interviewCard', props.date)
+  console.log('new date obj: ', new Date(props.date))
   return (
     <div>
     <Accordion defaultActiveKey="0">
@@ -36,14 +39,23 @@ const InterviewCard = (props: IInterviewCardProps) => {
               <Form.Row>
                 <Form.Group as={Col} controlId="formDate">
                   <Form.Label>Date</Form.Label>
-                  {'/n'}
-                    <DatePicker selected={props.date} onChange={(date) => {props.saveDate(date, props.id)}}/>
+                    <DatePicker
+                      selected={new Date(props.date)}
+                      onChange={(date: Date) => props.saveDate(date, props.id)}
+                    />
                 </Form.Group>
 
 
                 <Form.Group as={Col} controlId="formTime">
                   <Form.Label>Time</Form.Label>
-                  <Form.Control></Form.Control>
+                  <DatePicker
+                    selected={new Date()}
+                    onChange={props.timeChange}
+                    showTimeSelect
+                    showTimeSelectOnly
+                    timeFormat="h:mm aa"
+                    timeIntervals={15}
+                  />
                 </Form.Group>
               </Form.Row>
               <Form.Row>
