@@ -1,6 +1,7 @@
 # KOFFEE
 <p align="center">
 ![Image] (https://github.com/clandie/clandie/blob/master/client/assets/full-logo.png)
+<img src="https://github.com/clandie/clandie/blob/master/client/assets/full-logo.png">
 </p>
 
 <p align="center">
