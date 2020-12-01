@@ -15,6 +15,7 @@ import {
   CLEAR_USER_INFO,
   GET_BOARD,
   INVALID_USER_INFO,
+  INCOMPLETE_USER_INFO,
 } from '../constants/actionTypes';
 import { AppThunk } from '../store';
 
@@ -69,6 +70,13 @@ export const verifyUser = (userObj: types.ILoginState): AppThunk => async (
   dispatch
 ) => {
   // let userId: number;
+  // if (userObj.email === '' || userObj.password === '') {
+  //   console.log('here')
+  //   dispatch({
+  //     type: INCOMPLETE_USER_INFO,
+  //   });
+  //   return;
+  // }
   const userEmail = `${userObj.email}`;
   const userPassword = `${userObj.password}`;
   const query = `query VerifyUser($userEmail: String!, $userPassword: String!) { 

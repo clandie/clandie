@@ -17,7 +17,7 @@ export const VERIFY_USER = 'VERIFY_USER';
 export const SET_USER_INFO = 'SET_USER_INFO';
 export const CLEAR_USER_INFO = 'CLEAR_USER_INFO';
 export const INVALID_USER_INFO = 'INVALID_USER_INFO';
-
+export const INCOMPLETE_USER_INFO = 'INCOMPLETE_USER_INFO';
 // Board Action Types
 export const CREATE_BOARD = 'CREATE_BOARD';
 export const SET_BOARD = 'SET_BOARD';
@@ -77,6 +77,10 @@ interface ClearUserInfo {
 
 interface InvalidUserInfo {
   type: typeof INVALID_USER_INFO;
+}
+
+interface IncompleteUserInfo {
+  type: typeof INCOMPLETE_USER_INFO;
 }
 
 // BOARD ACTION TYPES
@@ -179,7 +183,8 @@ export type UserActionTypes =
   | VerifyUser
   | SetUserInfo
   | ClearUserInfo
-  | InvalidUserInfo;
+  | InvalidUserInfo
+  | IncompleteUserInfo;
 
 export type BoardActionTypes =
   | CreateBoard

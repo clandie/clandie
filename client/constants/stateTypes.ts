@@ -4,7 +4,7 @@
 export interface UserState {
   id: number | null;
   name: string;
-  authorized: boolean | null;
+  authorized: boolean | null | string;
 }
 
 // board reducer state

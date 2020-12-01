@@ -9,6 +9,7 @@ import {
   SET_USER_INFO,
   CLEAR_USER_INFO,
   INVALID_USER_INFO,
+  INCOMPLETE_USER_INFO,
 } from '../constants/actionTypes';
 
 // we may need to add more to this later
@@ -44,6 +45,12 @@ const userReducer = (state = initialState, action: UserActionTypes) => {
         ...state,
         authorized: false,
       };
+
+    case INCOMPLETE_USER_INFO:
+      return {
+        ...state,
+        authorized: null
+      }
 
     default:
       return state;

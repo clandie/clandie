@@ -5,7 +5,7 @@ import { Link, Redirect } from 'react-router-dom';
 
 interface ILoginProps {
   verifyUser(userObj: ILoginState): void;
-  authorized?: boolean | null;
+  authorized: boolean | null | string;
 }
 
 interface ILoginState {
@@ -23,6 +23,7 @@ class Login extends Component<ILoginProps, ILoginState> {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
+    this.renderError = this.renderError.bind(this);
   }
 
   // update state on form change
@@ -38,15 +39,22 @@ class Login extends Component<ILoginProps, ILoginState> {
       email: this.state.email,
       password: this.state.password,
     };
-    if (userObj.email === '' || userObj.password === '') return alert('Please provide email and password')
+    // if (userObj.email === '' || userObj.password === '') {
+    //   return alert('Please provide email and password')
+    // }
     this.props.verifyUser(userObj);
   };
 
-  // render error message if unathenticated
-  renderError = (authorized?: boolean | null) => {
+  // render error message if unauthenticated
+  renderError = (authorized: boolean | null |string) => {
     if (authorized === false) {
       return (
-        <p>Please provide email and password</p>
+        <p id="invalid-user" style={{color: "red"}}>* Incorrect email and/or password</p>
+      )
+    } else if (authorized === 'incomplete') {
+      return (
+        <p id="invalid-user" style={{color: "red"}}>* Please provide both email and password</p>
+
       )
     }
   }
