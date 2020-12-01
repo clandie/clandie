@@ -4,7 +4,7 @@
 </p>
 
 <p align="center">
-Koffee :coffee:  is a job application tracker and organizer. It provides a simple, lightweight solution that allows users to manage opportunities in their job search. The Koffee board keeps track of every detail about your job applications including location, salary, notes, interviews, contacts and more.
+Koffee :coffee: &nbsp;is a job application tracker and organizer. It provides a simple, lightweight solution that allows users to manage opportunities in their job search. The Koffee board keeps track of every detail about your job applications including location, salary, notes, interviews, contacts and more.
 </p>
 
 ## Getting Started
