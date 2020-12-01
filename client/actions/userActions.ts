@@ -14,6 +14,7 @@ import {
   SET_USER_INFO,
   CLEAR_USER_INFO,
   GET_BOARD,
+  INVALID_USER_INFO,
 } from '../constants/actionTypes';
 import { AppThunk } from '../store';
 
@@ -101,7 +102,12 @@ export const verifyUser = (userObj: types.ILoginState): AppThunk => async (
           type: GET_BOARD,
           payload: user.boards,
         });
-      } else if (user.message) return alert(user.message);
+      } else if (user.message) {
+        dispatch({
+          type: INVALID_USER_INFO
+        })
+        // return alert(user.message)
+      };
     })
     .catch((err) => {
       console.log('verifyUser action fetch error', err);

@@ -16,6 +16,7 @@ export const ADD_USER = 'ADD_USER';
 export const VERIFY_USER = 'VERIFY_USER';
 export const SET_USER_INFO = 'SET_USER_INFO';
 export const CLEAR_USER_INFO = 'CLEAR_USER_INFO';
+export const INVALID_USER_INFO = 'INVALID_USER_INFO';
 
 // Board Action Types
 export const CREATE_BOARD = 'CREATE_BOARD';
@@ -74,6 +75,10 @@ interface ClearUserInfo {
   type: typeof CLEAR_USER_INFO;
 }
 
+interface InvalidUserInfo {
+  type: typeof INVALID_USER_INFO;
+}
+
 // BOARD ACTION TYPES
 
 interface CreateBoard {
@@ -92,9 +97,6 @@ interface SetBoard {
   };
 }
 
-// interface BoardData {
-//   boards: { _id: number; name: string }[];
-// }
 
 interface GetBoard {
   type: typeof GET_BOARD;
@@ -163,31 +165,6 @@ interface UpdateColumns {
   payload: IJobs[];
 }
 
-// interface UpdateOpportunities {
-//   type: typeof UPDATE_OPPORTUNITIES;
-//   payload: { job: IJobs; list_order: number };
-// }
-
-// interface UpdateApplied {
-//   type: typeof UPDATE_APPLIED;
-//   payload: { job: IJobs; list_order: number };
-// }
-
-// interface UpdateInterviews {
-//   type: typeof UPDATE_INTERVIEWS;
-//   payload: { job: IJobs; list_order: number };
-// }
-
-// interface UpdateOffers {
-//   type: typeof UPDATE_OFFERS;
-//   payload: { job: IJobs; list_order: number };
-// }
-
-// interface UpdateRejected {
-//   type: typeof UPDATE_REJECTED;
-//   payload: { job: IJobs; list_order: number };
-// }
-
 interface ClearColumns {
   type: typeof CLEAR_COLUMNS;
 }
@@ -201,7 +178,8 @@ export type UserActionTypes =
   | AddUser
   | VerifyUser
   | SetUserInfo
-  | ClearUserInfo;
+  | ClearUserInfo
+  | InvalidUserInfo;
 
 export type BoardActionTypes =
   | CreateBoard

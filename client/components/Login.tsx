@@ -5,7 +5,7 @@ import { Link, Redirect } from 'react-router-dom';
 
 interface ILoginProps {
   verifyUser(userObj: ILoginState): void;
-  authorized?: boolean;
+  authorized?: boolean | null;
 }
 
 interface ILoginState {
@@ -38,8 +38,18 @@ class Login extends Component<ILoginProps, ILoginState> {
       email: this.state.email,
       password: this.state.password,
     };
+    if (userObj.email === '' || userObj.password === '') return alert('Please provide email and password')
     this.props.verifyUser(userObj);
   };
+
+  // render error message if unathenticated
+  renderError = (authorized?: boolean | null) => {
+    if (authorized === false) {
+      return (
+        <p>Please provide email and password</p>
+      )
+    }
+  }
 
   render() {
     if (this.props.authorized) {
@@ -67,6 +77,7 @@ class Login extends Component<ILoginProps, ILoginState> {
                 onChange={this.handleChange}
               />
             </Form.Group>
+            {this.renderError(this.props.authorized)}
             <div className="login-btn">
               <Button
                 id="login-btn-1"
