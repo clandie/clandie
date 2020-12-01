@@ -39,6 +39,13 @@ export const clearUserInfo = () => ({
 export const addUser = (userObj: types.ISignupState): AppThunk => async (
   dispatch
 ) => {
+  // if incomplete user info, update state and return error message
+  if (userObj.email === '' || userObj.password === '' || userObj.name === '') {
+    dispatch({
+      type: INCOMPLETE_USER_INFO,
+    });
+    return;
+  }
   // fetch request to create user in db
   const userName = `${userObj.name}`;
   const userEmail = `${userObj.email}`;
@@ -71,7 +78,6 @@ export const verifyUser = (userObj: types.ILoginState): AppThunk => async (
 ) => {
   // if incomplete user info, update state and return error message
   if (userObj.email === '' || userObj.password === '') {
-    console.log('here')
     dispatch({
       type: INCOMPLETE_USER_INFO,
     });
