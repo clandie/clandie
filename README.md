@@ -9,7 +9,7 @@ Koffee is a job application tracker and organizer. It provides a simple, lightwe
 
 ## Getting Started
 
-1. Go to koffee-clandie.herokuapp.com
+1. Go to [koffee-clandie.herokuapp.com](koffee-clandie.herokuapp.com)
 2. Log in or sign up for an account
 3. Select a board or create a new one
 4. Add/drag job opportunities to the appropriate columns
@@ -44,11 +44,11 @@ Koffee development is integrated with webpack HMR and the application will reloa
 
 ## Technologies Used
 
-- Typescript
-- React/Redux
-- GraphQL (Apollo Server)
-- React Bootstrap
-- react-beautiful-dnd
-- SCSS
-- Webpack
+- [Typescript](https://www.typescriptlang.org/)
+- [React/Redux](https://react-redux.js.org/)
+- [GraphQL (Apollo Server)](https://www.apollographql.com/docs/)
+- [React Bootstrap](https://react-bootstrap.github.io/)
+- [react-beautiful-dnd](https://github.com/atlassian/react-beautiful-dnd)
+- [SCSS](https://sass-lang.com/)
+- [Webpack](https://webpack.js.org/)
 
