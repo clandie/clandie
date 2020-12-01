@@ -9,7 +9,7 @@ Koffee is a job application tracker and organizer. It provides a simple, lightwe
 
 ## Getting Started
 
-1. Go to [koffee-clandie.herokuapp.com](koffee-clandie.herokuapp.com)
+1. Go to [koffee-clandie.herokuapp.com](https://koffee-clandie.herokuapp.com/)
 2. Log in or sign up for an account
 3. Select a board or create a new one
 4. Add/drag job opportunities to the appropriate columns
