@@ -1,26 +1,17 @@
 import React from 'react';
 import { Form, Col, Button, Card } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion';
-import DatePicker from 'react-datepicker';
-import "react-datepicker/dist/react-datepicker.css";
-
 
 interface IInterviewCardProps {
-  id: number;
   title: string;
   date: Date;
   time: Date;
   notes: string;
-  saveDate: (date: Date, interviewid: number) => void;
-  timeChange: (time: Date) => void;
   // jobId: number;
 }
 
 const InterviewCard = (props: IInterviewCardProps) => {
-  console.log('props.date from interviewCard', props.date)
-  console.log('new date obj: ', new Date(props.date))
   return (
-    <div>
     <Accordion defaultActiveKey="0">
       <Card>
         <Accordion.Toggle as={Card.Header} eventKey="1">
@@ -38,24 +29,14 @@ const InterviewCard = (props: IInterviewCardProps) => {
               </Form.Row>
               <Form.Row>
                 <Form.Group as={Col} controlId="formDate">
+                  {/* <ControlLabel>Date</ControlLabel> */}
+                  {/* <DatePicker /> */}
                   <Form.Label>Date</Form.Label>
-                    <DatePicker
-                      selected={new Date(props.date)}
-                      onChange={(date: Date) => props.saveDate(date, props.id)}
-                    />
+                  <Form.Control></Form.Control>
                 </Form.Group>
-
-
                 <Form.Group as={Col} controlId="formTime">
                   <Form.Label>Time</Form.Label>
-                  <DatePicker
-                    selected={new Date()}
-                    onChange={props.timeChange}
-                    showTimeSelect
-                    showTimeSelectOnly
-                    timeFormat="h:mm aa"
-                    timeIntervals={15}
-                  />
+                  <Form.Control></Form.Control>
                 </Form.Group>
               </Form.Row>
               <Form.Row>
@@ -71,7 +52,6 @@ const InterviewCard = (props: IInterviewCardProps) => {
         </Accordion.Collapse>
       </Card>
     </Accordion>
-    </div>
   );
 };
 

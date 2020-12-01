@@ -3,7 +3,7 @@ import { Tab, Tabs, Modal } from 'react-bootstrap';
 import Details from '../tabs/Details';
 import Interviews from '../tabs/Interviews';
 import Contacts from '../tabs/Contacts';
-import { IDetails, ISelectedJob} from '../../constants/types';
+import { IDetails, ISelectedJob, IInterviews} from '../../constants/types';
 
 interface IDetailsModalProps {
   show: boolean;
@@ -14,6 +14,7 @@ interface IDetailsModalProps {
   deleteJob: (jobId: number, boardId: number) => void;
   getInterview: (jobId: number) => void;
   createInterview: (title: string, jobId: number) => void;
+  updateInterview: (interviewObj: IInterviews | undefined) => void;
   allInterviews: | {
     _id: number;
     title: string;
@@ -71,6 +72,7 @@ class JobDetailsModal extends Component<IDetailsModalProps> {
                 allInterviews={this.props.allInterviews}
                 getInterview={this.props.getInterview}
                 createInterview={this.props.createInterview}
+                updateInterview={this.props.updateInterview}
                 jobId={jobId}
               />
             </Tab>

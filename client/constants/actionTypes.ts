@@ -9,7 +9,7 @@
  * ************************************
  */
 
-import { IJobs } from './types';
+import { IJobs, IInterviews } from './types';
 
 // User Action Types
 export const ADD_USER = 'ADD_USER';
@@ -32,6 +32,7 @@ export const CLEAR_JOB = 'CLEAR_JOB';
 // Interview Action Types
 export const GET_INTERVIEW = 'GET_INTERVIEW';
 export const CREATE_INTERVIEW = 'CREATE_INTERVIEW';
+export const UPDATE_INTERVIEW = 'UPDATE_INTERVIEW'
 
 // Column Action Types
 export const UPDATE_OPPORTUNITIES = 'UPDATE_OPPORTUNITIES';
@@ -157,6 +158,12 @@ interface CreateInterview {
     job_id: number;
   };
 }
+
+interface UpdateInterview {
+  type: typeof UPDATE_INTERVIEW;
+  payload: IInterviews | undefined
+}
+
 // COLUMN ACTION TYPES
 interface UpdateColumns {
   type: typeof UPDATE_COLUMNS;
@@ -212,7 +219,7 @@ export type BoardActionTypes =
 
 export type JobActionTypes = GetJob | CreateJob | ClearJob;
 
-export type InterviewActionTypes = GetInterview | CreateInterview;
+export type InterviewActionTypes = GetInterview | CreateInterview | UpdateInterview;
 
 export type ColumnActionTypes =
   // | UpdateOpportunities

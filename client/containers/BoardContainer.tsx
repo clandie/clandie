@@ -84,6 +84,10 @@ const mapDispatchToProps = (dispatch: any) => ({
     console.log('dispatched create interview');
     dispatch(interviewActions.createInterview(title, jobId));
   },
+  updateInterview: (interviewObj: types.IInterviews | undefined) => {
+    console.log('dispatched update interview');
+    dispatch(interviewActions.updateInterview(interviewObj));
+  },
   setColumns: (allJobs: any[]) => {
     console.log('dispatched set columns');
     dispatch({
@@ -279,6 +283,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
           allInterviews={this.props.allInterviews}
           getInterview={this.props.getInterview}
           createInterview={this.props.createInterview}
+          updateInterview={this.props.updateInterview}
         />
         <div className="boardContainer">
           <div className="boardHeader">
