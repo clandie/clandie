@@ -110,7 +110,7 @@ body,
     font-size: 14px;
   }
   .modal-body {
-    height: 450px;
+    max-height: 450px;
     overflow: scroll;
   }
 
