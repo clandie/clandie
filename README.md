@@ -1,6 +1,6 @@
 # KOFFEE
 <p align="center">
-<img width="450" height="450"src="https://github.com/clandie/clandie/blob/master/client/assets/full-logo.png">
+<img width="350" height="350"src="https://github.com/clandie/clandie/blob/master/client/assets/full-logo.png">
 </p>
 
 <p align="center">
