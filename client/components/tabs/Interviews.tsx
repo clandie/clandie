@@ -90,19 +90,21 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
   }
 
   saveDate(date: Date, interviewId: number) {
-    console.log('event from saveDate, ', date)
-    console.log('interviewId type: ', typeof interviewId)
+    // console.log('event from saveDate, ', date)
+    // console.log('interviewId type: ', typeof interviewId)
     // e.preventDefault();
-    const stateClone = _.cloneDeep(this.state);
-    const interviews = stateClone['listOfInterviews'];
-    console.log('interviews from state clone: ', interviews)
+    const stateClone = _.cloneDeep(this.props);
+    const interviews = stateClone.allInterviews;
+    // console.log(this.props)
+    // console.log('interviews from state clone: ', interviews)
 
 
     let interviewToUpdate;
     const newInterviews = [];
     if(interviews){
-      console.log('in conditional to check if interviews exists')
+      // console.log('in conditional to check if interviews exists')
       for(let i = 0; i < interviews.length; i++){
+        console.log(interviewId, interviews[i]._id)
         if(interviews[i]._id === interviewId) {
           interviews[i].date = date;
           interviewToUpdate = interviews[i];
@@ -111,7 +113,7 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
       }
     }
 
-    console.log('arg to be sent to updateInterview action', interviewToUpdate)
+    // console.log('arg to be sent to updateInterview action', interviewToUpdate)
     // if(this.props.jobId) this.props.getInterview(this.props.jobId);
     this.props.updateInterview(interviewToUpdate);
     
@@ -122,7 +124,7 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
   }
 
   handleTimeChange(time: Date) {
-    console.log('time from handleTimeChange', time.toLocaleTimeString())
+    // console.log('time from handleTimeChange', time.toLocaleTimeString())
     return time;
   }
 
@@ -132,7 +134,7 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
     const interviews = [];
     if (allInterviews) {
       for (let i = 0; i < allInterviews.length; i++) {
-        console.log('states date: ', allInterviews[i].date)
+        // console.log('states date: ', allInterviews[i].date)
         interviews.push(
           <InterviewCard
             id={allInterviews[i]._id}
@@ -147,6 +149,8 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
         );
       }
     }
+
+    interviews.sort((a: JSX.Element, b: JSX.Element) => new Date(a.props.date).getTime() - new Date(b.props.date).getTime());
 
     return (
       <div className="interviewsTab">
