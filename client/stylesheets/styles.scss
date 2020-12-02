@@ -457,11 +457,29 @@ BOARD CONTAINER
   }
 }
 
+.contactsTab {
+  margin: 20px;
+  font-size: 13px;
+
+  .save-btn {
+    float: right;
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+}
 
 .contactCard {
 
-  margin: 20px;
-  font-size: 13px;
+  margin-bottom: 5px;
+
+  #headerTitle {
+    margin-left: 20px;
+    font-style: italic;
+  }
+
+  #headerContact {
+    float: right;
+  }
 
   .contactName, .contactTitle, .contactPhone, .contactEmail {
     height: 35px;

@@ -3,16 +3,29 @@ import { Form, Col, Button, Card } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion';
 
 interface IContactCardProps {
-
+  eventKey: number;
+  name: string;
+  title: string | null;
+  phone: string | null;
+  email: string | null;
+  notes: string | null;
 }
 
 const ContactCard = (props: IContactCardProps) => {
+  let headerContact;
+  if (props.phone) {
+    headerContact = props.phone
+  } else {
+    headerContact = props.email
+  }
   return (
     <div className="contactCard">
       <Accordion>
         <Card>
           <Accordion.Toggle as={Card.Header} eventKey="0">
-            Clara Kim
+            {props.name}
+            <span id="headerTitle">{props.title}</span>
+            <span id="headerContact">{headerContact}</span>
           </Accordion.Toggle>
           <Accordion.Collapse eventKey="0">
             <Card.Body>

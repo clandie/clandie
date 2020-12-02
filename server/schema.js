@@ -146,6 +146,7 @@ const typeDefs = gql`
     email: String
     notes: String
     jobs_id: ID!
+    allContacts: [Contact!]
   }
 
   type Interview {

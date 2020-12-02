@@ -17,7 +17,7 @@ import userResolvers, { User, UserResult } from './resolvers/userResolvers';
 import boardResolvers, { Board, BoardResult } from './resolvers/boardResolvers';
 import jobResolvers, { Job, JobResult } from './resolvers/jobResolvers';
 import interviewResolvers, { Interview, InterviewResult } from './resolvers/interviewResolvers';
-import Contact, { ContactResult } from './resolvers/contactResolvers';
+import contactResolvers, { Contact, ContactResult } from './resolvers/contactResolvers';
 import dbModel from './datasources/postgresConnection';
 import db from './datasources/postgresDB';
 
@@ -47,19 +47,20 @@ const startApolloServer = async () => {
         ...boardResolvers.Query,
         ...jobResolvers.Query,
         ...interviewResolvers.Query,
-        ...Contact.Query,
+        ...contactResolvers.Query,
       },
       Mutation: {
         ...userResolvers.Mutation,
         ...boardResolvers.Mutation,
         ...jobResolvers.Mutation,
         ...interviewResolvers.Mutation,
-        ...Contact.Mutation,
+        ...contactResolvers.Mutation,
       },
       User,
       Board,
       Job,
       Interview,
+      Contact,
       UserResult,
       BoardResult,
       JobResult,

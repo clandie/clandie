@@ -2,19 +2,24 @@ import React, { Component } from 'react';
 import { Form, Col, Button, Card } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion';
 import ContactCard from '../../utils/ContactCard';
-interface IContactsProps {
+import { ContactState }from '../../constants/stateTypes'
 
+interface IContactsProps {
+  jobId?: number;
+  getContact: (jobID: number) => void;
+  createContact: (name: string, jobID: number) => void;
+  allContacts: ContactState['contacts']
 }
 interface IContactsState {
-    name?: string,
-    title?: string,
-    phone?: string,
-    email?: string,
-    notes?: string,
+    name: string,
+    title: string | null,
+    phone: string | null,
+    email: string | null,
+    notes: string | null,
 }
 
 class Contacts extends Component<IContactsProps, IContactsState> {
-  constructor(props: IContactsState) {
+  constructor(props: IContactsProps) {
     super(props);
     this.state = {
       name: '',
@@ -24,18 +29,46 @@ class Contacts extends Component<IContactsProps, IContactsState> {
       notes: '',
       }
     this.handleChange = this.handleChange.bind(this);
+    this.handleSave = this.handleSave.bind(this);
+  }
+
+  componentDidMount() {
+    const { jobId } = this.props;
+    if (jobId) this.props.getContact(jobId)
   }
 
   handleChange(e: any) {
-    const { name, value } = e.target;
-    console.log('here')
-    this.setState({ [name] : value})
+    const { value } = e.target;
+    this.setState({ name : value})
+  }
+
+  handleSave(e: any) {
+    e.preventDefault();
+    const {createContact, jobId} = this.props;
+    if (jobId) createContact(this.state.name, jobId)
+    this.setState({name: ''})
   }
 
   render() {
+    const {allContacts} = this.props;
+    const contacts =[];
+    if (allContacts) {
+      for (let i = 0; i < allContacts.length; i++) {
+        contacts.push(
+          <ContactCard 
+            eventKey={i}
+            name={allContacts[i].name}
+            title={allContacts[i].title}
+            phone={allContacts[i].phone}
+            email={allContacts[i].email}
+            notes={allContacts[i].notes}
+          />
+        )
+      }
+    }
     return (
     <div className="contactsTab">
-      <ContactCard />
+      {contacts}
       <Accordion>
         <Card>
             <Accordion.Toggle as={Card.Header} eventKey="1">
@@ -50,6 +83,7 @@ class Contacts extends Component<IContactsProps, IContactsState> {
                       <Form.Control
                         type="text"
                         name="name"
+                        value={this.state.name}
                         onChange={this.handleChange}
                       ></Form.Control>
                     </Form.Group>
@@ -57,7 +91,7 @@ class Contacts extends Component<IContactsProps, IContactsState> {
                   <Button
                     className="save-btn"
                     type="submit"
-                    // onClick={this.handleSave}
+                    onClick={this.handleSave}
                   >
                     Save
                   </Button>
