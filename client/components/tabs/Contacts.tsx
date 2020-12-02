@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Col, Button, Card } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion';
-
+import ContactCard from '../../utils/ContactCard';
 interface IContactsProps {
 
 }
@@ -35,6 +35,7 @@ class Contacts extends Component<IContactsProps, IContactsState> {
   render() {
     return (
     <div className="contactsTab">
+      <ContactCard />
       <Accordion>
         <Card>
             <Accordion.Toggle as={Card.Header} eventKey="1">
