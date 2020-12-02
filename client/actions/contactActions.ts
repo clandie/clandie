@@ -111,8 +111,7 @@ export const updateContact = (contactInfo: types.IContactInfo): AppThunk => asyn
   })
     .then((res) => res.json())
     .then((updatedContact) => {
-      const {allContacts} = updatedContact.data.updateContact;
-      console.log('contact updated', updatedContact);
+      const { allContacts } = updatedContact.data.updateContact;
       dispatch({
         type: UPDATE_CONTACT,
         payload: allContacts,
@@ -121,5 +120,42 @@ export const updateContact = (contactInfo: types.IContactInfo): AppThunk => asyn
     .catch((err) => {
       console.log('error in update contact action', err)
     })
-}
+};
+
+export const deleteContact = (contactID: number): AppThunk => async (dispatch) => {
+  const query = `mutation DeleteContact($contactID: ID!) {
+    deleteContact(contactID: $contactID) {
+      allContacts {
+        _id
+        name
+        title
+        phone
+        email
+        notes
+        jobs_id
+      }
+    }
+  }`
+
+  fetch('/graphql', {
+    method: 'POST',
+    body: JSON.stringify({
+      query,
+      variables: { contactID },
+    }),
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+  })
+    .then((res) => res.json())
+    .then((deletedContact) => {
+      const { allContacts } = deletedContact.data.deleteContact;
+      dispatch({
+        type: GET_CONTACT,
+        payload: allContacts
+      })
+    })
+    .catch(err => {
+      console.log('error in delete contact action', err)
+    })
+};
+
 

@@ -11,6 +11,7 @@ interface IContactCardProps {
   email: string | null;
   notes: string | null;
   updateContact: (contactInfo: IContactInfo) => void;
+  deleteContact: (contactID: number) => void;
 }
 
 interface IContactCardState {
@@ -63,7 +64,8 @@ class ContactCard extends Component<IContactCardProps, IContactCardState> {
   }
 
   render() {
-    const { name, title, phone, email } = this.props;
+    const { name, title, phone, email, deleteContact } = this.props;
+      // display phone number, else display email
       let headerContact;
       if (phone) {
         headerContact = phone
@@ -133,6 +135,7 @@ class ContactCard extends Component<IContactCardProps, IContactCardState> {
                   </Form.Group>
                   <Button
                     className="delete-btn"
+                    onClick={() => deleteContact(this.props.id)}
                   >
                     Delete
                   </Button>

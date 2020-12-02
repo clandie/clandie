@@ -28,6 +28,7 @@ interface IDetailsModalProps {
   allContacts: ContactState['contacts'];
   getContact: (jobID: number) => void;
   updateContact: (contactInfo: IContactInfo) => void;
+  deleteContact: (contactID: number) => void;
 }
 
 class JobDetailsModal extends Component<IDetailsModalProps> {
@@ -87,6 +88,7 @@ class JobDetailsModal extends Component<IDetailsModalProps> {
                 allContacts={this.props.allContacts}
                 createContact={this.props.createContact}
                 updateContact={this.props.updateContact}
+                deleteContact={this.props.deleteContact}
                 jobId={jobId}
               />
             </Tab>

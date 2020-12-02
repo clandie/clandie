@@ -10,6 +10,7 @@ interface IContactsProps {
   getContact: (jobID: number) => void;
   createContact: (name: string, jobID: number) => void;
   updateContact: (contactInfo: IContactInfo) => void;
+  deleteContact: (contactID: number) => void;
   allContacts: ContactState['contacts']
 }
 interface IContactsState {
@@ -44,7 +45,7 @@ class Contacts extends Component<IContactsProps, IContactsState> {
   }
 
   render() {
-    const {allContacts, updateContact} = this.props;
+    const {allContacts, updateContact, deleteContact} = this.props;
     const contacts =[];
     if (allContacts) {
       for (let i = 0; i < allContacts.length; i++) {
@@ -57,6 +58,7 @@ class Contacts extends Component<IContactsProps, IContactsState> {
             email={allContacts[i].email}
             notes={allContacts[i].notes}
             updateContact={updateContact}
+            deleteContact={deleteContact}
           />
         )
       }

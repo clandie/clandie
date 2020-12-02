@@ -102,6 +102,10 @@ const mapDispatchToProps = (dispatch: any) => ({
     console.log('dispatched update contact');
     dispatch(contactActions.updateContact(contactInfo));
   },
+  deleteContact: (contactID: number) => {
+    console.log('dispatched delete contact');
+    dispatch(contactActions.deleteContact(contactID))
+  },
   setColumns: (allJobs: any[]) => {
     console.log('dispatched set columns');
     dispatch({
@@ -302,6 +306,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
           allContacts={this.props.allContacts}
           getContact={this.props.getContact}
           updateContact={this.props.updateContact}
+          deleteContact={this.props.deleteContact}
         />
         <div className="boardContainer">
           <div className="boardHeader">
