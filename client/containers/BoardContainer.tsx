@@ -10,6 +10,7 @@ import * as actions from '../actions/boardActions';
 import * as userActions from '../actions/userActions';
 import * as jobActions from '../actions/jobActions';
 import * as interviewActions from '../actions/interviewActions';
+import * as contactActions from '../actions/contactActions';
 import * as columnActions from '../actions/columnActions';
 import * as types from '../constants/types';
 
@@ -24,7 +25,8 @@ const mapStateToProps = (store: TAppState) => ({
   userId: store.users.id,
   allJobs: store.jobs.jobs,
   columns: store.columns,
-  allInterviews: store.interviews.interviews
+  allInterviews: store.interviews.interviews,
+  allContacts: store.contacts.contacts,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
@@ -87,6 +89,22 @@ const mapDispatchToProps = (dispatch: any) => ({
   updateInterview: (interviewObj: types.IInterviews | undefined) => {
     console.log('dispatched update interview');
     dispatch(interviewActions.updateInterview(interviewObj));
+  },
+  getContact: (jobID: number) => {
+    console.log('dispatched get contact');
+    dispatch(contactActions.getContacts(jobID))
+  },
+  createContact: (name: string, jobID: number) => {
+    console.log('dispatched create contact');
+    dispatch(contactActions.createContact(name, jobID));
+  },
+  updateContact: (contactInfo: types.IContactInfo) => {
+    console.log('dispatched update contact');
+    dispatch(contactActions.updateContact(contactInfo));
+  },
+  deleteContact: (contactID: number) => {
+    console.log('dispatched delete contact');
+    dispatch(contactActions.deleteContact(contactID))
   },
   setColumns: (allJobs: any[]) => {
     console.log('dispatched set columns');
@@ -284,6 +302,11 @@ class BoardContainer extends Component<BoardProps, BoardState> {
           getInterview={this.props.getInterview}
           createInterview={this.props.createInterview}
           updateInterview={this.props.updateInterview}
+          createContact={this.props.createContact}
+          allContacts={this.props.allContacts}
+          getContact={this.props.getContact}
+          updateContact={this.props.updateContact}
+          deleteContact={this.props.deleteContact}
         />
         <div className="boardContainer">
           <div className="boardHeader">

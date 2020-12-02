@@ -427,24 +427,69 @@ BOARD CONTAINER
   margin: 20px;
   font-size: 13px;
 
-  .detailsLocation {
-    height: 40px;
+  .detailsLocation, .detailsSalary {
+    height: 35px;
     width: 350px;
     padding: 8px;
   }
-  .detailsSalary {
-    height: 40px;
-    width: 350px;
-    padding: 8px;
-  }
+  
   .detailsUrl {
-    height: 40px;
+    height: 35px;
     width: 725px;
     padding: 8px;
   }
   .detailsNotes {
     height: 200px;
     width: 725px;
+    padding: 10px;
+  }
+
+  .delete-btn {
+    background-color: $dark-lav;
+    color: white;
+    border: 1px solid $dark-lav;
+    font-size: 13px;
+  }
+
+  .save-btn {
+    float: right;
+    font-size: 13px;
+  }
+}
+
+.contactsTab {
+  margin: 20px;
+  font-size: 13px;
+
+  .save-btn {
+    float: right;
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+}
+
+.contactCard {
+
+  margin-bottom: 5px;
+
+  #headerTitle {
+    margin-left: 20px;
+    font-style: italic;
+  }
+
+  #headerContact {
+    float: right;
+  }
+
+  .contactName, .contactTitle, .contactPhone, .contactEmail {
+    height: 35px;
+    width: 333px;
+    padding: 8px;
+  }
+
+  .contactNotes {
+    height: 100px;
+    width: 680px;
     padding: 10px;
   }
 

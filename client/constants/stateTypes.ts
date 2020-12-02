@@ -30,6 +30,18 @@ export interface InterviewState {
   }[] | null;
 }
 
+export interface ContactState {
+  contacts: {
+    _id: number;
+    name: string;
+    title: string | null;
+    phone: string | null;
+    email: string | null;
+    notes: string | null;
+    jobID: number;
+  }[] | [];
+}
+
 // column reducer state
 export interface ColumnState {
   opportunities: [];

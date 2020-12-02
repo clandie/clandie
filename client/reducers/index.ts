@@ -5,6 +5,7 @@ import userReducer from './userReducer';
 import boardReducer from './boardReducer';
 import columnReducer from './columnReducer';
 import interviewReducer from './interviewReducer';
+import contactReducer from './contactReducer';
 
 // combine reducers
 const reducers: any = combineReducers({
@@ -13,6 +14,7 @@ const reducers: any = combineReducers({
   boards: boardReducer,
   columns: columnReducer,
   interviews: interviewReducer,
+  contacts: contactReducer,
 });
 
 export default reducers;
