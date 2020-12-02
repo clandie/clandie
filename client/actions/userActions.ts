@@ -14,6 +14,8 @@ import {
   SET_USER_INFO,
   CLEAR_USER_INFO,
   GET_BOARD,
+  INVALID_USER_INFO,
+  INCOMPLETE_USER_INFO,
 } from '../constants/actionTypes';
 import { AppThunk } from '../store';
 
@@ -37,6 +39,13 @@ export const clearUserInfo = () => ({
 export const addUser = (userObj: types.ISignupState): AppThunk => async (
   dispatch
 ) => {
+  // if incomplete user info, update state and return error message
+  if (userObj.email === '' || userObj.password === '' || userObj.name === '') {
+    dispatch({
+      type: INCOMPLETE_USER_INFO,
+    });
+    return;
+  }
   // fetch request to create user in db
   const userName = `${userObj.name}`;
   const userEmail = `${userObj.email}`;
@@ -67,7 +76,13 @@ export const addUser = (userObj: types.ISignupState): AppThunk => async (
 export const verifyUser = (userObj: types.ILoginState): AppThunk => async (
   dispatch
 ) => {
-  // let userId: number;
+  // if incomplete user info, update state and return error message
+  if (userObj.email === '' || userObj.password === '') {
+    dispatch({
+      type: INCOMPLETE_USER_INFO,
+    });
+    return;
+  }
   const userEmail = `${userObj.email}`;
   const userPassword = `${userObj.password}`;
   const query = `query VerifyUser($userEmail: String!, $userPassword: String!) { 
@@ -101,7 +116,11 @@ export const verifyUser = (userObj: types.ILoginState): AppThunk => async (
           type: GET_BOARD,
           payload: user.boards,
         });
-      } else if (user.message) return alert(user.message);
+      } else if (user.message) {
+        dispatch({
+          type: INVALID_USER_INFO
+        })
+      };
     })
     .catch((err) => {
       console.log('verifyUser action fetch error', err);

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-// import { Dispatch } from 'redux';
 
 import Login from './components/Login';
 import Signup from './components/Signup';

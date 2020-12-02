@@ -8,13 +8,15 @@ import {
   UserActionTypes,
   SET_USER_INFO,
   CLEAR_USER_INFO,
+  INVALID_USER_INFO,
+  INCOMPLETE_USER_INFO,
 } from '../constants/actionTypes';
 
 // we may need to add more to this later
 const initialState: UserState = {
   id: null,
   name: '',
-  authorized: false,
+  authorized: null,
 };
 
 const userReducer = (state = initialState, action: UserActionTypes) => {
@@ -35,8 +37,21 @@ const userReducer = (state = initialState, action: UserActionTypes) => {
         ...state,
         id: null,
         name: '',
+        authorized: null,
+      };
+
+    case INVALID_USER_INFO:
+      return {
+        ...state,
         authorized: false,
       };
+
+    case INCOMPLETE_USER_INFO:
+      return {
+        ...state,
+        authorized: 'incomplete'
+      }
+
     default:
       return state;
   }
