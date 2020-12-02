@@ -94,9 +94,13 @@ const mapDispatchToProps = (dispatch: any) => ({
     console.log('dispatched get contact');
     dispatch(contactActions.getContacts(jobID))
   },
-  createContact: (name: string, jobID: number) =>{
+  createContact: (name: string, jobID: number) => {
     console.log('dispatched create contact');
     dispatch(contactActions.createContact(name, jobID));
+  },
+  updateContact: (contactInfo: types.IContactInfo) => {
+    console.log('dispatched update contact');
+    dispatch(contactActions.updateContact(contactInfo));
   },
   setColumns: (allJobs: any[]) => {
     console.log('dispatched set columns');
@@ -297,6 +301,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
           createContact={this.props.createContact}
           allContacts={this.props.allContacts}
           getContact={this.props.getContact}
+          updateContact={this.props.updateContact}
         />
         <div className="boardContainer">
           <div className="boardHeader">

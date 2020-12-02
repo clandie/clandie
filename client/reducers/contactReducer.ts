@@ -28,6 +28,7 @@ const contactReducer = (state = initialState, action: ContactActionTypes) => {
     case UPDATE_CONTACT:
       return {
         ...state,
+        contacts: action.payload
       }
 
     default:

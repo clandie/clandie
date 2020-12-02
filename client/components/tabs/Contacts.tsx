@@ -3,19 +3,17 @@ import { Form, Col, Button, Card } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion';
 import ContactCard from '../../utils/ContactCard';
 import { ContactState }from '../../constants/stateTypes'
+import { IContactInfo } from '../../constants/types';
 
 interface IContactsProps {
   jobId?: number;
   getContact: (jobID: number) => void;
   createContact: (name: string, jobID: number) => void;
+  updateContact: (contactInfo: IContactInfo) => void;
   allContacts: ContactState['contacts']
 }
 interface IContactsState {
     name: string,
-    title: string | null,
-    phone: string | null,
-    email: string | null,
-    notes: string | null,
 }
 
 class Contacts extends Component<IContactsProps, IContactsState> {
@@ -23,10 +21,6 @@ class Contacts extends Component<IContactsProps, IContactsState> {
     super(props);
     this.state = {
       name: '',
-      title: '',
-      phone: '',
-      email: '',
-      notes: '',
       }
     this.handleChange = this.handleChange.bind(this);
     this.handleSave = this.handleSave.bind(this);
@@ -45,23 +39,24 @@ class Contacts extends Component<IContactsProps, IContactsState> {
   handleSave(e: any) {
     e.preventDefault();
     const {createContact, jobId} = this.props;
-    if (jobId) createContact(this.state.name, jobId)
+    if (this.state.name && jobId) createContact(this.state.name, jobId)
     this.setState({name: ''})
   }
 
   render() {
-    const {allContacts} = this.props;
+    const {allContacts, updateContact} = this.props;
     const contacts =[];
     if (allContacts) {
       for (let i = 0; i < allContacts.length; i++) {
         contacts.push(
           <ContactCard 
-            eventKey={i}
+            id={allContacts[i]._id}
             name={allContacts[i].name}
             title={allContacts[i].title}
             phone={allContacts[i].phone}
             email={allContacts[i].email}
             notes={allContacts[i].notes}
+            updateContact={updateContact}
           />
         )
       }

@@ -32,6 +32,7 @@ export interface InterviewState {
 
 export interface ContactState {
   contacts: {
+    _id: number;
     name: string;
     title: string | null;
     phone: string | null;
