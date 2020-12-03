@@ -4,6 +4,7 @@ import Accordion from 'react-bootstrap/Accordion';
 import { IContactInfo } from '../constants/types';
 
 interface IContactCardProps {
+  eventKey: number;
   id: number;
   name: string;
   title: string | null;
@@ -64,7 +65,7 @@ class ContactCard extends Component<IContactCardProps, IContactCardState> {
   }
 
   render() {
-    const { name, title, phone, email, deleteContact } = this.props;
+    const { eventKey, name, title, phone, email, deleteContact } = this.props;
       // display phone number, else display email
       let headerContact;
       if (phone) {
@@ -73,81 +74,77 @@ class ContactCard extends Component<IContactCardProps, IContactCardState> {
         headerContact = email
       }
     return (
-      <div className="contactCard">
-        <Accordion>
-          <Card>
-            <Accordion.Toggle as={Card.Header} eventKey="0">
-              {name}
-              <span id="headerTitle">{title}</span>
-              <span id="headerContact">{headerContact}</span>
-            </Accordion.Toggle>
-            <Accordion.Collapse eventKey="0">
-              <Card.Body>
-                <Form>
-                  <Form.Row>
-                    <Form.Group as={Col} controlId="formContactName">
-                      <Form.Label>Name</Form.Label>
-                        <textarea 
-                          className="contactName" 
-                          name="name" 
-                          value={this.state.name ? this.state.name : ''}
-                          onChange={this.handleChange}
-                        ></textarea>
-                    </Form.Group>
-                    <Form.Group as={Col} controlId="formContactTitle">
-                      <Form.Label>Title</Form.Label>
-                      <textarea 
-                        className="contactTitle" 
-                        name="title" 
-                        value={this.state.title ? this.state.title : ''}
-                        onChange={this.handleChange}
-                      ></textarea>
-                    </Form.Group>
-                  </Form.Row>
-                  <Form.Row>
-                    <Form.Group as={Col} controlId="formContactPhone">
-                      <Form.Label>Phone</Form.Label>
-                      <textarea 
-                        className="contactPhone" 
-                        name="phone" 
-                        value={this.state.phone ? this.state.phone : ''}
-                        onChange={this.handleChange}
-                      ></textarea>
-                    </Form.Group>
-                    <Form.Group as={Col} controlId="formContactEmail">
-                      <Form.Label>Email</Form.Label>
-                      <textarea 
-                        className="contactEmail" 
-                        name="email" 
-                        value={this.state.email ? this.state.email : ''}
-                        onChange={this.handleChange}
-                      ></textarea>
-                    </Form.Group>
-                  </Form.Row>
-                  <Form.Group controlId="formContactNotes">
-                    <Form.Label>Notes</Form.Label>
+      <Card className="contactCard">
+        <Accordion.Toggle as={Card.Header} eventKey={eventKey.toString()}>
+          {name}
+          <span id="headerTitle">{title}</span>
+          <span id="headerContact">{headerContact}</span>
+        </Accordion.Toggle>
+        <Accordion.Collapse eventKey={eventKey.toString()}>
+          <Card.Body>
+            <Form>
+              <Form.Row>
+                <Form.Group as={Col} controlId="formContactName">
+                  <Form.Label>Name</Form.Label>
                     <textarea 
-                      className="contactNotes" 
-                      name="notes" 
-                      value={this.state.notes ? this.state.notes : ''}
+                      className="contactName" 
+                      name="name" 
+                      value={this.state.name ? this.state.name : ''}
                       onChange={this.handleChange}
                     ></textarea>
-                  </Form.Group>
-                  <Button
-                    className="delete-btn"
-                    onClick={() => deleteContact(this.props.id)}
-                  >
-                    Delete
-                  </Button>
-                  <Button className="save-btn" type="submit" onClick={this.handleSave}>
-                    Save
-                  </Button>
-              </Form>
-              </Card.Body>
-            </Accordion.Collapse>
-          </Card>
-        </Accordion>
-      </div>
+                </Form.Group>
+                <Form.Group as={Col} controlId="formContactTitle">
+                  <Form.Label>Title</Form.Label>
+                  <textarea 
+                    className="contactTitle" 
+                    name="title" 
+                    value={this.state.title ? this.state.title : ''}
+                    onChange={this.handleChange}
+                  ></textarea>
+                </Form.Group>
+              </Form.Row>
+              <Form.Row>
+                <Form.Group as={Col} controlId="formContactPhone">
+                  <Form.Label>Phone</Form.Label>
+                  <textarea 
+                    className="contactPhone" 
+                    name="phone" 
+                    value={this.state.phone ? this.state.phone : ''}
+                    onChange={this.handleChange}
+                  ></textarea>
+                </Form.Group>
+                <Form.Group as={Col} controlId="formContactEmail">
+                  <Form.Label>Email</Form.Label>
+                  <textarea 
+                    className="contactEmail" 
+                    name="email" 
+                    value={this.state.email ? this.state.email : ''}
+                    onChange={this.handleChange}
+                  ></textarea>
+                </Form.Group>
+              </Form.Row>
+              <Form.Group controlId="formContactNotes">
+                <Form.Label>Notes</Form.Label>
+                <textarea 
+                  className="contactNotes" 
+                  name="notes" 
+                  value={this.state.notes ? this.state.notes : ''}
+                  onChange={this.handleChange}
+                ></textarea>
+              </Form.Group>
+              <Button
+                className="delete-btn"
+                onClick={() => deleteContact(this.props.id)}
+              >
+                Delete
+              </Button>
+              <Button className="save-btn" type="submit" onClick={this.handleSave}>
+                Save
+              </Button>
+          </Form>
+          </Card.Body>
+        </Accordion.Collapse>
+      </Card>
     )
   }
 }
