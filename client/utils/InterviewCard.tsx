@@ -16,7 +16,6 @@ interface IInterviewCardProps {
 }
 
 const InterviewCard = (props: IInterviewCardProps) => {
-  console.log('props time from interview card: ', props.time)
   return (
     <div>
     <Accordion defaultActiveKey="0">

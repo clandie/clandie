@@ -21,7 +21,6 @@ interface IInterviewsProps {
         notes: string;
       }[]
     | null;
-  // allInterviews: IInterviews;
   getInterview: (jobId: number) => void;
   createInterview: (title: string, jobId: number) => void;
   updateInterview: (interviewObj: IInterviews | undefined) => void;
@@ -145,12 +144,14 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
     const interviews = [];
     if (allInterviews) {
       for (let i = 0; i < allInterviews.length; i++) {
+        let time = allInterviews[i].time;
+        if(allInterviews[i].time) time = new Date(`01 Jan 1970 ${allInterviews[i].time}`);
         interviews.push(
           <InterviewCard
             id={allInterviews[i]._id}
             title={allInterviews[i].title}
             date={allInterviews[i].date}
-            time={new Date(`01 Jan 1970 ${allInterviews[i].time}`)}
+            time={time}
             notes={allInterviews[i].notes}
             saveDate={this.saveDate}
             saveTime={this.saveTime}
