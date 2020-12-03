@@ -457,6 +457,17 @@ BOARD CONTAINER
   }
 }
 
+.interviewsTab {
+  margin: 20px;
+  font-size: 13px;
+
+  .save-btn {
+    float: right;
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+}
+
 .contactsTab {
   margin: 20px;
   font-size: 13px;
@@ -465,6 +476,35 @@ BOARD CONTAINER
     float: right;
     font-size: 13px;
     margin-bottom: 20px;
+  }
+}
+
+.interviewCard {
+
+  margin-bottom: 5px;
+
+  .interviewTitle, .interviewDate, .interviewTime, .interviewNotes {
+    height: 35px;
+    width: 333px;
+    padding: 8px;
+  }
+
+  .interviewNotes {
+    height: 100px;
+    width: 680px;
+    padding: 10px;
+  }
+
+  .delete-btn {
+    background-color: $dark-lav;
+    color: white;
+    border: 1px solid $dark-lav;
+    font-size: 13px;
+  }
+
+  .save-btn {
+    float: right;
+    font-size: 13px;
   }
 }
 
