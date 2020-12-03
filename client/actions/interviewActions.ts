@@ -45,6 +45,7 @@ export const createInterview = (
       __typename
       ... on Interview {
         allInterviews{
+          _id
           title
           date
           time
@@ -67,14 +68,13 @@ export const createInterview = (
   })
     .then((res) => res.json())
     .then((newInterview) => {
-      // console.log('NEW INTERVIEW: ', newInterview);
       dispatch({
         type: CREATE_INTERVIEW,
-        payload: newInterview.data.interviews,
+        payload: newInterview.data.createInterview.allInterviews,
       });
       dispatch({
         type: GET_INTERVIEW,
-        payload: newInterview.data.allInterviews,
+        payload: newInterview.data.createInterview.allInterviews,
       });
     })
     .catch((err) => console.log('error in create interview action', err));
@@ -93,7 +93,7 @@ export const updateInterview = (interviewObj: IInterviews | undefined): AppThunk
     notes = interviewObj.notes; 
   }
 
-  const query =   `mutation UpdateInterview ($title: String, $date: Date, $time: Date, $notes: String, $interviewID: ID!) {
+  const query = `mutation UpdateInterview ($title: String, $date: Date, $time: Date, $notes: String, $interviewID: ID!) {
     updateInterview (title: $title, date: $date, time: $time, notes: $notes, interviewID: $interviewID) {
       __typename
       ... on Interview {

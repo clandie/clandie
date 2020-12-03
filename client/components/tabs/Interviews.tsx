@@ -36,12 +36,12 @@ interface IInterviewsState {
         notes?: string;
       }[]
     | null;
-  newInterviewInput: {
+  // newInterviewInput: {
     title: string;
-    date?: Date | null;
-    time?: Date | null;
-    notes?: string;
-  };
+    // date?: Date | null;
+    // time?: Date | null;
+    // notes?: string;
+  // };
 }
 
 class Interviews extends Component<IInterviewsProps, IInterviewsState> {
@@ -49,12 +49,12 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
     super(props);
     this.state = {
       listOfInterviews: [],
-      newInterviewInput: {
+      // newInterviewInput: {
         title: '',
-        date: null,
-        time: null,
-        notes: '',
-      },
+        // date: null,
+        // time: null,
+        // notes: '',
+      // },
     };
     this.handleSave = this.handleSave.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -65,27 +65,34 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
   componentDidMount() {
     if(this.props.jobId) this.props.getInterview(this.props.jobId);
 
-    // const { allInterviews } = this.props;
-
     this.setState({
       listOfInterviews: this.props.allInterviews,
     });
   }
 
   handleChange(e: any) {
-    const { name, value } = e.target;
+    // const { name, value } = e.target;
 
-    const newInterviewInput = Object.assign(this.state.newInterviewInput);
-    newInterviewInput[name] = value;
-    this.setState({
-      newInterviewInput,
-    });
+    // const newInterviewInput = Object.assign(this.state.newInterviewInput);
+    // newInterviewInput[name] = value;
+    // this.setState({
+    //   newInterviewInput,
+    // });
+
+    const { value } = e.target;
+    this.setState({ title: value });
   }
 
   handleSave(e: any) {
     e.preventDefault();
     const { createInterview, jobId } = this.props;
-    if (jobId) createInterview(this.state.newInterviewInput.title, jobId);
+    if (jobId) createInterview(this.state.title, jobId);
+
+    // const stateCopy = _.cloneDeep(this.state);
+    // stateCopy.title = '';
+    // console.log(stateCopy)
+    this.setState({title: ''});
+    console.log('state fron interviews after setstate: ', this.state)
   }
 
   saveDate(date: Date, interviewId: number) {
@@ -146,6 +153,7 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
       for (let i = 0; i < allInterviews.length; i++) {
         let time = allInterviews[i].time;
         if(allInterviews[i].time) time = new Date(`01 Jan 1970 ${allInterviews[i].time}`);
+
         interviews.push(
           <InterviewCard
             id={allInterviews[i]._id}
@@ -179,7 +187,8 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
                       <Form.Control
                         type="text"
                         name="title"
-                        placeholder={this.state.newInterviewInput.title}
+                        value={this.state.title}
+                        placeholder="eg. On-Site, Phone-Screening, Behavioral, etc."
                         onChange={this.handleChange}
                       ></Form.Control>
                     </Form.Group>
