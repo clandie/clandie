@@ -80,8 +80,8 @@ const typeDefs = gql`
     deleteInterview(interviewID: ID!): Interview!
     updateInterview(
       title: String
-      date: String
-      time: String
+      date: Date
+      time: Date
       notes: String
       interviewID: ID!
     ): InterviewResult!

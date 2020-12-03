@@ -11,12 +11,13 @@ interface IInterviewCardProps {
   date: Date;
   time: Date;
   notes: string;
-  saveDate: (date: Date, interviewid: number) => void;
-  timeChange: (time: Date) => void;
+  saveDate: (date: Date, interviewId: number) => void;
+  saveTime: (time: Date, interviewId: number) => void;
   // jobId: number;
 }
 
 const InterviewCard = (props: IInterviewCardProps) => {
+  console.log('props time from interview card: ', props.time)
   return (
     <div>
     <Accordion defaultActiveKey="0">
@@ -40,17 +41,17 @@ const InterviewCard = (props: IInterviewCardProps) => {
                     <DatePicker
                       selected={new Date(props.date)}
                       onChange={(date: Date) => props.saveDate(date, props.id)}
+                      dateFormat="MMMM d, yyyy"
                     />
                 </Form.Group>
-
-
                 <Form.Group as={Col} controlId="formTime">
                   <Form.Label>Time</Form.Label>
                   <DatePicker
-                    selected={new Date()}
-                    onChange={props.timeChange}
+                    selected={props.time}
+                    onChange={(time: Date) => props.saveTime(time, props.id)}
                     showTimeSelect
                     showTimeSelectOnly
+                    dateFormat="h:mm aa"
                     timeFormat="h:mm aa"
                     timeIntervals={15}
                   />

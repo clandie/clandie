@@ -60,7 +60,7 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
     this.handleSave = this.handleSave.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.saveDate = this.saveDate.bind(this);
-    this.handleTimeChange = this.handleTimeChange.bind(this);
+    this.saveTime = this.saveTime.bind(this);
   }
 
   componentDidMount() {
@@ -90,31 +90,23 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
   }
 
   saveDate(date: Date, interviewId: number) {
-    // console.log('event from saveDate, ', date)
-    // console.log('interviewId type: ', typeof interviewId)
-    // e.preventDefault();
-    const stateClone = _.cloneDeep(this.props);
-    const interviews = stateClone.allInterviews;
-    // console.log(this.props)
-    // console.log('interviews from state clone: ', interviews)
-
+    const propsClone = _.cloneDeep(this.props);
+    const interviews = propsClone.allInterviews;
 
     let interviewToUpdate;
     const newInterviews = [];
     if(interviews){
-      // console.log('in conditional to check if interviews exists')
       for(let i = 0; i < interviews.length; i++){
         console.log(interviewId, interviews[i]._id)
         if(interviews[i]._id === interviewId) {
           interviews[i].date = date;
+          if(interviews[i].time) interviews[i].time = new Date(`01 Jan 1970 ${interviews[i].time}`);
           interviewToUpdate = interviews[i];
         }
         newInterviews.push(interviews[i]);
       }
     }
 
-    // console.log('arg to be sent to updateInterview action', interviewToUpdate)
-    // if(this.props.jobId) this.props.getInterview(this.props.jobId);
     this.props.updateInterview(interviewToUpdate);
     
     this.setState({
@@ -123,9 +115,28 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
     })
   }
 
-  handleTimeChange(time: Date) {
-    // console.log('time from handleTimeChange', time.toLocaleTimeString())
-    return time;
+  saveTime(time: Date, interviewId: number) {
+    const propsClone = _.cloneDeep(this.props);
+    const interviews = propsClone.allInterviews;
+
+    let interviewToUpdate;
+    const newInterviews = [];
+    if(interviews){
+      for(let i = 0; i < interviews.length; i++){
+        if(interviews[i]._id === interviewId){
+          interviews[i].time = time;
+          interviewToUpdate = interviews[i];
+        }
+        newInterviews.push(interviews[i]);
+      }
+    }
+
+    this.props.updateInterview(interviewToUpdate);
+
+    this.setState({
+      ...this.state,
+      listOfInterviews: newInterviews
+    });
   }
 
   render() {
@@ -134,16 +145,15 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
     const interviews = [];
     if (allInterviews) {
       for (let i = 0; i < allInterviews.length; i++) {
-        // console.log('states date: ', allInterviews[i].date)
         interviews.push(
           <InterviewCard
             id={allInterviews[i]._id}
             title={allInterviews[i].title}
             date={allInterviews[i].date}
-            time={allInterviews[i].time}
+            time={new Date(`01 Jan 1970 ${allInterviews[i].time}`)}
             notes={allInterviews[i].notes}
             saveDate={this.saveDate}
-            timeChange={this.handleTimeChange}
+            saveTime={this.saveTime}
             // jobId={allInterviews[i]._id}
           ></InterviewCard>
         );
