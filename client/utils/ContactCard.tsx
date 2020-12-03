@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Form, Col, Button, Card } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion';
 import { IContactInfo } from '../constants/types';
+import { ContactState }from '../constants/stateTypes'
 
 interface IContactCardProps {
   eventKey: number;
@@ -13,6 +14,7 @@ interface IContactCardProps {
   notes: string | null;
   updateContact: (contactInfo: IContactInfo) => void;
   deleteContact: (contactID: number) => void;
+  allContacts: ContactState['contacts'];
 }
 
 interface IContactCardState {
@@ -21,6 +23,7 @@ interface IContactCardState {
   phone?: string | null,
   email?: string | null,
   notes?: string | null,
+  allContacts?: ContactState['contacts'] | []
 }
 
 class ContactCard extends Component<IContactCardProps, IContactCardState> {
@@ -32,6 +35,7 @@ class ContactCard extends Component<IContactCardProps, IContactCardState> {
       phone: '',
       email: '',
       notes: '',
+      allContacts: [],
       }
     this.handleChange = this.handleChange.bind(this);
     this.handleSave = this.handleSave.bind(this);
@@ -39,8 +43,17 @@ class ContactCard extends Component<IContactCardProps, IContactCardState> {
 
   componentDidMount() {
     // populate fields with contact info
-    const { name, title, phone, email, notes } = this.props;
-    this.setState({ name, title, phone, email, notes });
+    console.log('this card props', this.props)
+    const { name, title, phone, email, notes, allContacts } = this.props;
+    this.setState({ name, title, phone, email, notes, allContacts });
+  }
+
+  // update ui of cards once contact data is updated in db
+  componentDidUpdate() {
+    if (this.state.allContacts !== this.props.allContacts) {
+      const { name, title, phone, email, notes, allContacts } = this.props;
+      this.setState({ name, title, phone, email, notes, allContacts })
+    }
   }
 
   handleChange(e: any) {

@@ -28,6 +28,7 @@ class Contacts extends Component<IContactsProps, IContactsState> {
   }
 
   componentDidMount() {
+    console.log('contacts props', this.props)
     const { jobId } = this.props;
     if (jobId) this.props.getContact(jobId)
   }
@@ -45,7 +46,7 @@ class Contacts extends Component<IContactsProps, IContactsState> {
   }
 
   render() {
-    const {allContacts, updateContact, deleteContact} = this.props;
+    const { updateContact, deleteContact, allContacts} = this.props;
     const contacts =[];
     if (allContacts) {
       for (let i = 0; i < allContacts.length; i++) {
@@ -60,10 +61,12 @@ class Contacts extends Component<IContactsProps, IContactsState> {
             notes={allContacts[i].notes}
             updateContact={updateContact}
             deleteContact={deleteContact}
+            allContacts={allContacts}
           />
         )
       }
     }
+  
     return (
       <div className="contactsTab">
         <Accordion>
