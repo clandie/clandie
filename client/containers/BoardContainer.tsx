@@ -90,6 +90,10 @@ const mapDispatchToProps = (dispatch: any) => ({
     console.log('dispatched update interview');
     dispatch(interviewActions.updateInterview(interviewObj));
   },
+  deleteInterview: (interviewId: number) => {
+    console.log('dispatched update interview');
+    dispatch(interviewActions.deleteInterview(interviewId));
+  },
   getContact: (jobID: number) => {
     console.log('dispatched get contact');
     dispatch(contactActions.getContacts(jobID))
@@ -302,6 +306,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
           getInterview={this.props.getInterview}
           createInterview={this.props.createInterview}
           updateInterview={this.props.updateInterview}
+          deleteInterview={this.props.deleteInterview}
           createContact={this.props.createContact}
           allContacts={this.props.allContacts}
           getContact={this.props.getContact}

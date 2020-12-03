@@ -16,6 +16,7 @@ interface IDetailsModalProps {
   getInterview: (jobId: number) => void;
   createInterview: (title: string, jobId: number) => void;
   updateInterview: (interviewObj: IInterviews | undefined) => void;
+  deleteInterview: (interviewId: number) => void;
   allInterviews: | {
     _id: number;
     title: string;
@@ -79,6 +80,7 @@ class JobDetailsModal extends Component<IDetailsModalProps> {
                 getInterview={this.props.getInterview}
                 createInterview={this.props.createInterview}
                 updateInterview={this.props.updateInterview}
+                deleteInterview={this.props.deleteInterview}
                 jobId={jobId}
               />
             </Tab>

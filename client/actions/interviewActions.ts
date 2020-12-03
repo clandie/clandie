@@ -22,7 +22,7 @@ export const getInterview = (jobId: number): AppThunk => async (dispatch) => {
   })
     .then((res) => res.json())
     .then((allInterviews) => {
-      console.log('All INTERVIEWS: ', allInterviews);
+      // console.log('All INTERVIEWS: ', allInterviews);
       dispatch({
         type: GET_INTERVIEW,
         payload: allInterviews.data.interviews,
@@ -45,6 +45,7 @@ export const createInterview = (
       __typename
       ... on Interview {
         allInterviews{
+          _id
           title
           date
           time
@@ -67,14 +68,13 @@ export const createInterview = (
   })
     .then((res) => res.json())
     .then((newInterview) => {
-      // console.log('NEW INTERVIEW: ', newInterview);
       dispatch({
         type: CREATE_INTERVIEW,
-        payload: newInterview.data.interviews,
+        payload: newInterview.data.createInterview.allInterviews,
       });
       dispatch({
         type: GET_INTERVIEW,
-        payload: newInterview.data.allInterviews,
+        payload: newInterview.data.createInterview.allInterviews,
       });
     })
     .catch((err) => console.log('error in create interview action', err));
@@ -82,7 +82,7 @@ export const createInterview = (
 
 
 export const updateInterview = (interviewObj: IInterviews | undefined): AppThunk => async (dispatch) => {
-  // console.log('args to updateInterview: ', interviewObj)
+  console.log('args to updateInterview: ', interviewObj)
   
   let interviewID, title, date, time, notes;
   if (interviewObj){
@@ -92,8 +92,8 @@ export const updateInterview = (interviewObj: IInterviews | undefined): AppThunk
     time = interviewObj.time;
     notes = interviewObj.notes; 
   }
-  // const {_id, title, date, time, notes} = interviewObj;
-  const query =   `mutation UpdateInterview ($title: String, $date: String, $time: String, $notes: String, $interviewID: ID!) {
+
+  const query = `mutation UpdateInterview ($title: String, $date: Date, $time: Date, $notes: String, $interviewID: ID!) {
     updateInterview (title: $title, date: $date, time: $time, notes: $notes, interviewID: $interviewID) {
       __typename
       ... on Interview {
@@ -133,3 +133,35 @@ export const updateInterview = (interviewObj: IInterviews | undefined): AppThunk
   })
   .catch((err) => console.log('error in update interview action', err));
 };
+
+export const deleteInterview = (interviewID: number) : AppThunk => async (dispatch) => {
+  // console.log('interviewID from deleteInterview: ', interviewId)
+  const query = `mutation DeleteInterview($interviewID: ID!){
+    deleteInterview(interviewID: $interviewID){
+      allInterviews{
+        _id
+        title
+        date
+        time
+        notes
+      }
+    }
+  }`;
+
+  fetch('/graphql', {
+    method: 'POST',
+    body: JSON.stringify({
+      query,
+      variables: { interviewID },
+    }),
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+  })
+    .then((res) => res.json())
+    .then((allInterviews) => {
+      console.log('ALLINTERVIEWS FROM DELETE INTERVIEW ACTION', allInterviews);
+      dispatch({
+        type: GET_INTERVIEW,
+        payload: allInterviews.data.deleteInterview.allInterviews
+      });
+    })
+}
