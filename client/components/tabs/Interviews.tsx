@@ -154,7 +154,6 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
             notes={allInterviews[i].notes}
             saveDate={this.saveDate}
             saveTime={this.saveTime}
-            // jobId={allInterviews[i]._id}
           ></InterviewCard>
         );
       }
