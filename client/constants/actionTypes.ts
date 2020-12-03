@@ -33,7 +33,12 @@ export const CLEAR_JOB = 'CLEAR_JOB';
 // Interview Action Types
 export const GET_INTERVIEW = 'GET_INTERVIEW';
 export const CREATE_INTERVIEW = 'CREATE_INTERVIEW';
-export const UPDATE_INTERVIEW = 'UPDATE_INTERVIEW'
+export const UPDATE_INTERVIEW = 'UPDATE_INTERVIEW';
+
+// Contact Action Types
+export const GET_CONTACT = 'GET_CONTACT';
+export const CREATE_CONTACT = 'CREATE_CONTACT';
+export const UPDATE_CONTACT = 'UPDATE_CONTACT';
 
 // Column Action Types
 export const UPDATE_OPPORTUNITIES = 'UPDATE_OPPORTUNITIES';
@@ -170,6 +175,29 @@ interface UpdateInterview {
   payload: IInterviews | undefined
 }
 
+interface GetContact {
+  type: typeof GET_CONTACT;
+  payload: number;
+}
+
+interface CreateContact {
+  type: typeof CREATE_CONTACT;
+  payload: {
+    name: string;
+  }
+}
+
+interface UpdateContact {
+  type: typeof UPDATE_CONTACT;
+  payload: {
+    name: string;
+    title: string;
+    phone: string;
+    email: string;
+    notes: string;
+  }
+}
+
 // COLUMN ACTION TYPES
 interface UpdateColumns {
   type: typeof UPDATE_COLUMNS;
@@ -203,6 +231,8 @@ export type BoardActionTypes =
 export type JobActionTypes = GetJob | CreateJob | ClearJob;
 
 export type InterviewActionTypes = GetInterview | CreateInterview | UpdateInterview;
+
+export type ContactActionTypes = GetContact | CreateContact | UpdateContact;
 
 export type ColumnActionTypes =
   // | UpdateOpportunities

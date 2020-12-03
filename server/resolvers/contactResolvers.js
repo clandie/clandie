@@ -23,6 +23,24 @@ module.exports = {
     },
   },
 
+  Contact: {
+    allContacts: async ({ jobs_id }, args, { dataSources }) => {
+      try {
+        const {postgresDB} = dataSources;
+        const text = `SELECT * FROM contacts WHERE jobs_id=$1`;
+        const params = [jobs_id];
+        const contacts = await postgresDB(text, params);
+        return contacts.rows;
+      } catch (err) {
+        console.log(
+          'An error occurred in Contact.allContacts resolver: ',
+          err
+        );
+        return err;
+      }
+    },
+  },
+
   Mutation: {
     createContact: async (parent, { name, jobID }, { dataSources }) => {
       try {

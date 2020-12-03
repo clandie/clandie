@@ -84,3 +84,12 @@ export interface ISelectedJob {
       }[]
     | null;
 }
+
+export interface IContactInfo {
+  name?: string, 
+  title?: string | null, 
+  phone?: string | null, 
+  email?: string | null, 
+  notes?: string | null, 
+  contactID: number
+}
