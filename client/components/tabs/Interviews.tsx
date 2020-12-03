@@ -24,6 +24,7 @@ interface IInterviewsProps {
   getInterview: (jobId: number) => void;
   createInterview: (title: string, jobId: number) => void;
   updateInterview: (interviewObj: IInterviews | undefined) => void;
+  deleteInterview: (interviewId: number) => void;
 }
 
 interface IInterviewsState {
@@ -163,6 +164,8 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
             notes={allInterviews[i].notes}
             saveDate={this.saveDate}
             saveTime={this.saveTime}
+            updateInterview={this.props.updateInterview}
+            deleteInterview={this.props.deleteInterview}
           ></InterviewCard>
         );
       }

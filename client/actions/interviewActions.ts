@@ -133,3 +133,35 @@ export const updateInterview = (interviewObj: IInterviews | undefined): AppThunk
   })
   .catch((err) => console.log('error in update interview action', err));
 };
+
+export const deleteInterview = (interviewID: number) : AppThunk => async (dispatch) => {
+  // console.log('interviewID from deleteInterview: ', interviewId)
+  const query = `mutation DeleteInterview($interviewID: ID!){
+    deleteInterview(interviewID: $interviewID){
+      allInterviews{
+        _id
+        title
+        date
+        time
+        notes
+      }
+    }
+  }`;
+
+  fetch('/graphql', {
+    method: 'POST',
+    body: JSON.stringify({
+      query,
+      variables: { interviewID },
+    }),
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+  })
+    .then((res) => res.json())
+    .then((allInterviews) => {
+      console.log('ALLINTERVIEWS FROM DELETE INTERVIEW ACTION', allInterviews);
+      dispatch({
+        type: GET_INTERVIEW,
+        payload: allInterviews.data.deleteInterview.allInterviews
+      });
+    })
+}
