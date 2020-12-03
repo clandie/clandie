@@ -57,7 +57,7 @@ class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> 
 
   render(){
   return (
-    <div>
+    <div className="interviewCard">
     <Accordion defaultActiveKey="0">
       <Card>
         <Accordion.Toggle as={Card.Header} eventKey="1">
@@ -81,6 +81,7 @@ class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> 
                 <Form.Group as={Col} controlId="formDate">
                   <Form.Label>Date</Form.Label>
                     <DatePicker
+                      className="interviewDate"
                       selected={this.props.date ? new Date(this.props.date): null}
                       onChange={(date: Date) => this.props.saveDate(date, this.props.id)}
                       dateFormat="MMMM d, yyyy"
@@ -89,6 +90,7 @@ class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> 
                 <Form.Group as={Col} controlId="formTime">
                   <Form.Label>Time</Form.Label>
                   <DatePicker
+                    className="interviewTime"
                     selected={this.props.time}
                     onChange={(time: Date) => this.props.saveTime(time, this.props.id)}
                     showTimeSelect
