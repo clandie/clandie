@@ -22,7 +22,6 @@ export const getInterview = (jobId: number): AppThunk => async (dispatch) => {
   })
     .then((res) => res.json())
     .then((allInterviews) => {
-      // console.log('All INTERVIEWS: ', allInterviews);
       dispatch({
         type: GET_INTERVIEW,
         payload: allInterviews.data.interviews,
@@ -39,7 +38,6 @@ export const createInterview = (
   title: string,
   jobId: number
 ): AppThunk => async (dispatch) => {
-  // console.log('args to createInterview: ', title, jobId);
   const query = `mutation CreateInterview($title: String!, $jobId: ID!) {
     createInterview (title: $title, jobsID: $jobId) {
       __typename
@@ -72,18 +70,16 @@ export const createInterview = (
         type: CREATE_INTERVIEW,
         payload: newInterview.data.createInterview.allInterviews,
       });
-      dispatch({
-        type: GET_INTERVIEW,
-        payload: newInterview.data.createInterview.allInterviews,
-      });
+      // dispatch({
+      //   type: GET_INTERVIEW,
+      //   payload: newInterview.data.createInterview.allInterviews,
+      // });
     })
     .catch((err) => console.log('error in create interview action', err));
 };
 
 
-export const updateInterview = (interviewObj: IInterviews | undefined): AppThunk => async (dispatch) => {
-  console.log('args to updateInterview: ', interviewObj)
-  
+export const updateInterview = (interviewObj: IInterviews | undefined): AppThunk => async (dispatch) => { 
   let interviewID, title, date, time, notes;
   if (interviewObj){
     interviewID = interviewObj._id;
@@ -121,15 +117,14 @@ export const updateInterview = (interviewObj: IInterviews | undefined): AppThunk
   })
   .then((res) => res.json())
   .then((updatedInterviews) => {
-    console.log('updates from interviewActions.ts', updatedInterviews);
     dispatch({
       type: UPDATE_INTERVIEW,
       payload: updatedInterviews.data.updateInterview.allInterviews
     });
-    dispatch({
-      type: GET_INTERVIEW,
-      payload: updatedInterviews.data.updateInterview.allInterviews
-    });
+    // dispatch({
+    //   type: GET_INTERVIEW,
+    //   payload: updatedInterviews.data.updateInterview.allInterviews,
+    // });
   })
   .catch((err) => console.log('error in update interview action', err));
 };
@@ -158,7 +153,6 @@ export const deleteInterview = (interviewID: number) : AppThunk => async (dispat
   })
     .then((res) => res.json())
     .then((allInterviews) => {
-      console.log('ALLINTERVIEWS FROM DELETE INTERVIEW ACTION', allInterviews);
       dispatch({
         type: GET_INTERVIEW,
         payload: allInterviews.data.deleteInterview.allInterviews

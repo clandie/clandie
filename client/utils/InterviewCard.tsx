@@ -3,7 +3,7 @@ import { Form, Col, Button, Card } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import {IInterviews} from '../constants/types'
+import {IInterviews} from '../constants/types';
 
 
 interface IInterviewCardProps {
@@ -12,8 +12,6 @@ interface IInterviewCardProps {
   date: Date |null;
   time: Date | null;
   notes: string | null;
-  saveDate: (date: Date, interviewId: number) => void;
-  saveTime: (time: Date, interviewId: number) => void;
   updateInterview: (interviewObj: IInterviews) => void;
   deleteInterview: (interviewId: number) => void;
 }
@@ -43,11 +41,11 @@ class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> 
     this.setState({title, date, time, notes});
   }
 
-  handleChange(e: any) {
-    const { name, value } = e.target;
+  handleChange(e: any, name: string) {
+    const value = e.target ? e.target.value : e;
     this.setState({ [name]: value });
   }
-  
+
   handleSave(e: any){
     e.preventDefault();
     const { title, date, time, notes } = this.state;
@@ -73,7 +71,7 @@ class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> 
                     className="interviewTitle"
                     name="title"
                     value={this.state.title ? this.state.title : ''}
-                    onChange={this.handleChange}
+                    onChange={(e: any) => this.handleChange(e, 'title')}
                   ></textarea>
                 </Form.Group>
               </Form.Row>
@@ -81,18 +79,20 @@ class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> 
                 <Form.Group as={Col} controlId="formDate">
                   <Form.Label>Date</Form.Label>
                     <DatePicker
+                      name="date"
                       className="interviewDate"
-                      selected={this.props.date ? new Date(this.props.date): null}
-                      onChange={(date: Date) => this.props.saveDate(date, this.props.id)}
+                      selected={this.state.date ? new Date(this.state.date): null}
+                      onChange={(date: Date) => this.handleChange(date, 'date')}
                       dateFormat="MMMM d, yyyy"
                     />
                 </Form.Group>
                 <Form.Group as={Col} controlId="formTime">
                   <Form.Label>Time</Form.Label>
                   <DatePicker
+                    name="time"
                     className="interviewTime"
-                    selected={this.props.time}
-                    onChange={(time: Date) => this.props.saveTime(time, this.props.id)}
+                    selected={this.state.time}
+                    onChange={(time: Date) => this.handleChange(time, 'time')}
                     showTimeSelect
                     showTimeSelectOnly
                     dateFormat="h:mm aa"
@@ -108,7 +108,7 @@ class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> 
                     className="interviewNotes"
                     name="notes"
                     value={this.state.notes ? this.state.notes : ''}
-                    onChange={this.handleChange}
+                    onChange={(e: any) => this.handleChange(e, 'notes')}
                   ></textarea>
                 </Form.Group>
               </Form.Row>
