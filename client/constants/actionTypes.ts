@@ -24,6 +24,7 @@ export const SET_BOARD = 'SET_BOARD';
 export const GET_BOARD = 'GET_BOARD';
 export const SELECT_BOARD = 'SELECT_BOARD';
 export const CLEAR_BOARD = 'CLEAR_BOARD';
+export const DELETE_BOARD = 'DELETE_BOARD';
 
 // Job Action Types
 export const GET_JOB = 'GET_JOB;';
@@ -123,6 +124,14 @@ interface SelectBoard {
 
 interface ClearBoard {
   type: typeof CLEAR_BOARD;
+}
+
+interface DeleteBoard {
+  type: typeof DELETE_BOARD;
+  payload: {
+    id: number;
+    name: string;
+  }
 }
 
 //JOB ACTION TYPES
@@ -226,7 +235,8 @@ export type BoardActionTypes =
   | SetBoard
   | GetBoard
   | SelectBoard
-  | ClearBoard;
+  | ClearBoard
+  | DeleteBoard;
 
 export type JobActionTypes = GetJob | CreateJob | ClearJob;
 

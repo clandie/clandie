@@ -108,7 +108,7 @@ module.exports = {
     deleteJob: async (parent, { jobID }, { dataSources }) => {
       try {
         const {postgresDB} = dataSources;
-
+        
         //deleting interviews
         const interviewQueryText = `
           DELETE FROM
