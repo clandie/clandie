@@ -1,4 +1,7 @@
 const { UserInputError } = require('apollo-server');
+const { Mutation } = require('./jobResolvers');
+
+const deleteJob = Mutation.deleteJob;
 
 module.exports = {
   Query: {
@@ -90,6 +93,16 @@ module.exports = {
     deleteBoard: async (parent, { boardID }, { dataSources }) => {
       try {
         const {postgresDB} = dataSources;
+
+        // get all job IDs then run deleteJob resolver
+        const boardText = 'SELECT * FROM jobs WHERE boards_id=$1';
+        const boardParams = [boardID];
+        const jobs = await postgresDB(boardText, boardParams);
+        for(let i = 0; i < jobs.length; i++){
+          await deleteJob({}, {jobID: jobs[i]._id}, { dataSources, });
+        }
+
+        // deleting board
         const text = `
           DELETE FROM 
           boards 
