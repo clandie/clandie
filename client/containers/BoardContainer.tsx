@@ -14,9 +14,9 @@ import * as interviewActions from '../actions/interviewActions';
 import * as contactActions from '../actions/contactActions';
 import * as columnActions from '../actions/columnActions';
 import * as types from '../constants/types';
-
 import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
 import { CLEAR_COLUMNS, GET_JOB, SET_COLUMNS} from '../constants/actionTypes';
+import { dailyUnsplash } from '../assets/unsplashUrls';
 
 const mapStateToProps = (store: TAppState) => ({
   boardId: store.boards.id,
@@ -145,10 +145,10 @@ interface BoardState {
   showDeleteBoardModal: boolean;
   currentColumn: { columnName: string; columnOrder: number | null };
   selectedJob: types.ISelectedJob | null;
-
   dropdownItems: JSX.Element[] | [];
   boardToDeleteId: number | null,
   boardToDeleteName: string | null,
+  dailyUnsplash: string;
 }
 
 class BoardContainer extends Component<BoardProps, BoardState> {
@@ -166,6 +166,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
       dropdownItems: [],
       boardToDeleteId: null,
       boardToDeleteName: null,
+      dailyUnsplash: '',
     };
 
     this.selectBoard = this.selectBoard.bind(this);
@@ -183,7 +184,12 @@ class BoardContainer extends Component<BoardProps, BoardState> {
   // render modal if board name isn't set
   componentDidMount() {
     this.createDropdown();
-    if (this.props.boardName === null) this.setState({ showBoardModal: true });
+    if (this.props.boardName === null) {
+      this.setState({ showBoardModal: true })
+    } else {
+      // set daily background image
+      this.setState({ dailyUnsplash })
+    }
   }
 
   // update drop down menu when users switch boards
@@ -301,7 +307,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
   }
 
   render() {
-    // below modals will render based on local state which is determined by user's actions
+    const image = this.state.dailyUnsplash;
     return (
       <>
         <BoardModal
@@ -353,7 +359,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
           name={this.state.boardToDeleteName}
           deleteBoard={this.props.deleteBoard}
         />
-        <div className="boardContainer">
+        <div className="boardContainer" style={{backgroundImage: `url(${image})` }}>
           <div className="boardHeader">
             <div className="board-options">
             <div className="logo"></div>
