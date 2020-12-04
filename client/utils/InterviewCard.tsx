@@ -57,8 +57,6 @@ class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> 
   }
 
   componentDidUpdate(){
-    console.log('PROPS IN COMPONENTDIDUPDATE', this.props.allInterviews)
-    console.log('STATE IN COMPONENTDIDUPDATE', this.state.allInterviews)
     if(this.state.allInterviews !== this.props.allInterviews){
       const { title, date, time, notes, allInterviews } = this.props;
       this.setState({ title, date, time, notes, allInterviews, });
