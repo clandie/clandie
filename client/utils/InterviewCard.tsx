@@ -12,6 +12,13 @@ interface IInterviewCardProps {
   date: Date |null;
   time: Date | null;
   notes: string | null;
+  allInterviews: {
+    _id: number;
+    title?: string;
+    date?: Date;
+    time?: Date;
+    notes?: string;
+  }[] | null;
   updateInterview: (interviewObj: IInterviews) => void;
   deleteInterview: (interviewId: number) => void;
 }
@@ -21,6 +28,13 @@ interface IInterviewCardState {
   date?: Date |null;
   time?: Date | null;
   notes?: string | null;
+  allInterviews?: {
+    _id: number;
+    title?: string;
+    date?: Date;
+    time?: Date;
+    notes?: string;
+  }[] | null;
 }
 
 class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> {
@@ -31,14 +45,25 @@ class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> 
       date: null,
       time: null,
       notes: '',
+      allInterviews: [],
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSave = this.handleSave.bind(this);
   }
 
   componentDidMount(){
-    const { title, date, time, notes } = this.props;
-    this.setState({title, date, time, notes});
+    const { title, date, time, notes, allInterviews } = this.props;
+    this.setState({title, date, time, notes, allInterviews, });
+  }
+
+  componentDidUpdate(){
+    console.log('PROPS IN COMPONENTDIDUPDATE', this.props.allInterviews)
+    console.log('STATE IN COMPONENTDIDUPDATE', this.state.allInterviews)
+    if(this.state.allInterviews !== this.props.allInterviews){
+      const { title, date, time, notes, allInterviews } = this.props;
+      this.setState({ title, date, time, notes, allInterviews, });
+      console.log(this.state)
+    }
   }
 
   handleChange(e: any, name: string) {
@@ -84,55 +109,45 @@ class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> 
                 <Form.Group as={Col} controlId="formDate">
                   <Form.Label>Date</Form.Label>
                     <DatePicker
-                      name="date"
-                      className="interviewDate"
-                      selected={this.state.date ? new Date(this.state.date): null}
-                      onChange={(date: Date) => this.handleChange(date, 'date')}
-                      dateFormat="MMMM d, yyyy"
+                      name="time"
+                      className="interviewTime"
+                      selected={this.state.time}
+                      onChange={(time: Date) => this.handleChange(time, 'time')}
+                      showTimeSelect
+                      showTimeSelectOnly
+                      dateFormat="h:mm aa"
+                      timeFormat="h:mm aa"
+                      timeIntervals={15}
                     />
-                </Form.Group>
-                <Form.Group as={Col} controlId="formTime">
-                  <Form.Label>Time</Form.Label>
-                  <DatePicker
-                    name="time"
-                    className="interviewTime"
-                    selected={this.state.time}
-                    onChange={(time: Date) => this.handleChange(time, 'time')}
-                    showTimeSelect
-                    showTimeSelectOnly
-                    dateFormat="h:mm aa"
-                    timeFormat="h:mm aa"
-                    timeIntervals={15}
-                  />
-                </Form.Group>
-              </Form.Row>
-              <Form.Row>
-                <Form.Group as={Col} controlId="formNotes">
-                  <Form.Label>Notes</Form.Label>
-                  <textarea 
-                    className="interviewNotes"
-                    name="notes"
-                    value={this.state.notes ? this.state.notes : ''}
-                    onChange={(e: any) => this.handleChange(e, 'notes')}
-                  ></textarea>
-                </Form.Group>
-              </Form.Row>
-              <Button 
-                className="delete-btn"
-                onClick={() => this.props.deleteInterview(this.props.id)}
-              >Delete</Button>
-              <Button
-                className="save-btn"
-                type="submit"
-                onClick={this.handleSave}
-              >Save</Button>
-            </Form>
-          </Card.Body>
-        </Accordion.Collapse>
-      </Card>
-    </Accordion>
-    </div>
-  )};
+                  </Form.Group>
+                </Form.Row>
+                <Form.Row>
+                  <Form.Group as={Col} controlId="formNotes">
+                    <Form.Label>Notes</Form.Label>
+                    <textarea 
+                      className="interviewNotes"
+                      name="notes"
+                      value={this.state.notes ? this.state.notes : ''}
+                      onChange={(e: any) => this.handleChange(e, 'notes')}
+                    ></textarea>
+                  </Form.Group>
+                </Form.Row>
+                <Button 
+                  className="delete-btn"
+                  onClick={() => this.props.deleteInterview(this.props.id)}
+                >Delete</Button>
+                <Button
+                  className="save-btn"
+                  type="submit"
+                  onClick={this.handleSave}
+                >Save</Button>
+              </Form>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+      </Accordion>
+      </div>
+    )};
 };
 
 export default InterviewCard;

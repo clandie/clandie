@@ -28,6 +28,7 @@ class Contacts extends Component<IContactsProps, IContactsState> {
   }
 
   componentDidMount() {
+    console.log('contacts props', this.props)
     const { jobId } = this.props;
     if (jobId) this.props.getContact(jobId)
   }
@@ -45,12 +46,13 @@ class Contacts extends Component<IContactsProps, IContactsState> {
   }
 
   render() {
-    const {allContacts, updateContact, deleteContact} = this.props;
+    const { updateContact, deleteContact, allContacts} = this.props;
     const contacts =[];
     if (allContacts) {
       for (let i = 0; i < allContacts.length; i++) {
         contacts.push(
           <ContactCard 
+            eventKey={i + 1}
             id={allContacts[i]._id}
             name={allContacts[i].name}
             title={allContacts[i].title}
@@ -59,45 +61,47 @@ class Contacts extends Component<IContactsProps, IContactsState> {
             notes={allContacts[i].notes}
             updateContact={updateContact}
             deleteContact={deleteContact}
+            allContacts={allContacts}
           />
         )
       }
     }
+  
     return (
-    <div className="contactsTab">
-      {contacts}
-      <Accordion>
-        <Card>
-            <Accordion.Toggle as={Card.Header} eventKey="1">
-              +
-            </Accordion.Toggle>
-            <Accordion.Collapse eventKey="1">
-              <Card.Body>
-                <Form>
-                  <Form.Row>
-                    <Form.Group as={Col} controlId="formTitle">
-                      <Form.Label>Name</Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="name"
-                        value={this.state.name}
-                        onChange={this.handleChange}
-                      ></Form.Control>
-                    </Form.Group>
-                  </Form.Row>
-                  <Button
-                    className="save-btn"
-                    type="submit"
-                    onClick={this.handleSave}
-                  >
-                    Save
-                  </Button>
-                </Form>
-              </Card.Body>
-            </Accordion.Collapse>
-          </Card>
-      </Accordion>
-    </div>
+      <div className="contactsTab">
+        <Accordion>
+          {contacts}
+          <Card>
+              <Accordion.Toggle as={Card.Header} eventKey="0">
+                +
+              </Accordion.Toggle>
+              <Accordion.Collapse eventKey="0">
+                <Card.Body>
+                  <Form>
+                    <Form.Row>
+                      <Form.Group as={Col} controlId="formTitle">
+                        <Form.Label>Name</Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="name"
+                          value={this.state.name}
+                          onChange={this.handleChange}
+                        ></Form.Control>
+                      </Form.Group>
+                    </Form.Row>
+                    <Button
+                      className="save-btn"
+                      type="submit"
+                      onClick={this.handleSave}
+                    >
+                      Save
+                    </Button>
+                  </Form>
+                </Card.Body>
+              </Accordion.Collapse>
+            </Card>
+        </Accordion>
+      </div>
     );
   }
 }

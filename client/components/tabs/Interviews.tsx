@@ -82,6 +82,7 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
               date={allInterviews[i].date}
               time={time}
               notes={allInterviews[i].notes}
+              allInterviews={this.props.allInterviews}
               updateInterview={this.props.updateInterview}
               deleteInterview={this.props.deleteInterview}
             ></InterviewCard>
@@ -94,6 +95,7 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
               date={allInterviews[i].date}
               time={time}
               notes={allInterviews[i].notes}
+              allInterviews={this.props.allInterviews}
               updateInterview={this.props.updateInterview}
               deleteInterview={this.props.deleteInterview}
             ></InterviewCard>
