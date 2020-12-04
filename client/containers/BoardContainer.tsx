@@ -14,9 +14,18 @@ import * as interviewActions from '../actions/interviewActions';
 import * as contactActions from '../actions/contactActions';
 import * as columnActions from '../actions/columnActions';
 import * as types from '../constants/types';
+
 import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
 import { CLEAR_COLUMNS, GET_JOB, SET_COLUMNS} from '../constants/actionTypes';
+// import { APP_ACCESS_KEY }from '../../secret'
+// import { createApi }from 'unsplash-js';
+
 import { dailyUnsplash } from '../assets/unsplashUrls';
+
+// Unsplash Api - currently not in use but will need later on
+// const unsplash = createApi({
+//   accessKey: APP_ACCESS_KEY,
+// })
 
 const mapStateToProps = (store: TAppState) => ({
   boardId: store.boards.id,
@@ -187,8 +196,21 @@ class BoardContainer extends Component<BoardProps, BoardState> {
     if (this.props.boardName === null) {
       this.setState({ showBoardModal: true })
     } else {
-      // set daily background image
+      // set daily url
       this.setState({ dailyUnsplash })
+       
+      // unsplash api to fetch collection images - not in use currently but will need later
+      // unsplash.collections.getPhotos({ collectionId: '34177528'})
+      //   .then(res => {
+      //     console.log('res photo', res);
+      //     if (res.response) {
+      //       this.setState({ unsplash: res.response.results });
+      //     }
+      //   })
+      //   .catch(err => {
+      //     console.log('err in unsplash api', err);
+      //   });
+    
     }
   }
 
@@ -307,7 +329,9 @@ class BoardContainer extends Component<BoardProps, BoardState> {
   }
 
   render() {
-    const image = this.state.dailyUnsplash;
+    let image = this.state.dailyUnsplash;
+    
+    // below modals will render based on local state which is determined by user's actions
     return (
       <>
         <BoardModal
