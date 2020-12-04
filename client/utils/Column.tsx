@@ -41,6 +41,7 @@ const Column = (props: IColumnProps) => {
     <div className="column"> 
       {/* <div className="column-header">  */}
         <h1>{title}</h1>
+        <h3>{column.length} Jobs</h3>
         {/* <div className={`${title.toLowerCase()}-img`}></div> */}
       {/* </div> */}
       <Button
