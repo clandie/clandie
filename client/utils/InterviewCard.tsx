@@ -104,19 +104,29 @@ class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> 
                 </Form.Group>
               </Form.Row>
               <Form.Row>
-                <Form.Group as={Col} controlId="formDate">
-                  <Form.Label>Date</Form.Label>
-                    <DatePicker
-                      name="time"
-                      className="interviewTime"
-                      selected={this.state.time}
-                      onChange={(time: Date) => this.handleChange(time, 'time')}
-                      showTimeSelect
-                      showTimeSelectOnly
-                      dateFormat="h:mm aa"
-                      timeFormat="h:mm aa"
-                      timeIntervals={15}
-                    />
+                  <Form.Group as={Col} controlId="formDate">
+                    <Form.Label>Date</Form.Label>
+                      <DatePicker
+                        name="date"
+                        className="interviewDate"
+                        selected={this.state.date ? new Date(this.state.date): null}
+                        onChange={(date: Date) => this.handleChange(date, 'date')}
+                        dateFormat="MMMM d, yyyy"
+                      />
+                  </Form.Group>
+                  <Form.Group as={Col} controlId="formTime">
+                    <Form.Label>Time</Form.Label>
+                      <DatePicker
+                        name="time"
+                        className="interviewTime"
+                        selected={this.state.time}
+                        onChange={(time: Date) => this.handleChange(time, 'time')}
+                        showTimeSelect
+                        showTimeSelectOnly
+                        dateFormat="h:mm aa"
+                        timeFormat="h:mm aa"
+                        timeIntervals={15}
+                      />
                   </Form.Group>
                 </Form.Row>
                 <Form.Row>
