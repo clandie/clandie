@@ -54,19 +54,24 @@ class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> 
   }
 
   render(){
+    const dateOptions = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' };
+    const date = this.props.date ? new Date(this.props.date).toLocaleDateString('en-US', dateOptions) : null;
+
   return (
     <div className="interviewCard">
-    <Accordion defaultActiveKey="0">
+    <Accordion>
       <Card>
-        <Accordion.Toggle as={Card.Header} eventKey="1">
+        <Accordion.Toggle as={Card.Header} eventKey="0">
           {this.props.title}
+          <span id="interviewHeaderDate">{date}</span>
         </Accordion.Toggle>
-        <Accordion.Collapse eventKey="1">
+        <Accordion.Collapse eventKey="0">
           <Card.Body>
             <Form>
               <Form.Row>
                 <Form.Group as={Col} controlId="formTitle">
                   <Form.Label>Title</Form.Label>
+                  <br />
                   <textarea 
                     className="interviewTitle"
                     name="title"
