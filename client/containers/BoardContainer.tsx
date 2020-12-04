@@ -16,6 +16,13 @@ import * as types from '../constants/types';
 
 import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
 import { CLEAR_COLUMNS, GET_JOB, SET_COLUMNS} from '../constants/actionTypes';
+import { APP_ACCESS_KEY }from '../../secret'
+import { createApi }from 'unsplash-js';
+
+// create Unsplash Api
+const unsplash = createApi({
+  accessKey: APP_ACCESS_KEY,
+})
 
 const mapStateToProps = (store: TAppState) => ({
   boardId: store.boards.id,
@@ -145,6 +152,8 @@ interface BoardState {
   selectedJob: types.ISelectedJob | null;
 
   dropdownItems: JSX.Element[] | [];
+  unsplash: any[];
+  unsplashCollection: string;
 }
 
 class BoardContainer extends Component<BoardProps, BoardState> {
@@ -159,6 +168,8 @@ class BoardContainer extends Component<BoardProps, BoardState> {
       currentColumn: { columnName: '', columnOrder: null },
       selectedJob: null,
       dropdownItems: [],
+      unsplash: [],
+      unsplashCollection: 'https://source.unsplash.com/collection/34177528/1200x900',
     };
 
     this.selectBoard = this.selectBoard.bind(this);
@@ -174,7 +185,23 @@ class BoardContainer extends Component<BoardProps, BoardState> {
   // render modal if board name isn't set
   componentDidMount() {
     this.createDropdown();
-    if (this.props.boardName === null) this.setState({ showBoardModal: true });
+    if (this.props.boardName === null) {
+      this.setState({ showBoardModal: true })
+    } else {
+      // unsplash api for background image
+      console.log('mounted api')
+      unsplash.collections.getPhotos({ collectionId: '34177528'})
+        .then(res => {
+          console.log('res photo', res);
+          if (res.response) {
+            this.setState({ unsplash: res.response.results });
+          }
+        })
+        .catch(err => {
+          console.log('err in unsplash api', err);
+        });
+       
+    }
   }
 
   // update drop down menu when users switch boards
@@ -275,6 +302,11 @@ class BoardContainer extends Component<BoardProps, BoardState> {
   }
 
   render() {
+    let image;
+    let index = 4;
+    if (this.state.unsplash[index]) {
+      image = this.state.unsplash[index].urls.raw;
+    }
     // below modals will render based on local state which is determined by user's actions
     return (
       <>
@@ -320,7 +352,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
           updateContact={this.props.updateContact}
           deleteContact={this.props.deleteContact}
         />
-        <div className="boardContainer">
+        <div className="boardContainer" style={{backgroundImage: `url(${image})` }}>
           <div className="boardHeader">
             <div className="board-options">
             <div className="logo"></div>
