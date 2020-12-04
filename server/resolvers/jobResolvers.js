@@ -108,6 +108,26 @@ module.exports = {
     deleteJob: async (parent, { jobID }, { dataSources }) => {
       try {
         const {postgresDB} = dataSources;
+        
+        //deleting interviews
+        const interviewQueryText = `
+          DELETE FROM
+          interviews
+          WHERE jobs_id=$1
+        `;
+        const interviewParams = [jobID];
+        await postgresDB(interviewQueryText, interviewParams);
+
+        //deleting contacts
+        const contactsQueryText =  `
+          DELETE FROM
+          contacts
+          WHERE jobs_id=$1
+        `;
+        const contactsParams = [jobID];
+        await postgresDB(contactsQueryText, contactsParams);
+
+        // deleting job
         const text = `
           DELETE FROM 
           jobs 
