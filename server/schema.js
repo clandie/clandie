@@ -80,8 +80,8 @@ const typeDefs = gql`
     deleteInterview(interviewID: ID!): Interview!
     updateInterview(
       title: String
-      date: String
-      time: String
+      date: Date
+      time: Date
       notes: String
       interviewID: ID!
     ): InterviewResult!
@@ -146,6 +146,7 @@ const typeDefs = gql`
     email: String
     notes: String
     jobs_id: ID!
+    allContacts: [Contact!]
   }
 
   type Interview {

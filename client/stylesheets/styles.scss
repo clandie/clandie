@@ -44,10 +44,12 @@ body,
   background-image: url('../assets/city-blur.jpg');
   background-size: 100%;
   background-repeat: no-repeat;
+  font-size: 12px;
+
 
   .login-box {
-    width: 480px;
-    height: 700px;
+    width: 380px;
+    height: 600px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -58,8 +60,8 @@ body,
 
 
     .full-logo {
-      width: 200px;
-      height: 200px;
+      width: 150px;
+      height: 150px;
       margin-bottom: 20px;
       background-image: url('../assets/full-logo.png');
       background-size: 100%;
@@ -67,8 +69,12 @@ body,
     }
 
     .login-form {
-      width: 370px;
+      width: 300px;
       margin-bottom: 50px;
+
+      #formBasicEmail, #formBasicPassword, #formBasicName {
+        font-size: 12px;
+      }
 
       .login-btn {
         display: flex;
@@ -78,6 +84,7 @@ body,
         .submit-btn {
           background-color: $bright-teal;
           border: 1px solid $bright-teal;
+          font-size: 12px;
         }
 
         .submit-btn:hover {
@@ -95,8 +102,16 @@ body,
 // BOARD
 
 .boardModal {
+  
+  #contained-modal-title-vcenter {
+    font-size: 18px;
+  }
+  #boardName, #createBoard {
+    font-size: 14px;
+  }
   .modal-body {
-    padding: 20px;
+    max-height: 450px;
+    overflow: scroll;
   }
 
   .boardInput {
@@ -104,8 +119,8 @@ body,
   }
 
   .boardCard {
-    height: 200px;
-    width: 200px;
+    height: 100px;
+    width: 150px;
     margin: 20px;
     padding: 20px;
     color: white;
@@ -114,7 +129,7 @@ body,
     border-radius: 8px;
 
     h3 {
-      font-size: 20px;
+      font-size: 16px;
       font-family: 'Oxygen', sans-serif;
     }
   }
@@ -122,9 +137,22 @@ body,
     background-color: white;
     color: $teal;
   }
+
+  .boardCard:focus {
+    background-color: white;
+    color: $teal;
+  }
 }
 
 .createJobModal {
+
+  #contained-modal-title-vcenter {
+    font-size: 18px;
+  }
+
+  #formBasicCompany, #formBasicTitle {
+    font-size: 14px;
+  }
   .modal-content {
     padding: 8px;
 
@@ -140,9 +168,9 @@ body,
       display: flex;
       justify-content: flex-end;
       .save-btn {
-        width: 90px;
+        width: 70px;
         margin: 10px;
-        padding: 10px;
+        font-size: 14px;
       }
     }
   }
@@ -153,11 +181,11 @@ BOARD CONTAINER
 */
 .boardContainer {
   height: 100%;
-  background-color: $beige;
+  // background-color: $beige;
   // background-image: url('../assets/coffee-doodle.png');
   // background-position: 95% 100%;
   background-repeat: no-repeat;
-  // background-image: url('../assets/city-blur.jpg');
+  background-image: url('../assets/mountains.jpg');
   background-size: 100%;
 
   .boardHeader {
@@ -188,18 +216,22 @@ BOARD CONTAINER
 
 
     #dropdown-basic-button {
-      height: 40px;
-      margin-top: 5px;
-      padding-left: 20px;
-      padding-right: 20px;
+      height: 35px;
+      margin-top: 7px;
+      padding: 20px;
+      padding-top: 5px;
       background-color: white;
       color: black;
       border: 1px solid white;
+      font-size: 14px;
     }
     #dropdown-basic-button:hover {
       background-color: $brown;
       border: 1px solid $brown;
       color: white;
+    }
+    .dropdown-item {
+      font-size: 14px;
     }
     #dropItem:focus {
       background-color: $lavender;
@@ -208,12 +240,12 @@ BOARD CONTAINER
     }
 
       .addBoard-btn {
-        margin: 5px;
+        margin: 7px;
         width: 40px;
-        height: 40px;
+        height: 35px;
+        padding-top: 4px;
         background-color: white;
         border: 1px solid white;
-
         color: black;
       }
 
@@ -227,18 +259,19 @@ BOARD CONTAINER
     h3 {
       text-align: center;
       padding: 10px;
-      margin-right: 100px;
+      margin-right: 150px;
       // color: white;
+      font-size: 25px;
     }
 
     .sign-out {
       margin-right: 20px;
-      margin-top: 5px;
       padding-left: 15px;
       padding-right: 15px;
       background-color: rgba(251, 251, 251, 0.1);
       color: black;
       border: none;
+      font-size: 12px;
     }
 
     .sign-out:hover {
@@ -265,12 +298,12 @@ BOARD CONTAINER
       margin: 5px;
 
       h1 {
-        font-size: 25px;
-        margin: 20px;
-        padding: 20px;
+        font-size: 18px;
+        margin: 15px;
+        padding: 10px;
       }
 
-      // column images
+      // column images - currently not in use
       .column-header {
         display: flex;
         flex-direction: row;
@@ -324,14 +357,15 @@ BOARD CONTAINER
         background-color: white;
         border: 1px solid $medium-grey;
         font-weight: 400;
-        font-size: 30px;
+        font-size: 22px;
       }
 
       .jobCard {
         .card {
           margin-top: 12px;
           padding: 10px;
-          padding-bottom: 5px;
+          padding-left: 2px;
+          padding-bottom: 2px;
           border: 1px solid $medium-grey;
           -webkit-box-shadow: 0 10px 6px -6px $medium-grey;
           -moz-box-shadow: 0 10px 6px -6px $medium-grey;
@@ -347,14 +381,14 @@ BOARD CONTAINER
               justify-content: space-between;
              
               .cardCompany {
-                font-size: 22px;
+                font-size: 17px;
                 font-weight: 600;
                 align-self: flex-start;
                 margin-top: -15px;
               }
               .cardLocation {
                 font-weight: 200;
-                font-size: 14px;
+                font-size: 12px;
                 margin-top: -10px;
                 margin-right: -10px;
               }
@@ -362,6 +396,7 @@ BOARD CONTAINER
             
             .cardTitle {
               align-self: flex-start;
+              font-size: 13px;
             }
           }
           
@@ -373,21 +408,33 @@ BOARD CONTAINER
 
 // JOB DETAILS MODAL
 
-.detailsTab {
-  margin: 20px;
 
-  .detailsLocation {
-    height: 40px;
+.detailsTitle {
+  h1 {
+    font-size: 35px;
+  }
+  h4 {
+    font-size: 20px;
+  }
+}
+
+#details-tab-tab-details, #details-tab-tab-interviews, #details-tab-tab-contacts {
+  font-size: 13px;
+}
+
+.detailsTab {
+
+  margin: 20px;
+  font-size: 13px;
+
+  .detailsLocation, .detailsSalary {
+    height: 35px;
     width: 350px;
     padding: 8px;
   }
-  .detailsSalary {
-    height: 40px;
-    width: 350px;
-    padding: 8px;
-  }
+  
   .detailsUrl {
-    height: 40px;
+    height: 35px;
     width: 725px;
     padding: 8px;
   }
@@ -401,9 +448,100 @@ BOARD CONTAINER
     background-color: $dark-lav;
     color: white;
     border: 1px solid $dark-lav;
+    font-size: 13px;
   }
 
   .save-btn {
     float: right;
+    font-size: 13px;
+  }
+}
+
+.interviewsTab {
+  margin: 20px;
+  font-size: 13px;
+
+  .save-btn {
+    float: right;
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+}
+
+.contactsTab {
+  margin: 20px;
+  font-size: 13px;
+
+  .save-btn {
+    float: right;
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+}
+
+.interviewCard {
+
+  margin-bottom: 5px;
+
+  .interviewTitle, .interviewDate, .interviewTime, .interviewNotes {
+    height: 35px;
+    width: 333px;
+    padding: 8px;
+  }
+
+  .interviewNotes {
+    height: 100px;
+    width: 680px;
+    padding: 10px;
+  }
+
+  .delete-btn {
+    background-color: $dark-lav;
+    color: white;
+    border: 1px solid $dark-lav;
+    font-size: 13px;
+  }
+
+  .save-btn {
+    float: right;
+    font-size: 13px;
+  }
+}
+
+.contactCard {
+
+  margin-bottom: 5px;
+
+  #headerTitle {
+    margin-left: 20px;
+    font-style: italic;
+  }
+
+  #headerContact {
+    float: right;
+  }
+
+  .contactName, .contactTitle, .contactPhone, .contactEmail {
+    height: 35px;
+    width: 333px;
+    padding: 8px;
+  }
+
+  .contactNotes {
+    height: 100px;
+    width: 680px;
+    padding: 10px;
+  }
+
+  .delete-btn {
+    background-color: $dark-lav;
+    color: white;
+    border: 1px solid $dark-lav;
+    font-size: 13px;
+  }
+
+  .save-btn {
+    float: right;
+    font-size: 13px;
   }
 }

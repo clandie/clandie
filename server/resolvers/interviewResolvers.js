@@ -30,7 +30,6 @@ module.exports = {
         const text = `SELECT * FROM interviews WHERE jobs_id=$1`;
         const params = [jobs_id];
         const interviews = await postgresDB(text, params);
-        console.log('ALLINTERVIEWS: ', interviews);
         return interviews.rows;
       } catch (err) {
         console.log(
@@ -93,18 +92,18 @@ module.exports = {
       try {
         const {postgresDB} = dataSources;
         if (title === '') throw new UserInputError();
-
+        
         const text = `
-          UPDATE interviews
-          SET title=$1, date=$2, time=$3, notes=$4
-          WHERE _id=$5
-          RETURNING *
+        UPDATE interviews
+        SET title=$1, date=$2, time=$3, notes=$4
+        WHERE _id=$5
+        RETURNING *
         `;
-
+        
         date = date === '' ? null : date;
         time = time === '' ? null : time;
-        const params = [title, date, time, notes, interviewID];
-
+        const params = [title, date, new Date(time).toLocaleTimeString(), notes, interviewID];
+        
         const updatedInterview = await postgresDB(text, params);
         return updatedInterview.rows[0];
       } catch (err) {

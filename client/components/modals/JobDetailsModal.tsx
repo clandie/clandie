@@ -3,7 +3,8 @@ import { Tab, Tabs, Modal } from 'react-bootstrap';
 import Details from '../tabs/Details';
 import Interviews from '../tabs/Interviews';
 import Contacts from '../tabs/Contacts';
-import { IDetails, ISelectedJob} from '../../constants/types';
+import { IDetails, ISelectedJob, IInterviews, IContactInfo} from '../../constants/types';
+import { ContactState } from '../../constants/stateTypes';
 
 interface IDetailsModalProps {
   show: boolean;
@@ -14,6 +15,8 @@ interface IDetailsModalProps {
   deleteJob: (jobId: number, boardId: number) => void;
   getInterview: (jobId: number) => void;
   createInterview: (title: string, jobId: number) => void;
+  updateInterview: (interviewObj: IInterviews | undefined) => void;
+  deleteInterview: (interviewId: number) => void;
   allInterviews: | {
     _id: number;
     title: string;
@@ -22,6 +25,11 @@ interface IDetailsModalProps {
     notes: string;
   }[]
 | null;
+  createContact: (name: string, jobID: number) => void;
+  allContacts: ContactState['contacts'];
+  getContact: (jobID: number) => void;
+  updateContact: (contactInfo: IContactInfo) => void;
+  deleteContact: (contactID: number) => void;
 }
 
 class JobDetailsModal extends Component<IDetailsModalProps> {
@@ -71,11 +79,20 @@ class JobDetailsModal extends Component<IDetailsModalProps> {
                 allInterviews={this.props.allInterviews}
                 getInterview={this.props.getInterview}
                 createInterview={this.props.createInterview}
+                updateInterview={this.props.updateInterview}
+                deleteInterview={this.props.deleteInterview}
                 jobId={jobId}
               />
             </Tab>
             <Tab eventKey="contacts" title="Contacts">
-              <Contacts />
+              <Contacts 
+                getContact={this.props.getContact}
+                allContacts={this.props.allContacts}
+                createContact={this.props.createContact}
+                updateContact={this.props.updateContact}
+                deleteContact={this.props.deleteContact}
+                jobId={jobId}
+              />
             </Tab>
           </Tabs>
         </Modal.Body>

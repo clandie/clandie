@@ -60,6 +60,7 @@ class CreateBoardModal extends Component<IModalProps, IModalState> {
           <Modal.Body>
             <InputGroup className="boardInput">
               <FormControl
+                id="boardName"
                 placeholder="Board Name"
                 aria-label="Board Name"
                 aria-describedby="basic-addon2"
@@ -67,6 +68,7 @@ class CreateBoardModal extends Component<IModalProps, IModalState> {
               />
               <InputGroup.Append>
                 <Button
+                  id="createBoard"
                   variant="outline-secondary"
                   type="submit"
                   onClick={this.handleSubmit}

@@ -7,7 +7,7 @@ import path from 'path';
 import { ApolloServer } from 'apollo-server-express';
 require('dotenv').config();
 // import cors from 'cors';
-const PORT = 3000;
+const PORT = process.env.PORT;
 
 const app = express();
 
@@ -16,8 +16,8 @@ import schema from './schema';
 import userResolvers, { User, UserResult } from './resolvers/userResolvers';
 import boardResolvers, { Board, BoardResult } from './resolvers/boardResolvers';
 import jobResolvers, { Job, JobResult } from './resolvers/jobResolvers';
-import Interview, { InterviewResult } from './resolvers/interviewResolvers';
-import Contact, { ContactResult } from './resolvers/contactResolvers';
+import interviewResolvers, { Interview, InterviewResult } from './resolvers/interviewResolvers';
+import contactResolvers, { Contact, ContactResult } from './resolvers/contactResolvers';
 import dbModel from './datasources/postgresConnection';
 import db from './datasources/postgresDB';
 
@@ -46,19 +46,21 @@ const startApolloServer = async () => {
         ...userResolvers.Query,
         ...boardResolvers.Query,
         ...jobResolvers.Query,
-        ...Interview.Query,
-        ...Contact.Query,
+        ...interviewResolvers.Query,
+        ...contactResolvers.Query,
       },
       Mutation: {
         ...userResolvers.Mutation,
         ...boardResolvers.Mutation,
         ...jobResolvers.Mutation,
-        ...Interview.Mutation,
-        ...Contact.Mutation,
+        ...interviewResolvers.Mutation,
+        ...contactResolvers.Mutation,
       },
       User,
       Board,
       Job,
+      Interview,
+      Contact,
       UserResult,
       BoardResult,
       JobResult,

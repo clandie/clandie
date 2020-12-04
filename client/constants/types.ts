@@ -45,11 +45,11 @@ export interface IDetails {
 }
 
 export interface IInterviews {
-  title: String;
-  date: Date;
-  time: Date;
-  notes: String;
-  jobs_id: Number;
+  _id: number;
+  title?: string;
+  date?: Date | null;
+  time?: Date | null;
+  notes?: string | null;
 }
 
 export interface IJobs {
@@ -83,4 +83,13 @@ export interface ISelectedJob {
         notes: string;
       }[]
     | null;
+}
+
+export interface IContactInfo {
+  name?: string, 
+  title?: string | null, 
+  phone?: string | null, 
+  email?: string | null, 
+  notes?: string | null, 
+  contactID: number
 }

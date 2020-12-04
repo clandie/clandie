@@ -4,7 +4,7 @@
 export interface UserState {
   id: number | null;
   name: string;
-  authorized: boolean;
+  authorized: boolean | null | string;
 }
 
 // board reducer state
@@ -28,6 +28,18 @@ export interface InterviewState {
     time: Date;
     notes: string
   }[] | null;
+}
+
+export interface ContactState {
+  contacts: {
+    _id: number;
+    name: string;
+    title: string | null;
+    phone: string | null;
+    email: string | null;
+    notes: string | null;
+    jobID: number;
+  }[] | [];
 }
 
 // column reducer state
