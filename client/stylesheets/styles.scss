@@ -482,6 +482,12 @@ BOARD CONTAINER
 .interviewCard {
 
   margin-bottom: 5px;
+  
+  #interviewHeaderDate {
+    float: right;
+    font-style: italic;
+  }
+
 
   .interviewTitle, .interviewDate, .interviewTime, .interviewNotes {
     height: 35px;

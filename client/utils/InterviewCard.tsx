@@ -79,40 +79,35 @@ class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> 
   }
 
   render(){
-    return (
-      <div className="interviewCard">
-      <Accordion defaultActiveKey="0">
-        <Card>
-          <Accordion.Toggle as={Card.Header} eventKey="1">
-            {this.props.title}
-          </Accordion.Toggle>
-          <Accordion.Collapse eventKey="1">
-            <Card.Body>
-              <Form>
-                <Form.Row>
-                  <Form.Group as={Col} controlId="formTitle">
-                    <Form.Label>Title</Form.Label>
-                    <textarea 
-                      className="interviewTitle"
-                      name="title"
-                      value={this.state.title ? this.state.title : ''}
-                      onChange={(e: any) => this.handleChange(e, 'title')}
-                    ></textarea>
-                  </Form.Group>
-                </Form.Row>
-                <Form.Row>
-                  <Form.Group as={Col} controlId="formDate">
-                    <Form.Label>Date</Form.Label>
-                      <DatePicker
-                        name="date"
-                        className="interviewDate"
-                        selected={this.state.date ? new Date(this.state.date): null}
-                        onChange={(date: Date) => this.handleChange(date, 'date')}
-                        dateFormat="MMMM d, yyyy"
-                      />
-                  </Form.Group>
-                  <Form.Group as={Col} controlId="formTime">
-                    <Form.Label>Time</Form.Label>
+    const dateOptions = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' };
+    const date = this.props.date ? new Date(this.props.date).toLocaleDateString('en-US', dateOptions) : null;
+
+  return (
+    <div className="interviewCard">
+    <Accordion>
+      <Card>
+        <Accordion.Toggle as={Card.Header} eventKey="0">
+          {this.props.title}
+          <span id="interviewHeaderDate">{date}</span>
+        </Accordion.Toggle>
+        <Accordion.Collapse eventKey="0">
+          <Card.Body>
+            <Form>
+              <Form.Row>
+                <Form.Group as={Col} controlId="formTitle">
+                  <Form.Label>Title</Form.Label>
+                  <br />
+                  <textarea 
+                    className="interviewTitle"
+                    name="title"
+                    value={this.state.title ? this.state.title : ''}
+                    onChange={(e: any) => this.handleChange(e, 'title')}
+                  ></textarea>
+                </Form.Group>
+              </Form.Row>
+              <Form.Row>
+                <Form.Group as={Col} controlId="formDate">
+                  <Form.Label>Date</Form.Label>
                     <DatePicker
                       name="time"
                       className="interviewTime"
