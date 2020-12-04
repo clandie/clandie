@@ -42,10 +42,10 @@ const mapDispatchToProps = (dispatch: any) => ({
     console.log('dispatched clear board');
     dispatch(actions.clearBoard());
   },
-  deleteBoard: (boardId: number) => {
-    console.log('dispatched delete board');
-    dispatch(actions.deleteBoard(boardId));
-  },
+  // deleteBoard: (boardId: number) => {
+  //   console.log('dispatched delete board');
+  //   dispatch(actions.deleteBoard(boardId));
+  // },
   clearUserInfo: () => {
     console.log('dispatched clear info');
     dispatch(userActions.clearUserInfo());
@@ -263,9 +263,9 @@ class BoardContainer extends Component<BoardProps, BoardState> {
               onClick={() => this.selectBoard(boards[i]._id, boards[i].name)}
             >
               {boards[i].name}
-              <Button
+              {/* <Button
                 onClick={() => this.props.deleteBoard(boards[i]._id)}
-              >Delete</Button>
+              >Delete</Button> */}
             </Dropdown.Item>
           );
         }
