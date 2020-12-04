@@ -5,6 +5,7 @@ import BoardModal from '../components/modals/BoardModal';
 import CreateJobModal from '../components/modals/CreateJobModal';
 import CreateBoardModal from '../components/modals/CreateBoardModal';
 import JobDetailsModal from '../components/modals/JobDetailsModal';
+import DeleteBoardModal from '../components/modals/DeleteBoardModal';
 import { TAppState } from '../store';
 import * as actions from '../actions/boardActions';
 import * as userActions from '../actions/userActions';
@@ -42,10 +43,10 @@ const mapDispatchToProps = (dispatch: any) => ({
     console.log('dispatched clear board');
     dispatch(actions.clearBoard());
   },
-  // deleteBoard: (boardId: number) => {
-  //   console.log('dispatched delete board');
-  //   dispatch(actions.deleteBoard(boardId));
-  // },
+  deleteBoard: (boardId: number) => {
+    console.log('dispatched delete board');
+    dispatch(actions.deleteBoard(boardId));
+  },
   clearUserInfo: () => {
     console.log('dispatched clear info');
     dispatch(userActions.clearUserInfo());
@@ -141,9 +142,12 @@ interface BoardState {
   showJobModal: boolean;
   showCreateBoard: boolean;
   showDetailsModal: boolean;
+  showDeleteBoardModal: boolean;
   currentColumn: { columnName: string; columnOrder: number | null };
   selectedJob: types.ISelectedJob | null;
   dropdownItems: JSX.Element[] | [];
+  boardToDeleteId: number | null,
+  boardToDeleteName: string | null,
   dailyUnsplash: string;
 }
 
@@ -156,9 +160,12 @@ class BoardContainer extends Component<BoardProps, BoardState> {
       showJobModal: false,
       showCreateBoard: false,
       showDetailsModal: false,
+      showDeleteBoardModal: false,
       currentColumn: { columnName: '', columnOrder: null },
       selectedJob: null,
       dropdownItems: [],
+      boardToDeleteId: null,
+      boardToDeleteName: null,
       dailyUnsplash: '',
     };
 
@@ -170,6 +177,8 @@ class BoardContainer extends Component<BoardProps, BoardState> {
     this.createDropdown = this.createDropdown.bind(this);
     this.renderCreateBoard = this.renderCreateBoard.bind(this);
     this.renderDetailsModal = this.renderDetailsModal.bind(this);
+    this.renderDeleteBoardModal = this.renderDeleteBoardModal.bind(this);
+    this.selectBoardToDelete = this.selectBoardToDelete.bind(this);
   }
 
   // render modal if board name isn't set
@@ -185,7 +194,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
 
   // update drop down menu when users switch boards
   componentDidUpdate(prevProps: any) {
-    if (prevProps.boardName !== this.props.boardName) {
+    if (prevProps.boardName !== this.props.boardName || prevProps.boards !== this.props.boards) {
       this.createDropdown();
     }
   }
@@ -212,6 +221,18 @@ class BoardContainer extends Component<BoardProps, BoardState> {
     this.setState({ showBoardModal: false, showCreateBoard: false });
   }
 
+  renderDeleteBoardModal(){
+    this.setState({showDeleteBoardModal: true});
+  }
+
+  selectBoardToDelete(boardId: number, name: string){
+    this.setState({
+      boardToDeleteId: boardId,
+      boardToDeleteName: name,
+    });
+    this.renderDeleteBoardModal();
+  }
+
   // reset state
   handleSignout() {
     this.props.clearUserInfo();
@@ -235,6 +256,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
       showJobModal: false,
       showCreateBoard: false,
       showDetailsModal: false,
+      showDeleteBoardModal: false,
       currentColumn: { columnName: '', columnOrder: null },
     });
   }
@@ -269,9 +291,13 @@ class BoardContainer extends Component<BoardProps, BoardState> {
               onClick={() => this.selectBoard(boards[i]._id, boards[i].name)}
             >
               {boards[i].name}
-              {/* <Button
-                onClick={() => this.props.deleteBoard(boards[i]._id)}
-              >Delete</Button> */}
+              <Button
+                onClick={(e: any) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  this.selectBoardToDelete(boards[i]._id, boards[i].name);
+                }}
+              >Delete</Button>
             </Dropdown.Item>
           );
         }
@@ -325,6 +351,13 @@ class BoardContainer extends Component<BoardProps, BoardState> {
           getContact={this.props.getContact}
           updateContact={this.props.updateContact}
           deleteContact={this.props.deleteContact}
+        />
+        <DeleteBoardModal
+          show={this.state.showDeleteBoardModal}
+          close={this.handleClose}
+          boardId={this.state.boardToDeleteId}
+          name={this.state.boardToDeleteName}
+          deleteBoard={this.props.deleteBoard}
         />
         <div className="boardContainer" style={{backgroundImage: `url(${image})` }}>
           <div className="boardHeader">

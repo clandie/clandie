@@ -98,8 +98,10 @@ module.exports = {
         const boardText = 'SELECT * FROM jobs WHERE boards_id=$1';
         const boardParams = [boardID];
         const jobs = await postgresDB(boardText, boardParams);
-        for(let i = 0; i < jobs.length; i++){
-          await deleteJob({}, {jobID: jobs[i]._id}, { dataSources, });
+        console.log('all jobs to be deleted: ', jobs.rows)
+        const toDelete = jobs.rows;
+        for(let i = 0; i < toDelete.length; i++){
+          await deleteJob({}, {jobID: toDelete[i]._id}, { dataSources, });
         }
 
         // deleting board
