@@ -299,8 +299,13 @@ BOARD CONTAINER
 
       h1 {
         font-size: 18px;
-        margin: 15px;
+        margin: 15px, 15px, 15px;
         padding: 10px;
+      }
+      
+      h3 {
+        font-size: 13px;
+        padding-bottom: 10px;
       }
 
       // column images - currently not in use
