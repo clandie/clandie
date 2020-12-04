@@ -12,6 +12,13 @@ interface IInterviewCardProps {
   date: Date |null;
   time: Date | null;
   notes: string | null;
+  allInterviews: {
+    _id: number;
+    title?: string;
+    date?: Date;
+    time?: Date;
+    notes?: string;
+  }[] | null;
   updateInterview: (interviewObj: IInterviews) => void;
   deleteInterview: (interviewId: number) => void;
 }
@@ -21,6 +28,13 @@ interface IInterviewCardState {
   date?: Date |null;
   time?: Date | null;
   notes?: string | null;
+  allInterviews?: {
+    _id: number;
+    title?: string;
+    date?: Date;
+    time?: Date;
+    notes?: string;
+  }[] | null;
 }
 
 class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> {
@@ -31,6 +45,7 @@ class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> 
       date: null,
       time: null,
       notes: '',
+      allInterviews: [],
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSave = this.handleSave.bind(this);
@@ -39,6 +54,13 @@ class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> 
   componentDidMount(){
     const { title, date, time, notes } = this.props;
     this.setState({title, date, time, notes});
+  }
+
+  componentDidUpdate(){
+    if(this.state.allInterviews !== this.props.allInterviews){
+      const { title, date, time, notes, allInterviews } = this.props;
+      this.setState({ title, date, time, notes, allInterviews, });
+    }
   }
 
   handleChange(e: any, name: string) {
