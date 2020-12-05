@@ -27,13 +27,20 @@ $beige: #ece2d6;
 html,
 body,
 #root,
-.app {
+.app, {
   // margin: 0;
   height: 100%;
   width: 100%;
   font-family: 'Oxygen', sans-serif;
   letter-spacing: 1px;
 }
+
+// @media screen and (max-width: 600px) {
+//   .board {
+//     display: flex;
+//     flex-direction: column;
+//   }
+// }
 
 .login-container {
   display: flex;
@@ -284,13 +291,20 @@ BOARD CONTAINER
     flex-direction: row;
     justify-content: space-evenly;
 
+    @media screen and (max-width: 1200px) {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
 
     /* COLUMNS */
     .column {
       padding: 20px;
       background-color: rgba(251, 251, 251, 0.9);
       align-self: flex-start;
-      width: 50%;
+      min-width: 370px;
+      // width: 50%;
       text-align: center;
       border: 1px solid $grey;
       border-radius: 8px;
