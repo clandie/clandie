@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Board from '../utils/Board';
 import { connect } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import BoardModal from '../components/modals/BoardModal';
 import CreateJobModal from '../components/modals/CreateJobModal';
 import CreateBoardModal from '../components/modals/CreateBoardModal';
@@ -313,13 +315,24 @@ class BoardContainer extends Component<BoardProps, BoardState> {
               onClick={() => this.selectBoard(boards[i]._id, boards[i].name)}
             >
               {boards[i].name}
-              <Button
+              {/* <div className="delete-btn"
                 onClick={(e: any) => {
                   e.preventDefault();
                   e.stopPropagation();
                   this.selectBoardToDelete(boards[i]._id, boards[i].name);
                 }}
-              >Delete</Button>
+              > */}
+                <FontAwesomeIcon 
+                  className="delete-btn"
+                  onClick={(e: any) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.selectBoardToDelete(boards[i]._id, boards[i].name);
+                  }}
+                  icon={faTrashAlt}
+                  size="1x"
+                />
+              {/* </div> */}
             </Dropdown.Item>
           );
         }
