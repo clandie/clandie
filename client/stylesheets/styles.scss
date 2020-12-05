@@ -28,7 +28,6 @@ html,
 body,
 #root,
 .app {
-  // margin: 0;
   height: 100%;
   width: 100%;
   font-family: 'Oxygen', sans-serif;
@@ -176,17 +175,49 @@ body,
   }
 }
 
+.deleteBoardModal {
+  .modal-body{
+    
+
+    .modal-btns{
+      padding-top: 20px;
+
+      .delete-btn {
+        float: right;
+        background-color: $dark-lav;
+        color: white;
+        border: 1px solid $dark-lav;
+        font-size: 13px;
+        width: 147px;
+      }
+    
+      .cancel-btn {
+        font-size: 13px;
+        width: 70px;
+      }
+    }
+  }
+}
+
 /*
 BOARD CONTAINER
 */
 .boardContainer {
   height: 100%;
   // background-color: $beige;
-  // background-image: url('../assets/coffee-doodle.png');
-  // background-position: 95% 100%;
   background-repeat: no-repeat;
-  background-image: url('../assets/mountains.jpg');
+  background-position: center center;
+  // background-image: url('../assets/mountains.jpg');
   background-size: 100%;
+
+  @media screen and (max-width: 1200px) {
+    background-attachment: fixed;
+    background-position: center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+  }
 
   .boardHeader {
     display: flex;
@@ -195,8 +226,6 @@ BOARD CONTAINER
     align-items: center;
     height: 60px;
     background-color: rgba(251, 251, 251, 0.3);
-
-   
 
     .board-options {
       display: flex;
@@ -212,8 +241,13 @@ BOARD CONTAINER
         background-repeat: no-repeat;
         margin-left: 5px;
         margin-top: 5px;
-      }
 
+        @media screen and (max-width: 600px) {
+            width: 40px;
+            height: 40px;
+            background-size: 60%;
+        }
+      }
 
     #dropdown-basic-button {
       height: 35px;
@@ -224,6 +258,16 @@ BOARD CONTAINER
       color: black;
       border: 1px solid white;
       font-size: 14px;
+
+
+      @media screen and (max-width: 600px) {
+        height: 20px;
+        margin-top: 4px;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 3px;
+        font-size: 11px;
+      }
     }
     #dropdown-basic-button:hover {
       background-color: $brown;
@@ -232,6 +276,18 @@ BOARD CONTAINER
     }
     .dropdown-item {
       font-size: 14px;
+      // width: fit-content;
+
+      .delete-btn {
+        float: right;
+        color: $dark-lav;
+        margin-top: 4px;
+      }
+
+      .delete-btn:hover {
+        color: white;
+        background-color: $dark-lav;
+      }
     }
     #dropItem:focus {
       background-color: $lavender;
@@ -247,6 +303,16 @@ BOARD CONTAINER
         background-color: white;
         border: 1px solid white;
         color: black;
+
+        @media screen and (max-width: 600px) {
+          margin: 4px;
+          width: 15px;
+          height: 10px;
+          padding-bottom: 23px;
+          padding-right: 22px;
+          padding-top: 0px;
+        }
+
       }
 
       .addBoard-btn:hover {
@@ -260,8 +326,13 @@ BOARD CONTAINER
       text-align: center;
       padding: 10px;
       margin-right: 150px;
-      // color: white;
       font-size: 25px;
+
+      @media screen and (max-width: 600px) {
+        font-size: 18px;
+        margin-top: 10px;
+        margin-right: 60px;
+      }
     }
 
     .sign-out {
@@ -272,6 +343,14 @@ BOARD CONTAINER
       color: black;
       border: none;
       font-size: 12px;
+
+      @media screen and (max-width: 600px) {
+        font-size: 10px;
+        width: 15%;
+        padding-left: 10px;
+        padding-right: 10px;
+
+      }
     }
 
     .sign-out:hover {
@@ -284,6 +363,13 @@ BOARD CONTAINER
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    // height: 100%;
+
+    @media screen and (max-width: 1200px) {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
 
 
     /* COLUMNS */
@@ -292,15 +378,26 @@ BOARD CONTAINER
       background-color: rgba(251, 251, 251, 0.9);
       align-self: flex-start;
       width: 50%;
+      min-width: 270px;
       text-align: center;
       border: 1px solid $grey;
       border-radius: 8px;
       margin: 5px;
 
+      @media screen and (max-width: 800px) {
+        min-width: 400px;
+      }
+
+
       h1 {
         font-size: 18px;
-        margin: 15px;
+        margin: 15px, 15px, 15px;
         padding: 10px;
+      }
+      
+      h3 {
+        font-size: 13px;
+        padding-bottom: 10px;
       }
 
       // column images - currently not in use
@@ -482,6 +579,11 @@ BOARD CONTAINER
 .interviewCard {
 
   margin-bottom: 5px;
+  
+  #interviewHeaderDate {
+    float: right;
+    font-style: italic;
+  }
 
   .interviewTitle, .interviewDate, .interviewTime, .interviewNotes {
     height: 35px;
@@ -490,7 +592,7 @@ BOARD CONTAINER
   }
 
   .interviewNotes {
-    height: 100px;
+    height: 150px;
     width: 680px;
     padding: 10px;
   }

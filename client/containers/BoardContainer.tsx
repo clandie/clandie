@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import Board from '../utils/Board';
 import { connect } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import BoardModal from '../components/modals/BoardModal';
 import CreateJobModal from '../components/modals/CreateJobModal';
 import CreateBoardModal from '../components/modals/CreateBoardModal';
 import JobDetailsModal from '../components/modals/JobDetailsModal';
+import DeleteBoardModal from '../components/modals/DeleteBoardModal';
 import { TAppState } from '../store';
 import * as actions from '../actions/boardActions';
 import * as userActions from '../actions/userActions';
@@ -16,6 +19,15 @@ import * as types from '../constants/types';
 
 import { Button, Dropdown, DropdownButton } from 'react-bootstrap';
 import { CLEAR_COLUMNS, GET_JOB, SET_COLUMNS} from '../constants/actionTypes';
+// import { APP_ACCESS_KEY }from '../../secret'
+// import { createApi }from 'unsplash-js';
+
+import { dailyUnsplash } from '../assets/unsplashUrls';
+
+// Unsplash Api - currently not in use but will need later on
+// const unsplash = createApi({
+//   accessKey: APP_ACCESS_KEY,
+// })
 
 const mapStateToProps = (store: TAppState) => ({
   boardId: store.boards.id,
@@ -42,10 +54,10 @@ const mapDispatchToProps = (dispatch: any) => ({
     console.log('dispatched clear board');
     dispatch(actions.clearBoard());
   },
-  // deleteBoard: (boardId: number) => {
-  //   console.log('dispatched delete board');
-  //   dispatch(actions.deleteBoard(boardId));
-  // },
+  deleteBoard: (boardId: number) => {
+    console.log('dispatched delete board');
+    dispatch(actions.deleteBoard(boardId));
+  },
   clearUserInfo: () => {
     console.log('dispatched clear info');
     dispatch(userActions.clearUserInfo());
@@ -141,10 +153,13 @@ interface BoardState {
   showJobModal: boolean;
   showCreateBoard: boolean;
   showDetailsModal: boolean;
+  showDeleteBoardModal: boolean;
   currentColumn: { columnName: string; columnOrder: number | null };
   selectedJob: types.ISelectedJob | null;
-
   dropdownItems: JSX.Element[] | [];
+  boardToDeleteId: number | null,
+  boardToDeleteName: string | null,
+  dailyUnsplash: string;
 }
 
 class BoardContainer extends Component<BoardProps, BoardState> {
@@ -156,9 +171,13 @@ class BoardContainer extends Component<BoardProps, BoardState> {
       showJobModal: false,
       showCreateBoard: false,
       showDetailsModal: false,
+      showDeleteBoardModal: false,
       currentColumn: { columnName: '', columnOrder: null },
       selectedJob: null,
       dropdownItems: [],
+      boardToDeleteId: null,
+      boardToDeleteName: null,
+      dailyUnsplash: '',
     };
 
     this.selectBoard = this.selectBoard.bind(this);
@@ -169,17 +188,37 @@ class BoardContainer extends Component<BoardProps, BoardState> {
     this.createDropdown = this.createDropdown.bind(this);
     this.renderCreateBoard = this.renderCreateBoard.bind(this);
     this.renderDetailsModal = this.renderDetailsModal.bind(this);
+    this.renderDeleteBoardModal = this.renderDeleteBoardModal.bind(this);
+    this.selectBoardToDelete = this.selectBoardToDelete.bind(this);
   }
 
   // render modal if board name isn't set
   componentDidMount() {
     this.createDropdown();
-    if (this.props.boardName === null) this.setState({ showBoardModal: true });
+    if (this.props.boardName === null) {
+      this.setState({ showBoardModal: true })
+    } else {
+      // set daily url
+      this.setState({ dailyUnsplash })
+       
+      // unsplash api to fetch collection images - not in use currently but will need later
+      // unsplash.collections.getPhotos({ collectionId: '34177528'})
+      //   .then(res => {
+      //     console.log('res photo', res);
+      //     if (res.response) {
+      //       this.setState({ unsplash: res.response.results });
+      //     }
+      //   })
+      //   .catch(err => {
+      //     console.log('err in unsplash api', err);
+      //   });
+    
+    }
   }
 
   // update drop down menu when users switch boards
   componentDidUpdate(prevProps: any) {
-    if (prevProps.boardName !== this.props.boardName) {
+    if (prevProps.boardName !== this.props.boardName || prevProps.boards !== this.props.boards) {
       this.createDropdown();
     }
   }
@@ -206,6 +245,18 @@ class BoardContainer extends Component<BoardProps, BoardState> {
     this.setState({ showBoardModal: false, showCreateBoard: false });
   }
 
+  renderDeleteBoardModal(){
+    this.setState({showDeleteBoardModal: true});
+  }
+
+  selectBoardToDelete(boardId: number, name: string){
+    this.setState({
+      boardToDeleteId: boardId,
+      boardToDeleteName: name,
+    });
+    this.renderDeleteBoardModal();
+  }
+
   // reset state
   handleSignout() {
     this.props.clearUserInfo();
@@ -229,6 +280,7 @@ class BoardContainer extends Component<BoardProps, BoardState> {
       showJobModal: false,
       showCreateBoard: false,
       showDetailsModal: false,
+      showDeleteBoardModal: false,
       currentColumn: { columnName: '', columnOrder: null },
     });
   }
@@ -263,9 +315,24 @@ class BoardContainer extends Component<BoardProps, BoardState> {
               onClick={() => this.selectBoard(boards[i]._id, boards[i].name)}
             >
               {boards[i].name}
-              {/* <Button
-                onClick={() => this.props.deleteBoard(boards[i]._id)}
-              >Delete</Button> */}
+              {/* <div className="delete-btn"
+                onClick={(e: any) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  this.selectBoardToDelete(boards[i]._id, boards[i].name);
+                }}
+              > */}
+                <FontAwesomeIcon 
+                  className="delete-btn"
+                  onClick={(e: any) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.selectBoardToDelete(boards[i]._id, boards[i].name);
+                  }}
+                  icon={faTrashAlt}
+                  size="1x"
+                />
+              {/* </div> */}
             </Dropdown.Item>
           );
         }
@@ -275,6 +342,8 @@ class BoardContainer extends Component<BoardProps, BoardState> {
   }
 
   render() {
+    let image = this.state.dailyUnsplash;
+    
     // below modals will render based on local state which is determined by user's actions
     return (
       <>
@@ -320,7 +389,14 @@ class BoardContainer extends Component<BoardProps, BoardState> {
           updateContact={this.props.updateContact}
           deleteContact={this.props.deleteContact}
         />
-        <div className="boardContainer">
+        <DeleteBoardModal
+          show={this.state.showDeleteBoardModal}
+          close={this.handleClose}
+          boardId={this.state.boardToDeleteId}
+          name={this.state.boardToDeleteName}
+          deleteBoard={this.props.deleteBoard}
+        />
+        <div className="boardContainer" style={{backgroundImage: `url(${image})` }}>
           <div className="boardHeader">
             <div className="board-options">
             <div className="logo"></div>

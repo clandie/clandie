@@ -81,7 +81,7 @@ class Details extends Component<IDetailProps, IDetailState> {
             </Form.Group>
             <Form.Group as={Col} controlId="formSalary">
               <Form.Label>Salary</Form.Label>
-              <textarea className="detailsSalary" onChange={this.handleChange} name="salary" value={this.state.salary ? this.state.salary : ''}></textarea>
+              <textarea className="detailsSalary" onChange={this.handleChange} name="salary" value={`$ ${this.state.salary ? this.state.salary : ''}`}></textarea>
             </Form.Group>
           </Form.Row>
           <Form.Group controlId="formUrl">

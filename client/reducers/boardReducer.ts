@@ -8,6 +8,7 @@ import {
   SET_BOARD,
   GET_BOARD,
   CLEAR_BOARD,
+  DELETE_BOARD
 } from '../constants/actionTypes';
 
 const initialState: BoardState = {
@@ -41,6 +42,13 @@ const boardReducer = (state = initialState, action: BoardActionTypes) => {
         name: null,
         boards: [],
       };
+
+    case DELETE_BOARD:
+      return {
+        ...state,
+        boards: action.payload,
+      }
+
     default:
       return state;
   }

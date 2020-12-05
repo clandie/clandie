@@ -3,7 +3,7 @@ import {
   SET_BOARD,
   GET_BOARD,
   CLEAR_BOARD,
-  // DELETE_BOARD,
+  DELETE_BOARD,
   GET_JOB,
 } from '../constants/actionTypes';
 import { AppThunk } from '../store';
@@ -101,31 +101,33 @@ export const getBoard = (userId: number): AppThunk => async (dispatch) => {
     });
 };
 
-// export const deleteBoard = (boardId: number): AppThunk => async (dispatch) => {
-//   const query = `
-//     mutation DeleteBoard($boardId: ID!) {
-//       deleteBoard(boardID: $boardId){
-//         _id
-//         name
-//       }
-//     }
-//   `;
+export const deleteBoard = (boardId: number): AppThunk => async (dispatch) => {
+  const query = `
+    mutation DeleteBoard($boardId: ID!) {
+      deleteBoard(boardID: $boardId){
+        userBoards {
+          _id
+          name
+        }
+      }
+    }
+  `;
 
-//   fetch('/graphql', {
-//     method: 'POST',
-//     body: JSON.stringify({ query, variables: {boardId}}),
-//     headers: {'Content-Type': 'application/json', Accept: 'application/json'},
-//   })
-//     .then((res) => res.json())
-//     .then((deletedBoard) => {
-//       console.log('DELETED BOARD FROM ACTION', deletedBoard)
-//       dispatch({
-//         type: DELETE_BOARD, 
-//         payload: deletedBoard.data,
-//       });
-//       dispatch({
-//         type: GET_BOARD,
-//         payload: deletedBoard.data
-//       })
-//     })
-// }
+  fetch('/graphql', {
+    method: 'POST',
+    body: JSON.stringify({ query, variables: {boardId}}),
+    headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+  })
+    .then((res) => res.json())
+    .then((deletedBoard) => {
+      console.log('DELETED BOARD FROM ACTION', deletedBoard)
+      dispatch({
+        type: DELETE_BOARD, 
+        payload: deletedBoard.data.deleteBoard.userBoards,
+      });
+      dispatch({
+        type: GET_BOARD,
+        payload: deletedBoard.data.deleteBoard.userBoards,
+      })
+    })
+}
