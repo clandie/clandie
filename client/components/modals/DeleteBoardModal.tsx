@@ -42,16 +42,21 @@ class DeleteBoardModal extends Component<IDeleteModalProps> {
             Delete {this.props.name}
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="modal-content">
           Are you sure you want to delete {this.props.name} and all of its contents?
-          <Button
-            onClick={this.handleCancelDelete}
-          >Cancel</Button>
-          <Button
-            onClick={(e: any) => {
-              if(this.props.boardId) this.handleDelete(this.props.boardId);
-            }}
-          >Delete Permanently</Button>
+          {/* <br /> */}
+          <div className="modal-btns">
+            <Button
+              className="cancel-btn"
+              onClick={this.handleCancelDelete}
+            >Cancel</Button>
+            <Button
+              className="delete-btn"
+              onClick={(e: any) => {
+                if(this.props.boardId) this.handleDelete(this.props.boardId);
+              }}
+            >Delete Permanently</Button>
+          </div>
         </Modal.Body>
       </Modal>
     )

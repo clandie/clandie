@@ -176,6 +176,30 @@ body,
   }
 }
 
+.deleteBoardModal {
+  .modal-body{
+    
+
+    .modal-btns{
+      padding-top: 20px;
+
+      .delete-btn {
+        float: right;
+        background-color: $dark-lav;
+        color: white;
+        border: 1px solid $dark-lav;
+        font-size: 13px;
+        width: 147px;
+      }
+    
+      .cancel-btn {
+        font-size: 13px;
+        width: 70px;
+      }
+    }
+  }
+}
+
 /*
 BOARD CONTAINER
 */
@@ -213,7 +237,6 @@ BOARD CONTAINER
         margin-top: 5px;
       }
 
-
     #dropdown-basic-button {
       height: 35px;
       margin-top: 7px;
@@ -231,6 +254,18 @@ BOARD CONTAINER
     }
     .dropdown-item {
       font-size: 14px;
+      // width: fit-content;
+
+      .delete-btn {
+        float: right;
+        color: $dark-lav;
+        margin-top: 4px;
+      }
+
+      .delete-btn:hover {
+        color: white;
+        background-color: $dark-lav;
+      }
     }
     #dropItem:focus {
       background-color: $lavender;
