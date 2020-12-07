@@ -44,6 +44,17 @@ body,
   background-size: 100%;
   background-repeat: no-repeat;
   font-size: 12px;
+  background-position: center center;
+
+
+  @media screen and (max-width: 1200px) {
+    background-attachment: fixed;
+    background-position: center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+  }
 
 
   .login-box {
@@ -57,6 +68,11 @@ body,
     border-radius: 10px;
     background-color:  rgba(255, 255, 255, 0.7);
 
+    @media screen and (max-width: 800px) {
+      width: 300px;
+      height: 520px;
+    }
+
 
     .full-logo {
       width: 150px;
@@ -65,11 +81,23 @@ body,
       background-image: url('../assets/full-logo.png');
       background-size: 100%;
       background-repeat: no-repeat;
+
+      @media screen and (max-width: 800px) {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 10px;
+      }
+
     }
 
     .login-form {
       width: 300px;
       margin-bottom: 50px;
+
+      @media screen and (max-width: 800px) {
+        width: 250px;
+        margin-bottom: 15px;
+      }
 
       #formBasicEmail, #formBasicPassword, #formBasicName {
         font-size: 12px;
@@ -111,6 +139,14 @@ body,
   .modal-body {
     max-height: 450px;
     overflow: scroll;
+    display: flex;
+    justify-content: space-evenly;
+
+    @media screen and (max-width: 800px) {
+      max-height: 300px;
+      display: flex;
+      flex-wrap: wrap;
+    }
   }
 
   .boardInput {
@@ -249,6 +285,11 @@ BOARD CONTAINER
         }
       }
 
+    .boardDropdownFlex {
+      display: flex;
+      justify-content: space-between;
+    }
+
     #dropdown-basic-button {
       height: 35px;
       margin-top: 7px;
@@ -282,6 +323,7 @@ BOARD CONTAINER
         float: right;
         color: $dark-lav;
         margin-top: 4px;
+        margin-left: 20px;
       }
 
       .delete-btn:hover {
@@ -524,9 +566,23 @@ BOARD CONTAINER
   margin: 20px;
   font-size: 13px;
 
-  .detailsLocation, .detailsSalary {
+  .detailsLocation{
     height: 35px;
     width: 350px;
+    padding: 8px;
+  }
+
+  .detailsSalaryFlex {
+    display: flex;
+
+    #dollarSymbol {
+      margin-top: 10px;
+    }
+  }
+
+  .detailsSalary {
+    height: 35px;
+    width: 340px;
     padding: 8px;
   }
   
