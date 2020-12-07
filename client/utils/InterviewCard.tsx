@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Col, Button, Card } from 'react-bootstrap';
+import { Form, Col, Button, Card, Alert } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
@@ -35,6 +35,7 @@ interface IInterviewCardState {
     time?: Date;
     notes?: string;
   }[] | null;
+  saved?: boolean;
 }
 
 class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> {
@@ -46,9 +47,11 @@ class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> 
       time: null,
       notes: '',
       allInterviews: [],
+      saved: false,
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSave = this.handleSave.bind(this);
+    this.successAlert = this.successAlert.bind(this);
   }
 
   componentDidMount(){
@@ -74,6 +77,15 @@ class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> 
     const { title, date, time, notes } = this.state;
     const interviewInfo = { _id: this.props.id, title, date, time, notes,};
     this.props.updateInterview(interviewInfo);
+    this.setState({ saved: true })
+  }
+
+  successAlert() {
+    if (this.state.saved === true) {
+      return (
+        <Alert variant="success" className="successAlert">Success! Your interview has been saved.</Alert>
+      )
+    } 
   }
 
   render(){
@@ -140,6 +152,7 @@ class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> 
                     ></textarea>
                   </Form.Group>
                 </Form.Row>
+                {this.successAlert()}
                 <Button 
                   className="delete-btn"
                   onClick={() => this.props.deleteInterview(this.props.id)}

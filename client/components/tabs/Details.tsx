@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Col, Button } from 'react-bootstrap';
+import { Form, Col, Button, Alert } from 'react-bootstrap';
 import { IDetails, ISelectedJob } from '../../constants/types';
 
 interface IDetailProps {
@@ -14,6 +14,7 @@ interface IDetailState {
   salary?: string;
   url?: string;
   notes?: string;
+  saved?: boolean;
 }
 class Details extends Component<IDetailProps, IDetailState> {
   constructor(props: IDetailProps) {
@@ -24,10 +25,12 @@ class Details extends Component<IDetailProps, IDetailState> {
       salary: '',
       url: '',
       notes: '',
+      saved: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSave = this.handleSave.bind(this);
+    this.successAlert = this.successAlert.bind(this);
   }
 
   componentDidMount() {
@@ -64,6 +67,15 @@ class Details extends Component<IDetailProps, IDetailState> {
       };
       updateDetails(detailsObj, boardId);
     }
+    this.setState({ saved: true })
+  }
+
+  successAlert() {
+    if (this.state.saved === true) {
+      return (
+        <Alert variant="success" className="successAlert">Success! Your details have been saved.</Alert>
+      )
+    } 
   }
 
   //* replaced form control with html text area - we may not even need forms for this tab
@@ -95,6 +107,7 @@ class Details extends Component<IDetailProps, IDetailState> {
             <Form.Label>Notes</Form.Label>
             <textarea className="detailsNotes" onChange={this.handleChange} name="notes" value={this.state.notes ? this.state.notes : ''}></textarea>
           </Form.Group>
+          {this.successAlert()}
           <Button
             className="delete-btn"
             onClick={() => {

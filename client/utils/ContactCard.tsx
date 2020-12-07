@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Col, Button, Card } from 'react-bootstrap';
+import { Form, Col, Button, Card, Alert } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion';
 import { IContactInfo } from '../constants/types';
 import { ContactState }from '../constants/stateTypes'
@@ -18,12 +18,13 @@ interface IContactCardProps {
 }
 
 interface IContactCardState {
-  name?: string,
-  title?: string | null,
-  phone?: string | null,
-  email?: string | null,
-  notes?: string | null,
-  allContacts?: ContactState['contacts'] | []
+  name?: string;
+  title?: string | null;
+  phone?: string | null;
+  email?: string | null;
+  notes?: string | null;
+  allContacts?: ContactState['contacts'] | [];
+  saved?: boolean;
 }
 
 class ContactCard extends Component<IContactCardProps, IContactCardState> {
@@ -36,6 +37,7 @@ class ContactCard extends Component<IContactCardProps, IContactCardState> {
       email: '',
       notes: '',
       allContacts: [],
+      saved: false,
       }
     this.handleChange = this.handleChange.bind(this);
     this.handleSave = this.handleSave.bind(this);
@@ -75,6 +77,15 @@ class ContactCard extends Component<IContactCardProps, IContactCardState> {
         };
         this.props.updateContact(contactInfo);
       }
+    this.setState({ saved: true })
+  }
+
+  successAlert() {
+    if (this.state.saved === true) {
+      return (
+        <Alert variant="success" className="successAlert">Success! Your contact has been saved.</Alert>
+      )
+    } 
   }
 
   render() {
@@ -145,6 +156,7 @@ class ContactCard extends Component<IContactCardProps, IContactCardState> {
                   onChange={this.handleChange}
                 ></textarea>
               </Form.Group>
+              {this.successAlert()}
               <Button
                 className="delete-btn"
                 onClick={() => deleteContact(this.props.id)}
