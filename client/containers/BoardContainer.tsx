@@ -196,10 +196,10 @@ class BoardContainer extends Component<BoardProps, BoardState> {
   componentDidMount() {
     this.createDropdown();
     if (this.props.boardName === null) {
-      this.setState({ showBoardModal: true })
+      this.setState({ showBoardModal: true, dailyUnsplash });
     } else {
       // set daily url
-      this.setState({ dailyUnsplash })
+      this.setState({ dailyUnsplash });
        
       // unsplash api to fetch collection images - not in use currently but will need later
       // unsplash.collections.getPhotos({ collectionId: '34177528'})
