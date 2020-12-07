@@ -249,6 +249,11 @@ BOARD CONTAINER
         }
       }
 
+    .boardDropdownFlex {
+      display: flex;
+      justify-content: space-between;
+    }
+
     #dropdown-basic-button {
       height: 35px;
       margin-top: 7px;
@@ -282,6 +287,7 @@ BOARD CONTAINER
         float: right;
         color: $dark-lav;
         margin-top: 4px;
+        margin-left: 20px;
       }
 
       .delete-btn:hover {
@@ -524,9 +530,23 @@ BOARD CONTAINER
   margin: 20px;
   font-size: 13px;
 
-  .detailsLocation, .detailsSalary {
+  .detailsLocation{
     height: 35px;
     width: 350px;
+    padding: 8px;
+  }
+
+  .detailsSalaryFlex {
+    display: flex;
+
+    #dollarSymbol {
+      margin-top: 10px;
+    }
+  }
+
+  .detailsSalary {
+    height: 35px;
+    width: 340px;
     padding: 8px;
   }
   

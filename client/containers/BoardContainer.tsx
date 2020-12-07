@@ -311,29 +311,25 @@ class BoardContainer extends Component<BoardProps, BoardState> {
         if (boards[i].name !== boardName) {
           items.push(
             <Dropdown.Item
-              id="dropItem"
-              onClick={() => this.selectBoard(boards[i]._id, boards[i].name)}
-            >
-              {boards[i].name}
-              {/* <div className="delete-btn"
-                onClick={(e: any) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  this.selectBoardToDelete(boards[i]._id, boards[i].name);
-                }}
-              > */}
-                <FontAwesomeIcon 
-                  className="delete-btn"
-                  onClick={(e: any) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    this.selectBoardToDelete(boards[i]._id, boards[i].name);
-                  }}
-                  icon={faTrashAlt}
-                  size="1x"
-                />
-              {/* </div> */}
-            </Dropdown.Item>
+                id="dropItem"
+                onClick={() => this.selectBoard(boards[i]._id, boards[i].name)}
+              >
+              <div className="boardDropdownFlex">
+                <p>
+                {boards[i].name}
+                </p>
+                  <FontAwesomeIcon 
+                    className="delete-btn"
+                    onClick={(e: any) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      this.selectBoardToDelete(boards[i]._id, boards[i].name);
+                    }}
+                    icon={faTrashAlt}
+                    size="1x"
+                  />
+              </div>
+              </Dropdown.Item>
           );
         }
       }
