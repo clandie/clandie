@@ -28,7 +28,7 @@ const typeDefs = gql`
     company: String!
     title: String!
     location: String
-    salary: Int
+    salary: String
     url: String
     notes: String
     interviews: [InterviewInput]
@@ -128,7 +128,7 @@ const typeDefs = gql`
     company: String!
     title: String!
     location: String
-    salary: Int
+    salary: String
     url: String
     notes: String
     boards_id: ID!
