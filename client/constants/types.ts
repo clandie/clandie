@@ -45,7 +45,7 @@ export interface IDetails {
 }
 
 export interface IInterviews {
-  _id: number;
+  _id?: number | null;
   title?: string;
   date?: Date | null;
   time?: Date | null;
