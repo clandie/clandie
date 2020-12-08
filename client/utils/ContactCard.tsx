@@ -45,7 +45,6 @@ class ContactCard extends Component<IContactCardProps, IContactCardState> {
 
   componentDidMount() {
     // populate fields with contact info
-    console.log('this card props', this.props)
     const { name, title, phone, email, notes, allContacts } = this.props;
     this.setState({ name, title, phone, email, notes, allContacts });
   }

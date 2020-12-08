@@ -24,7 +24,6 @@ export const getContacts = (jobID: number): AppThunk => async (dispatch) => {
   })
     .then((res) => res.json())
     .then((allContacts) => {
-      console.log('All CONTACTS: ', allContacts);
       dispatch({
         type: GET_CONTACT,
         payload: allContacts.data.contacts,
@@ -68,7 +67,6 @@ export const createContact = (name: string, jobID: number): AppThunk => async (d
     .then((res) => res.json())
     .then((newContact) => {
       const {allContacts} = newContact.data.createContact;
-      console.log('new contact created', newContact);
       dispatch({
         type: CREATE_CONTACT,
         payload: allContacts,

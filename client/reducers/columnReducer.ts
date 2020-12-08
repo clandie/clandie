@@ -26,16 +26,6 @@ const initialState: any = {
 
 const columnReducer = (state = initialState, action: ColumnActionTypes) => {
   switch (action.type) {
-    // case UPDATE_COLUMNS:
-    //   const column = action.payload.status;
-    //   const copy: IJobs[] = _.cloneDeep(state[column]);
-    //   copy[action.payload.list_order] = action.payload.job;
-    //   console.log('column', column);
-    //   console.log('copy', copy);
-    //   return {
-    //     ...state,
-    //     [column]: copy,
-    //   };
     case UPDATE_COLUMNS:
       return {
         ...state,

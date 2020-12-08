@@ -11,7 +11,6 @@ const initialState: ContactState = {
 };
 
 const contactReducer = (state = initialState, action: ContactActionTypes) => {
-  console.log('currContactState', state)
   switch (action.type) {
     case GET_CONTACT:
       return {
