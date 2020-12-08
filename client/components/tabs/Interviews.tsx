@@ -73,7 +73,6 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
     const noDateInterviews = [];
     if (allInterviews) {
       for (let i = 0; i < allInterviews.length; i++) {
-        console.log( 'DATE CREATED TO STORE TIME', new Date(`01 Jan 1970 ${allInterviews[i].time}`))
         let time = allInterviews[i].time;
         if(allInterviews[i].time) time = new Date(`01 Jan 1970 ${allInterviews[i].time}`);
         if(!allInterviews[i].date) noDateInterviews.push(
