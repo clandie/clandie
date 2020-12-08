@@ -24,6 +24,7 @@ interface IInterviewCardProps {
 }
 
 interface IInterviewCardState {
+  id?: number | null;
   title?: string;
   date?: Date |null;
   time?: Date | null;
@@ -42,6 +43,7 @@ class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> 
   constructor(props: IInterviewCardProps){
     super(props);
     this.state = {
+      id: null,
       title: '',
       date: null,
       time: null,
