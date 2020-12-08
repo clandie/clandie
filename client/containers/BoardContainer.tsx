@@ -43,104 +43,81 @@ const mapStateToProps = (store: TAppState) => ({
 
 const mapDispatchToProps = (dispatch: any) => ({
   setBoard: (boardObj: types.IBoardInfo) => {
-    console.log('dispatched set board', boardObj);
     dispatch(actions.setBoard(boardObj));
   },
   createBoard: (boardObj: types.IBoardInput) => {
-    console.log('dispatched create board', boardObj);
     dispatch(actions.createBoard(boardObj));
   },
   clearBoard: () => {
-    console.log('dispatched clear board');
     dispatch(actions.clearBoard());
   },
   deleteBoard: (boardId: number) => {
-    console.log('dispatched delete board');
     dispatch(actions.deleteBoard(boardId));
   },
   clearUserInfo: () => {
-    console.log('dispatched clear info');
     dispatch(userActions.clearUserInfo());
   },
   createJob: (jobObj: types.IJobInput) => {
-    console.log('dispatched create job');
     dispatch(jobActions.createJob(jobObj));
   },
   getJob: (boardId: number) => {
-    console.log('dispatched get job');
     dispatch(jobActions.getJob(boardId));
   },
   clearJob: () => {
-    console.log('dispatched clear job');
     dispatch(jobActions.clearJob());
   },
   updateDetails: (detailsObj: types.IDetails) => {
-    console.log('dispatched update details');
     dispatch(jobActions.updateDetails(detailsObj));
   },
   deleteJob: (jobId: number, boardId: number) => {
-    console.log('dispatched delete job');
     dispatch(jobActions.deleteJob(jobId, boardId));
   },
   updateStatus: (jobId: number, status: string) => {
-    console.log('dispatched update status');
     dispatch(jobActions.updateStatus(jobId, status));
   },
   // updateJobs is for dnd functionality - update state before updating db
   updateJobs: (allJobs: any[]) => {
-    console.log('dispatched update jobs');
     dispatch({
       type: GET_JOB,
       payload: allJobs,
     });
   },
   getInterview: (jobId: number) => {
-    console.log('dispatched get interview');
     dispatch(interviewActions.getInterview(jobId));
   },
   createInterview: (title: string, jobId: number) => {
-    console.log('dispatched create interview');
     dispatch(interviewActions.createInterview(title, jobId));
   },
   updateInterview: (interviewObj: types.IInterviews | undefined) => {
-    console.log('dispatched update interview');
     dispatch(interviewActions.updateInterview(interviewObj));
   },
   deleteInterview: (interviewId: number) => {
-    console.log('dispatched update interview');
     dispatch(interviewActions.deleteInterview(interviewId));
   },
   getContact: (jobID: number) => {
-    console.log('dispatched get contact');
     dispatch(contactActions.getContacts(jobID))
   },
   createContact: (name: string, jobID: number) => {
-    console.log('dispatched create contact');
     dispatch(contactActions.createContact(name, jobID));
   },
   updateContact: (contactInfo: types.IContactInfo) => {
-    console.log('dispatched update contact');
     dispatch(contactActions.updateContact(contactInfo));
   },
   deleteContact: (contactID: number) => {
-    console.log('dispatched delete contact');
     dispatch(contactActions.deleteContact(contactID))
   },
   setColumns: (allJobs: any[]) => {
-    console.log('dispatched set columns');
     dispatch({
       type: SET_COLUMNS,
       payload: allJobs,
     });
   },
   clearColumns: () => {
-    console.log('dispatched clear columns');
     dispatch({ type: CLEAR_COLUMNS });
   },
 
   // for dnd, updating column ui before updating db
   updateListOrder: (jobs:any[]) => {
-    console.log('dispatched update list order');
     dispatch(columnActions.updateListOrder(jobs));
   },
 });
@@ -290,13 +267,11 @@ class BoardContainer extends Component<BoardProps, BoardState> {
   }
 
   renderDetailsModal(jobId: number) {
-    console.log('clicked job card');
     const { allJobs } = this.props;
     let selectedJob;
     for (let i = 0; i < allJobs.length; i++) {
       if (allJobs[i]._id === jobId) {
         selectedJob = allJobs[i];
-        console.log('selected', selectedJob);
       }
     }
     this.setState({ selectedJob, showDetailsModal: true });

@@ -28,7 +28,6 @@ class Contacts extends Component<IContactsProps, IContactsState> {
   }
 
   componentDidMount() {
-    console.log('contacts props', this.props)
     const { jobId } = this.props;
     if (jobId) this.props.getContact(jobId)
   }
