@@ -44,7 +44,6 @@ export const getJob = (boardId: number): AppThunk => async (dispatch) => {
   })
     .then((res) => res.json())
     .then((allJobs) => {
-      console.log('ALL JOBS: ', allJobs);
       dispatch({
         type: GET_JOB,
         payload: allJobs.data.jobs,
@@ -94,7 +93,6 @@ export const createJob = (jobObj: types.IJobInput): AppThunk => async (
     .then((res) => res.json())
     .then((newJob) => {
       const { allJobs } = newJob.data.createJob;
-      console.log('new job created', newJob);
       dispatch({
         type: SET_COLUMNS,
         payload: allJobs,
@@ -169,7 +167,6 @@ export const updateDetails = (detailsObj: types.IDetails): AppThunk => async (
   })
     .then((res) => res.json())
     .then((data) => {
-      console.log('data', data);
       dispatch({
         type: SET_COLUMNS,
         payload: data.data.updateJob.allJobs,
@@ -213,7 +210,6 @@ export const deleteJob = (jobId: number, boardId: number): AppThunk => async (
   })
     .then((res) => res.json())
     .then((data) => {
-      console.log('deletedJob', data);
       dispatch({
         type: SET_COLUMNS,
         payload: data.data.deleteJob.allJobs,

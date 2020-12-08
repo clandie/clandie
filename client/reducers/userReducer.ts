@@ -20,8 +20,7 @@ const initialState: UserState = {
 };
 
 const userReducer = (state = initialState, action: UserActionTypes) => {
-  console.log('currUserState', state);
-
+  
   switch (action.type) {
     case SET_USER_INFO:
       const { _id, name } = action.payload;

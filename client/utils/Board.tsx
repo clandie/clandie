@@ -46,7 +46,6 @@ class Board extends Component<IBoardProps, IBoardState> {
 
   // TODO: need to retype result
   onDragEnd = (result: any) => {
-    console.log('result', result);
 
     const { destination, source, draggableId } = result;
     // if no destination or if dropped in same location, return
@@ -92,7 +91,6 @@ class Board extends Component<IBoardProps, IBoardState> {
     };
 
     const jobCard = sourceCopy[source.index];
-    console.log('job card', jobCard);
     if (destination.droppableId !== source.droppableId) {
       removeCard(sourceCopy, source.index);
       insertCard(destinationCopy, destination.index, jobCard);  
@@ -101,10 +99,6 @@ class Board extends Component<IBoardProps, IBoardState> {
       removeCard(sourceCopy, source.index);
       insertCard(sourceCopy, destination.index, jobCard)
     }
-    
-    // should now have updated columns array
-    console.log('sourceCopy', sourceCopy);
-    console.log('dest copy', destinationCopy);
     
     // update allJobs array with new columns
     const jobsCopy = _.cloneDeep(allJobs);

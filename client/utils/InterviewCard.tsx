@@ -63,7 +63,6 @@ class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> 
     if(this.state.allInterviews !== this.props.allInterviews){
       const { title, date, time, notes, allInterviews } = this.props;
       this.setState({ title, date, time, notes, allInterviews, });
-      console.log(this.state)
     }
   }
 

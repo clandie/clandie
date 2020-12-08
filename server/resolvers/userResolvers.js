@@ -9,7 +9,6 @@ module.exports = {
         const params = [email, password];
         const user = await postgresDB(text, params);
         if (!user.rows[0]) throw new AuthenticationError();
-        console.log(user.rows)
         return user.rows[0];
       } catch (err) {
         console.log('An error occurred in user resolver: ', err);

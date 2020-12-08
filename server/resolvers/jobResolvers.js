@@ -153,7 +153,7 @@ module.exports = {
         if (company === '' || title === '') throw new UserInputError();
 
         const jobIDInt = Number(jobID);
-        const salaryStr = salary === '' ? null : String(salary);
+        const salaryStr = salary === '' ? null : salary.toString();
         const text = `
           UPDATE jobs
           SET status=$1, company=$2, title=$3, location=$4, salary=$5, url=$6, notes=$7
