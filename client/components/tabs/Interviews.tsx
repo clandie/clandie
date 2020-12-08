@@ -77,19 +77,21 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
         if(allInterviews[i].time) time = new Date(`01 Jan 1970 ${allInterviews[i].time}`);
         if(!allInterviews[i].date) noDateInterviews.push(
           <InterviewCard
-              id={allInterviews[i]._id}
-              title={allInterviews[i].title}
-              date={allInterviews[i].date}
-              time={time}
-              notes={allInterviews[i].notes}
-              allInterviews={this.props.allInterviews}
-              updateInterview={this.props.updateInterview}
-              deleteInterview={this.props.deleteInterview}
-            ></InterviewCard>
+            key={`interviewCard${i}`}
+            id={allInterviews[i]._id}
+            title={allInterviews[i].title}
+            date={allInterviews[i].date}
+            time={time}
+            notes={allInterviews[i].notes}
+            allInterviews={this.props.allInterviews}
+            updateInterview={this.props.updateInterview}
+            deleteInterview={this.props.deleteInterview}
+          ></InterviewCard>
         );
         else {
           interviews.push(
             <InterviewCard
+              key={`interviewCard${i}`}
               id={allInterviews[i]._id}
               title={allInterviews[i].title}
               date={allInterviews[i].date}
