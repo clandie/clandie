@@ -102,8 +102,8 @@ module.exports = {
         
         date = date === '' ? null : date;
         time = time === '' ? null : time;
-        const params = [title, date, new Date(time).toLocaleTimeString(), notes, interviewID];
-        
+        const params = [title, date, new Date(time).toTimeString().slice(0, 8), notes, interviewID];
+
         const updatedInterview = await postgresDB(text, params);
         return updatedInterview.rows[0];
       } catch (err) {

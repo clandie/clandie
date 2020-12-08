@@ -57,8 +57,8 @@ class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> 
   }
 
   componentDidMount(){
-    const { title, date, time, notes, allInterviews } = this.props;
-    this.setState({title, date, time, notes, allInterviews, });
+    const { id, title, date, time, notes, allInterviews } = this.props;
+    this.setState({id, title, date, time, notes, allInterviews, });
   }
 
   componentDidUpdate(){
