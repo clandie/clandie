@@ -25,6 +25,8 @@ const Column = (props: IColumnProps) => {
         jobId={column[i]._id}
         details={details}
         index={Number(column[i].list_order)}
+        notes={column[i].notes}
+        status={column[i].status}
       />
     );
   }
