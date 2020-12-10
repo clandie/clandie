@@ -247,7 +247,7 @@ BOARD CONTAINER
   background-size: cover;
   background-attachment: fixed;
 
-  @media screen and (max-width: 1500px) {
+  @media screen and (max-width: 1500px), screen and (max-height: 800px) {
     background-attachment: fixed;
     background-position: center;
     -webkit-background-size: cover;
