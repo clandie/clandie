@@ -244,15 +244,17 @@ BOARD CONTAINER
   background-repeat: no-repeat;
   background-position: center center;
   // background-image: url('../assets/mountains.jpg');
-  background-size: 100%;
+  background-size: cover;
+  background-attachment: fixed;
 
-  @media screen and (max-width: 1200px) {
+  @media screen and (max-width: 1500px) {
     background-attachment: fixed;
     background-position: center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
+    height: auto;
   }
 
   .boardHeader {
