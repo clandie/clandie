@@ -100,6 +100,7 @@ class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> 
   
   componentDidUpdate(){
     if(this.state.allInterviews !== this.props.allInterviews){
+<<<<<<< HEAD
       const { title, date, time, timezone, notes, allInterviews } = this.props;
       // convert time to proper timezone from utc
       console.log('original ', time, timezone)
@@ -108,6 +109,10 @@ class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> 
       console.log('convert to tz: ', new Date(dayjs(utcTime).tz(timezone).format('MM-DD-YYYY HH:mm:ss')))
       const tzTime = new Date(dayjs(utcTime).tz(timezone).format('MM-DD-YYYY HH:mm:ss'));
       this.setState({ title, date, time: tzTime, timezone, notes, allInterviews, });
+=======
+      const { title, date, time, notes, allInterviews } = this.props;
+      this.setState({ title, date, time, notes, allInterviews, });
+>>>>>>> 082011a12b79ef8d2826b75f3e57bf008f25743f
     }
   }
 
