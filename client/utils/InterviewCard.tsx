@@ -3,20 +3,50 @@ import { Form, Col, Button, Card, Alert } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import TimezonePicker from 'react-bootstrap-timezone-picker';
+import 'react-bootstrap-timezone-picker/dist/react-bootstrap-timezone-picker.min.css';
 import {IInterviews} from '../constants/types';
 
+// need to use let in order for dayjs plugins to work properly
+let dayjs = require('dayjs');
+let utc = require('dayjs/plugin/utc'); // dependent on utc plugin
+let timezone = require('dayjs/plugin/timezone');
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+const timezones = {
+  'PST (Pacific Standard Time)': 'America/Los_Angeles',
+  'EST (Eastern Standard Time)': 'America/New_York',
+  'CST (Central Standard Time)': 'America/Chicago',
+  'MST (Mountain Standard Time)': 'America/Phoenix',
+  // 'AEST (Australia Eastern Standard Time)': 'GMT+11:00',
+  // 'ACST (Australia Central Standard Time)': 'ACST',
+  // 'AKST (Alaska Standard Time)': 'AKST',
+  // 'AST (Atlantic Standard Time)': 'AST',
+  // 'AWST (Australia Western Standard Time)': 'AWST',
+  // 'CAT (Central Africa Time)': 'CAT',
+  // 'CET (Central European Time)': 'CET',
+  // 'EAT (East Africa Time)': 'EAT',
+  // 'EET (Eastern European Time)': 'EET',
+  // 'MSK (Moscow Standard Time)': 'MSK',
+  // 'WAT (West Africa Time)': 'WAT',
+  // 'WET (Western European Time)': 'WET',
+};
 
 interface IInterviewCardProps {
   id: number;
   title: string;
   date: Date |null;
   time: Date | null;
+  timezone: string | null
   notes: string | null;
   allInterviews: {
     _id: number;
     title?: string;
     date?: Date;
     time?: Date;
+    timezone?: string;
     notes?: string;
   }[] | null;
   updateInterview: (interviewObj: IInterviews) => void;
@@ -28,12 +58,14 @@ interface IInterviewCardState {
   title?: string;
   date?: Date |null;
   time?: Date | null;
+  timezone?: string | null;
   notes?: string | null;
   allInterviews?: {
     _id: number;
     title?: string;
     date?: Date;
     time?: Date;
+    timezone?: string;
     notes?: string;
   }[] | null;
   saved?: boolean;
@@ -47,6 +79,7 @@ class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> 
       title: '',
       date: null,
       time: null,
+      timezone: null,
       notes: '',
       allInterviews: [],
       saved: false,
@@ -57,14 +90,24 @@ class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> 
   }
 
   componentDidMount(){
-    const { id, title, date, time, notes, allInterviews } = this.props;
-    this.setState({id, title, date, time, notes, allInterviews, });
+    const { id, title, date, time, timezone, notes, allInterviews } = this.props;
+    // convert time to proper timezone from utc
+    // console.log('time from componentDidMount: ', typeof dayjs(time).tz(timezone).toDate(), dayjs(time).tz(timezone).toDate())
+    // console.log('time from componentDidMount: ', typeof time, time)
+    const tzTime = dayjs(time).tz(timezone).toDate();
+    this.setState({id, title, date, time: tzTime, timezone, notes, allInterviews, });
   }
-
+  
   componentDidUpdate(){
     if(this.state.allInterviews !== this.props.allInterviews){
-      const { title, date, time, notes, allInterviews } = this.props;
-      this.setState({ title, date, time, notes, allInterviews, });
+      const { title, date, time, timezone, notes, allInterviews } = this.props;
+      // convert time to proper timezone from utc
+      console.log('original ', time, timezone)
+      const utcTime = dayjs(time).utc(true).format();
+      console.log('utc', utcTime)
+      console.log('convert to tz: ', new Date(dayjs(utcTime).tz(timezone).format('MM-DD-YYYY HH:mm:ss')))
+      const tzTime = new Date(dayjs(utcTime).tz(timezone).format('MM-DD-YYYY HH:mm:ss'));
+      this.setState({ title, date, time: tzTime, timezone, notes, allInterviews, });
     }
   }
 
@@ -75,8 +118,14 @@ class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> 
 
   handleSave(e: any){
     e.preventDefault();
-    const { title, date, time, notes } = this.state;
-    const interviewInfo = { _id: this.props.id, title, date, time, notes,};
+    const { title, date, time, timezone, notes } = this.state;
+    // convert time to utc before adding to db
+    const tzTime = dayjs(time).tz(timezone, true).format();
+    const utcTime = dayjs(tzTime).utc().format();
+
+    console.log('utcTime from handleSave: ', utcTime)
+    
+    const interviewInfo = { _id: this.props.id, title, date, time: utcTime, timezone, notes,};
     this.props.updateInterview(interviewInfo);
     this.setState({ saved: true })
   }
@@ -128,7 +177,7 @@ class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> 
                       />
                   </Form.Group>
                   <Form.Group as={Col} controlId="formTime">
-                    <Form.Label>Time</Form.Label>
+                    <Form.Label className="timeSelectionFlex">Time</Form.Label>
                       <DatePicker
                         name="time"
                         className="interviewTime"
@@ -140,7 +189,16 @@ class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> 
                         timeFormat="h:mm aa"
                         timeIntervals={15}
                       />
+                      <TimezonePicker 
+                        className="interviewTimezone"
+                        value={this.state.timezone}
+                        timezones={timezones}
+                        onChange={(timezone: string) => this.handleChange(timezone, 'timezone')}
+                      />
                   </Form.Group>
+                  {/* <Form.Group as={Col} controlId="formTimezone">
+                    <Form.Label>Timezone</Form.Label>
+                  </Form.Group> */}
                 </Form.Row>
                 <Form.Row>
                   <Form.Group as={Col} controlId="formNotes">

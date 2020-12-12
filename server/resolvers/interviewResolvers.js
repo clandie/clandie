@@ -1,4 +1,10 @@
 const { UserInputError } = require('apollo-server');
+let dayjs = require('dayjs');
+let utc = require('dayjs/plugin/utc'); // dependent on utc plugin
+// let timezone = require('dayjs/plugin/timezone');
+
+dayjs.extend(utc);
+// dayjs.extend(timezone);
 
 module.exports = {
   Query: {
@@ -86,23 +92,25 @@ module.exports = {
 
     updateInterview: async (
       parent,
-      { title, date, time, notes, interviewID },
+      { title, date, time, timezone, notes, interviewID },
       { dataSources }
     ) => {
       try {
+
+        console.log('time from updateInterview resolver: ', dayjs(time).utc().format('HH:mm:ss'))
         const {postgresDB} = dataSources;
         if (title === '') throw new UserInputError();
         
         const text = `
         UPDATE interviews
-        SET title=$1, date=$2, time=$3, notes=$4
-        WHERE _id=$5
+        SET title=$1, date=$2, time=$3, timezone=$4, notes=$5
+        WHERE _id=$6
         RETURNING *
         `;
         
         date = date === '' ? null : date;
         time = time === '' ? null : time;
-        const params = [title, date, new Date(time).toTimeString().slice(0, 8), notes, interviewID];
+        const params = [title, date, dayjs(time).utc().format('HH:mm:ss'), timezone, notes, interviewID];
 
         const updatedInterview = await postgresDB(text, params);
         return updatedInterview.rows[0];

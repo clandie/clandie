@@ -648,6 +648,22 @@ BOARD CONTAINER
     height: 35px;
     width: 333px;
     padding: 8px;
+
+  }
+  
+  .interviewTime {
+    width: 90px;
+  }
+
+  .interviewTimezone {
+    height: 35px;
+    width: 90px;
+    // border:  .005px solid black;
+  }
+
+  .timeSelectionFlex {
+    display: flex;
+    padding: 0px;
   }
 
   .interviewNotes {
