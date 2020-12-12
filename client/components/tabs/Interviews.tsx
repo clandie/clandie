@@ -13,6 +13,7 @@ interface IInterviewsProps {
         title: string;
         date: Date;
         time: Date;
+        timezone: string;
         notes: string;
       }[]
     | null;
@@ -29,6 +30,7 @@ interface IInterviewsState {
         title?: string;
         date?: Date;
         time?: Date;
+        timezone?: string;
         notes?: string;
       }[]
     | null;
@@ -77,16 +79,17 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
         if(allInterviews[i].time) time = new Date(`01 Jan 1970 ${allInterviews[i].time}`);
         if(!allInterviews[i].date) noDateInterviews.push(
           <InterviewCard
-            key={`interviewCard${i}`}
-            id={allInterviews[i]._id}
-            title={allInterviews[i].title}
-            date={allInterviews[i].date}
-            time={time}
-            notes={allInterviews[i].notes}
-            allInterviews={this.props.allInterviews}
-            updateInterview={this.props.updateInterview}
-            deleteInterview={this.props.deleteInterview}
-          ></InterviewCard>
+              key={`interviewCard${i}`}
+              id={allInterviews[i]._id}
+              title={allInterviews[i].title}
+              date={allInterviews[i].date}
+              time={time}
+              timezone={allInterviews[i].timezone}
+              notes={allInterviews[i].notes}
+              allInterviews={this.props.allInterviews}
+              updateInterview={this.props.updateInterview}
+              deleteInterview={this.props.deleteInterview}
+            ></InterviewCard>
         );
         else {
           interviews.push(
@@ -96,6 +99,7 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
               title={allInterviews[i].title}
               date={allInterviews[i].date}
               time={time}
+              timezone={allInterviews[i].timezone}
               notes={allInterviews[i].notes}
               allInterviews={this.props.allInterviews}
               updateInterview={this.props.updateInterview}

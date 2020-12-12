@@ -22,6 +22,7 @@ interface IDetailsModalProps {
     title: string;
     date: Date;
     time: Date;
+    timezone: string;
     notes: string;
   }[]
 | null;

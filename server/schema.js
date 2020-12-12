@@ -40,6 +40,7 @@ const typeDefs = gql`
     title: String!
     date: Date
     time: Date
+    timezone: String
     notes: String
     jobs_id: ID!
     allInterviews: [InterviewInput!]
@@ -82,6 +83,7 @@ const typeDefs = gql`
       title: String
       date: Date
       time: Date
+      timezone: String
       notes: String
       interviewID: ID!
     ): InterviewResult!
@@ -154,6 +156,7 @@ const typeDefs = gql`
     title: String!
     date: Date
     time: Date
+    timezone: String
     notes: String
     jobs_id: ID!
     allInterviews: [Interview!]
