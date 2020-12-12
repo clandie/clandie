@@ -13,6 +13,7 @@ interface IInterviewsProps {
         title: string;
         date: Date;
         time: Date;
+        timezone: string;
         notes: string;
       }[]
     | null;
@@ -29,6 +30,7 @@ interface IInterviewsState {
         title?: string;
         date?: Date;
         time?: Date;
+        timezone?: string;
         notes?: string;
       }[]
     | null;
@@ -81,6 +83,7 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
               title={allInterviews[i].title}
               date={allInterviews[i].date}
               time={time}
+              timezone={allInterviews[i].timezone}
               notes={allInterviews[i].notes}
               allInterviews={this.props.allInterviews}
               updateInterview={this.props.updateInterview}
@@ -94,6 +97,7 @@ class Interviews extends Component<IInterviewsProps, IInterviewsState> {
               title={allInterviews[i].title}
               date={allInterviews[i].date}
               time={time}
+              timezone={allInterviews[i].timezone}
               notes={allInterviews[i].notes}
               allInterviews={this.props.allInterviews}
               updateInterview={this.props.updateInterview}

@@ -49,6 +49,7 @@ export interface IInterviews {
   title?: string;
   date?: Date | null;
   time?: Date | null;
+  timezone?: string | null;
   notes?: string | null;
 }
 

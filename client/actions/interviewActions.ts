@@ -1,6 +1,7 @@
 import { AppThunk } from '../store';
 import { CREATE_INTERVIEW, GET_INTERVIEW, UPDATE_INTERVIEW } from '../constants/actionTypes';
 import {IInterviews} from '../constants/types';
+// let dayjs = require('dayjs');
 
 export const getInterview = (jobId: number): AppThunk => async (dispatch) => {
   const query = `query GetInterview($jobId: ID!){
@@ -9,6 +10,7 @@ export const getInterview = (jobId: number): AppThunk => async (dispatch) => {
       title
       date
       time
+      timezone
       notes
     }
   }`;
@@ -47,6 +49,7 @@ export const createInterview = (
           title
           date
           time
+          timezone
           notes
         }
       }
@@ -80,17 +83,22 @@ export const createInterview = (
 
 
 export const updateInterview = (interviewObj: IInterviews | undefined): AppThunk => async (dispatch) => { 
-  let interviewID, title, date, time, notes;
+  let interviewID, title, date, time, timezone, notes;
   if (interviewObj){
     interviewID = interviewObj._id;
     title = interviewObj.title;
     date = interviewObj.date;
     time = interviewObj.time;
+    timezone = interviewObj.timezone;
     notes = interviewObj.notes; 
   }
 
-  const query = `mutation UpdateInterview ($title: String, $date: Date, $time: Date, $notes: String, $interviewID: ID!) {
-    updateInterview (title: $title, date: $date, time: $time, notes: $notes, interviewID: $interviewID) {
+  // console.log('time from updateInterview: ', time)
+  // console.log(dayjs(time).format())
+  // if(typeof time === 'string') time = new Date(time);
+  
+  const query = `mutation UpdateInterview ($title: String, $date: Date, $time: Date, $timezone: String, $notes: String, $interviewID: ID!) {
+    updateInterview (title: $title, date: $date, time: $time, timezone: $timezone, notes: $notes, interviewID: $interviewID) {
       __typename
       ... on Interview {
         allInterviews{
@@ -98,6 +106,7 @@ export const updateInterview = (interviewObj: IInterviews | undefined): AppThunk
           title
           date
           time
+          timezone
           notes
         }
       }
@@ -111,7 +120,7 @@ export const updateInterview = (interviewObj: IInterviews | undefined): AppThunk
     method: 'POST',
     body: JSON.stringify({
       query,
-      variables: { title, date, time, notes, interviewID },
+      variables: { title, date, time, timezone, notes, interviewID },
     }),
     headers: { 'Content-Type': 'application/json', Accept: 'applicaiton/json' },
   })
@@ -130,7 +139,6 @@ export const updateInterview = (interviewObj: IInterviews | undefined): AppThunk
 };
 
 export const deleteInterview = (interviewID: number) : AppThunk => async (dispatch) => {
-  // console.log('interviewID from deleteInterview: ', interviewId)
   const query = `mutation DeleteInterview($interviewID: ID!){
     deleteInterview(interviewID: $interviewID){
       allInterviews{
@@ -138,6 +146,7 @@ export const deleteInterview = (interviewID: number) : AppThunk => async (dispat
         title
         date
         time
+        timezone
         notes
       }
     }
