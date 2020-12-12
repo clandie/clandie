@@ -73,10 +73,6 @@ export const createInterview = (
         type: CREATE_INTERVIEW,
         payload: newInterview.data.createInterview.allInterviews,
       });
-      // dispatch({
-      //   type: GET_INTERVIEW,
-      //   payload: newInterview.data.createInterview.allInterviews,
-      // });
     })
     .catch((err) => console.log('error in create interview action', err));
 };
@@ -130,10 +126,6 @@ export const updateInterview = (interviewObj: IInterviews | undefined): AppThunk
       type: UPDATE_INTERVIEW,
       payload: updatedInterviews.data.updateInterview.allInterviews
     });
-    // dispatch({
-    //   type: GET_INTERVIEW,
-    //   payload: updatedInterviews.data.updateInterview.allInterviews,
-    // });
   })
   .catch((err) => console.log('error in update interview action', err));
 };

@@ -244,15 +244,17 @@ BOARD CONTAINER
   background-repeat: no-repeat;
   background-position: center center;
   // background-image: url('../assets/mountains.jpg');
-  background-size: 100%;
+  background-size: cover;
+  background-attachment: fixed;
 
-  @media screen and (max-width: 1200px) {
+  @media screen and (max-width: 1500px), screen and (max-height: 800px) {
     background-attachment: fixed;
     background-position: center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
+    height: auto;
   }
 
   .boardHeader {
@@ -536,6 +538,7 @@ BOARD CONTAINER
             .cardTitle {
               align-self: flex-start;
               font-size: 13px;
+              text-align: left;
             }
           }
           
@@ -719,3 +722,27 @@ BOARD CONTAINER
     font-size: 13px;
   }
 }
+
+// Overlay / Popover
+.popover {
+  background-color: rgba(34, 34, 34, 0.9);
+
+  #popover-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: white;
+    background-color:  rgba(0, 0, 0, 0);
+  }
+  
+  #popover-content {
+    font-size: 13px;
+    color: white;
+  }
+}
+
+#popover-basic .arrow:after {
+  border-right-color: rgba(34, 34, 34, 0.9);
+  border-left-color: rgba(34, 34, 34, 0.9);
+}
+
+

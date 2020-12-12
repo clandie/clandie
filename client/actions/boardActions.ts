@@ -120,7 +120,6 @@ export const deleteBoard = (boardId: number): AppThunk => async (dispatch) => {
   })
     .then((res) => res.json())
     .then((deletedBoard) => {
-      console.log('DELETED BOARD FROM ACTION', deletedBoard)
       dispatch({
         type: DELETE_BOARD, 
         payload: deletedBoard.data.deleteBoard.userBoards,

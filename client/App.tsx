@@ -17,11 +17,9 @@ const mapStateToProps = (store: TAppState) => ({
 // ** type error when dispatch: Dispatch
 const mapDispatchToProps = (dispatch: any) => ({
   addUser: (userObj: types.ISignupState) => {
-    console.log('dispatched create user', userObj);
     dispatch(actions.addUser(userObj));
   },
   verifyUser: (userObj: types.ILoginState) => {
-    console.log('dispatched verify user', userObj);
     dispatch(actions.verifyUser(userObj));
   },
 });

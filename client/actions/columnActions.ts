@@ -31,7 +31,6 @@ export const updateListOrder = (jobs: types.IJobs[]): AppThunk => async (dispatc
     .then((res) => res.json())
     .then((data) => {
       const { allJobs } = data.data.updateListOrder[0];
-      console.log('updated list order', allJobs);
       dispatch({
         type: SET_COLUMNS,
         payload: allJobs,
