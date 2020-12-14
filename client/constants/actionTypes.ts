@@ -165,6 +165,7 @@ interface GetInterview {
       title: string;
       date: Date;
       time: Date;
+      timezone: string;
       notes: string;
       job_id: number;
     };
