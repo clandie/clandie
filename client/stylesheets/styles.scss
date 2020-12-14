@@ -657,8 +657,9 @@ BOARD CONTAINER
 
   .interviewTimezone {
     height: 35px;
-    width: 90px;
-    // border:  .005px solid black;
+    width: 120px;
+    margin-left: 1px;
+    border:  1px solid rgba(0, 0, 0, 0.753);
   }
 
   .timeSelectionFlex {

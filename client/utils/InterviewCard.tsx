@@ -91,10 +91,8 @@ class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> 
 
   componentDidMount(){
     const { id, title, date, time, timezone, notes, allInterviews } = this.props;
-    // convert time to proper timezone from utc
-    // console.log('time from componentDidMount: ', typeof dayjs(time).tz(timezone).toDate(), dayjs(time).tz(timezone).toDate())
-    // console.log('time from componentDidMount: ', typeof time, time)
-    const tzTime = dayjs(time).tz(timezone).toDate();
+    let tzTime = time;
+    if(time && timezone) tzTime = dayjs(time).tz(timezone).toDate();
     this.setState({id, title, date, time: tzTime, timezone, notes, allInterviews, });
   }
   
@@ -102,8 +100,11 @@ class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> 
     if(this.state.allInterviews !== this.props.allInterviews){
       const { title, date, time, timezone, notes, allInterviews } = this.props;
       // convert time to proper timezone from utc
-      const utcTime = dayjs(time).utc(true).format();
-      const tzTime = new Date(dayjs(utcTime).tz(timezone).format('MM-DD-YYYY HH:mm:ss'));
+      let tzTime = time;
+      if(time){
+        const utcTime = dayjs(time).utc(true).format();
+         tzTime = new Date(dayjs(utcTime).tz(timezone).format('MM-DD-YYYY HH:mm:ss'));
+      }
       this.setState({ title, date, time: tzTime, timezone, notes, allInterviews, });
     }
   }
@@ -117,10 +118,11 @@ class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> 
     e.preventDefault();
     const { title, date, time, timezone, notes } = this.state;
     // convert time to utc before adding to db
-    const tzTime = dayjs(time).tz(timezone, true).format();
-    const utcTime = dayjs(tzTime).utc().format();
-
-    console.log('utcTime from handleSave: ', utcTime)
+    let utcTime = time;
+    if(time){
+      const tzTime = dayjs(time).tz(timezone, true).format();
+      utcTime = dayjs(tzTime).utc().format();
+    }
     
     const interviewInfo = { _id: this.props.id, title, date, time: utcTime, timezone, notes,};
     this.props.updateInterview(interviewInfo);
@@ -188,14 +190,12 @@ class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> 
                       />
                       <TimezonePicker 
                         className="interviewTimezone"
+                        placeholder="select timezone"
                         value={this.state.timezone}
                         timezones={timezones}
                         onChange={(timezone: string) => this.handleChange(timezone, 'timezone')}
                       />
                   </Form.Group>
-                  {/* <Form.Group as={Col} controlId="formTimezone">
-                    <Form.Label>Timezone</Form.Label>
-                  </Form.Group> */}
                 </Form.Row>
                 <Form.Row>
                   <Form.Group as={Col} controlId="formNotes">
