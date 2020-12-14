@@ -27,8 +27,7 @@ export const getInterview = (jobId: number): AppThunk => async (dispatch) => {
       const interviews = allInterviews.data.interviews;
     for(let i = 0; i < interviews.length; i++){
       const intTime = interviews[i].time;
-      // if(intTime) console.log(new Date(dayjs(`2020-01-01T${intTime}`).format()))
-      interviews[i].time = new Date(dayjs(`2020-01-01T${intTime}`).format());
+      if(intTime) interviews[i].time = new Date(dayjs(`2020-01-01T${intTime}`).format());
     }
       dispatch({
         type: GET_INTERVIEW,
@@ -78,8 +77,7 @@ export const createInterview = (
       const interviews = newInterview.data.createInterview.allInterviews;
       for(let i = 0; i < interviews.length; i++){
         const intTime = interviews[i].time;
-        // if(intTime) console.log(new Date(dayjs(`2020-01-01T${intTime}`).format()))
-        interviews[i].time = new Date(dayjs(`2020-01-01T${intTime}`).format());
+        if(intTime) interviews[i].time = new Date(dayjs(`2020-01-01T${intTime}`).format());
       }
       dispatch({
         type: CREATE_INTERVIEW,
@@ -134,12 +132,10 @@ export const updateInterview = (interviewObj: IInterviews | undefined): AppThunk
   })
   .then((res) => res.json())
   .then((updatedInterviews) => {
-    // console.log('updated interviews', updatedInterviews.data.updateInterview.allInterviews)
     const interviews = updatedInterviews.data.updateInterview.allInterviews;
     for(let i = 0; i < interviews.length; i++){
       const intTime = interviews[i].time;
-      // if(intTime) console.log(new Date(dayjs(`2020-01-01T${intTime}`).format()))
-      interviews[i].time = new Date(dayjs(`2020-01-01T${intTime}`).format());
+      if(intTime) interviews[i].time = new Date(dayjs(`2020-01-01T${intTime}`).format());
     }
     
     dispatch({
@@ -177,8 +173,7 @@ export const deleteInterview = (interviewID: number) : AppThunk => async (dispat
       const interviews = allInterviews.data.deleteInterview.allInterviews;
       for(let i = 0; i < interviews.length; i++){
         const intTime = interviews[i].time;
-        // if(intTime) console.log(new Date(dayjs(`2020-01-01T${intTime}`).format()))
-        interviews[i].time = new Date(dayjs(`2020-01-01T${intTime}`).format());
+        if(intTime) interviews[i].time = new Date(dayjs(`2020-01-01T${intTime}`).format());
       }
       dispatch({
         type: GET_INTERVIEW,

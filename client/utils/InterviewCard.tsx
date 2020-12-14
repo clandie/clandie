@@ -92,7 +92,7 @@ class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> 
   componentDidMount(){
     const { id, title, date, time, timezone, notes, allInterviews } = this.props;
     let tzTime = time;
-    if(time) tzTime = dayjs(time).tz(timezone).toDate();
+    if(time && timezone) tzTime = dayjs(time).tz(timezone).toDate();
     this.setState({id, title, date, time: tzTime, timezone, notes, allInterviews, });
   }
   
