@@ -190,14 +190,12 @@ class InterviewCard extends Component<IInterviewCardProps, IInterviewCardState> 
                       />
                       <TimezonePicker 
                         className="interviewTimezone"
+                        placeholder="select timezone"
                         value={this.state.timezone}
                         timezones={timezones}
                         onChange={(timezone: string) => this.handleChange(timezone, 'timezone')}
                       />
                   </Form.Group>
-                  {/* <Form.Group as={Col} controlId="formTimezone">
-                    <Form.Label>Timezone</Form.Label>
-                  </Form.Group> */}
                 </Form.Row>
                 <Form.Row>
                   <Form.Group as={Col} controlId="formNotes">
