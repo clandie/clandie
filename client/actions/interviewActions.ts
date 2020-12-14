@@ -1,7 +1,7 @@
 import { AppThunk } from '../store';
 import { CREATE_INTERVIEW, GET_INTERVIEW, UPDATE_INTERVIEW } from '../constants/actionTypes';
 import {IInterviews} from '../constants/types';
-// let dayjs = require('dayjs');
+let dayjs = require('dayjs');
 
 export const getInterview = (jobId: number): AppThunk => async (dispatch) => {
   const query = `query GetInterview($jobId: ID!){
@@ -24,6 +24,11 @@ export const getInterview = (jobId: number): AppThunk => async (dispatch) => {
   })
     .then((res) => res.json())
     .then((allInterviews) => {
+      const interviews = allInterviews.data.interviews;
+    for(let i = 0; i < interviews.length; i++){
+      const intTime = interviews[i].time;
+      if(intTime) interviews[i].time = new Date(dayjs(`2020-01-01T${intTime}`).format());
+    }
       dispatch({
         type: GET_INTERVIEW,
         payload: allInterviews.data.interviews,
@@ -69,6 +74,11 @@ export const createInterview = (
   })
     .then((res) => res.json())
     .then((newInterview) => {
+      const interviews = newInterview.data.createInterview.allInterviews;
+      for(let i = 0; i < interviews.length; i++){
+        const intTime = interviews[i].time;
+        if(intTime) interviews[i].time = new Date(dayjs(`2020-01-01T${intTime}`).format());
+      }
       dispatch({
         type: CREATE_INTERVIEW,
         payload: newInterview.data.createInterview.allInterviews,
@@ -122,6 +132,12 @@ export const updateInterview = (interviewObj: IInterviews | undefined): AppThunk
   })
   .then((res) => res.json())
   .then((updatedInterviews) => {
+    const interviews = updatedInterviews.data.updateInterview.allInterviews;
+    for(let i = 0; i < interviews.length; i++){
+      const intTime = interviews[i].time;
+      if(intTime) interviews[i].time = new Date(dayjs(`2020-01-01T${intTime}`).format());
+    }
+    
     dispatch({
       type: UPDATE_INTERVIEW,
       payload: updatedInterviews.data.updateInterview.allInterviews
@@ -154,6 +170,11 @@ export const deleteInterview = (interviewID: number) : AppThunk => async (dispat
   })
     .then((res) => res.json())
     .then((allInterviews) => {
+      const interviews = allInterviews.data.deleteInterview.allInterviews;
+      for(let i = 0; i < interviews.length; i++){
+        const intTime = interviews[i].time;
+        if(intTime) interviews[i].time = new Date(dayjs(`2020-01-01T${intTime}`).format());
+      }
       dispatch({
         type: GET_INTERVIEW,
         payload: allInterviews.data.deleteInterview.allInterviews

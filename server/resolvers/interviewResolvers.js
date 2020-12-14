@@ -96,8 +96,6 @@ module.exports = {
       { dataSources }
     ) => {
       try {
-
-        console.log('time from updateInterview resolver: ', dayjs(time).utc().format('HH:mm:ss'))
         const {postgresDB} = dataSources;
         if (title === '') throw new UserInputError();
         
@@ -109,8 +107,8 @@ module.exports = {
         `;
         
         date = date === '' ? null : date;
-        time = time === '' ? null : time;
-        const params = [title, date, dayjs(time).utc().format('HH:mm:ss'), timezone, notes, interviewID];
+        time = time === '' ? null : dayjs(time).utc().format('HH:mm:ss');
+        const params = [title, date, time, timezone, notes, interviewID];
 
         const updatedInterview = await postgresDB(text, params);
         return updatedInterview.rows[0];
