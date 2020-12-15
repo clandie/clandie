@@ -14,6 +14,7 @@ $light-grey: #fbfbfb;
 $light-medium-grey: #dadada;
 $medium-grey: #c7c7c7;
 $dark-grey: #2a2a2a;
+$dull-grey: #707070;
 $grey: #c7c7c7;
 $teal: #1e8894;
 $bright-teal: #02adad;
@@ -658,8 +659,14 @@ BOARD CONTAINER
   .interviewTimezone {
     height: 35px;
     width: 120px;
-    margin-left: 1px;
-    border:  1px solid rgba(0, 0, 0, 0.753);
+    margin-left: 5px;
+    border-radius: 3px;
+    border:  1px solid $dull-grey;
+  }
+
+  #formTime {
+    border-radius: 2px;
+    border-bottom:1px solid $dull-grey;
   }
 
   .timeSelectionFlex {
