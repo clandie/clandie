@@ -240,7 +240,7 @@ body,
 BOARD CONTAINER
 */
 .boardContainer {
-  height: 100%;
+  // height: 100%;
   // background-color: $beige;
   background-repeat: no-repeat;
   background-position: center center;
@@ -248,7 +248,7 @@ BOARD CONTAINER
   background-size: cover;
   background-attachment: fixed;
 
-  @media screen and (max-width: 1500px), screen and (max-height: 800px) {
+  @media screen and (max-width: 1500px) {
     background-attachment: fixed;
     background-position: center;
     -webkit-background-size: cover;
