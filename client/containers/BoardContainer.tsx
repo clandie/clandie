@@ -172,24 +172,25 @@ class BoardContainer extends Component<BoardProps, BoardState> {
   // render modal if board name isn't set
   componentDidMount() {
     this.createDropdown();
+
+   // unsplash api to fetch collection images - not in use currently but will need later
+    // unsplash.collections.getPhotos({ collectionId: '34177528'})
+    // .then(res => {
+    //   console.log('res photo', res);
+    //   if (res.response) {
+    //     console.log('response', res.response.results)
+    //     // this.setState({ unsplash: res.response.results });
+    //   }
+    // })
+    // .catch(err => {
+    //   console.log('err in unsplash api', err);
+    // });
+
     if (this.props.boardName === null) {
       this.setState({ showBoardModal: true, dailyUnsplash });
     } else {
       // set daily url
       this.setState({ dailyUnsplash });
-       
-      // unsplash api to fetch collection images - not in use currently but will need later
-      // unsplash.collections.getPhotos({ collectionId: '34177528'})
-      //   .then(res => {
-      //     console.log('res photo', res);
-      //     if (res.response) {
-      //       this.setState({ unsplash: res.response.results });
-      //     }
-      //   })
-      //   .catch(err => {
-      //     console.log('err in unsplash api', err);
-      //   });
-    
     }
   }
 
